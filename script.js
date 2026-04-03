@@ -4,7 +4,6 @@ const navInner = document.querySelector('.nav-inner');
 const navbar = document.getElementById('navbar');
 const contactForm = document.getElementById('contactForm');
 const formStatus = document.getElementById('formStatus');
-const demoLink = document.getElementById('demoLink');
 const downloadLink = document.getElementById('downloadLink');
 const demoDescription = document.getElementById('demoDescription');
 const demoNote = document.getElementById('demoNote');
@@ -14,9 +13,9 @@ const shot3 = document.getElementById('shot-3');
 
 const STORAGE_KEY = 'marketpos-site-config';
 const DEFAULTS = {
-  demoUrl: 'demo.html',
+  demoUrl: '',
   downloadUrl: '',
-  demoDescription: 'Canlı demo ve kurulum bağlantıları eklendiğinde ziyaretçiler uygulamanın gerçek sürümüne ulaşabilir.',
+  demoDescription: 'Ziyaretçiler demo kurulum dosyasını indirip uygulamayı birebir kendi bilgisayarlarında test edebilir.',
   shot1: 'assets/checkout-screen.svg',
   shot2: 'assets/inventory-screen.svg',
   shot3: 'assets/reports-screen.svg',
@@ -52,25 +51,18 @@ function applySiteConfig() {
     shot3.src = cfg.sh3 || cfg.shot3;
   }
 
-  const hasDemo = Boolean(cfg.demoUrl);
   const hasDownload = Boolean(cfg.downloadUrl);
 
-  if (demoLink) {
-    demoLink.href = hasDemo ? cfg.demoUrl : '#';
-    demoLink.classList.toggle('is-disabled', !hasDemo);
-    demoLink.setAttribute('aria-disabled', String(!hasDemo));
-  }
-
   if (downloadLink) {
-    downloadLink.href = hasDownload ? cfg.downloadUrl : '#';
+    downloadLink.href = hasDownload ? cfg.downloadUrl : '#contact';
     downloadLink.classList.toggle('is-disabled', !hasDownload);
     downloadLink.setAttribute('aria-disabled', String(!hasDownload));
   }
 
   if (demoNote) {
-    demoNote.textContent = hasDemo || hasDownload
-      ? 'Bağlantılar aktif.'
-      : 'Bağlantılar henüz ayarlanmadı.';
+    demoNote.textContent = hasDownload
+      ? 'Kurulum bağlantısı aktif. İndirip hemen deneyebilirsin.'
+      : 'Kurulum bağlantısı henüz ayarlanmadı. İletişim formundan demo talep edebilirsin.';
   }
 }
 
