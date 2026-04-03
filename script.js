@@ -16,9 +16,9 @@ const DEFAULTS = {
   demoUrl: '',
   downloadUrl: '',
   demoDescription: 'Ziyaretçiler demo kurulum dosyasını indirip uygulamayı birebir kendi bilgisayarlarında test edebilir.',
-  shot1: 'assets/checkout-screen.svg',
-  shot2: 'assets/inventory-screen.svg',
-  shot3: 'assets/reports-screen.svg',
+  shot1: 'assets/marketpos-dashboard.png',
+  shot2: 'assets/marketpos-products.png',
+  shot3: 'assets/marketpos-reports.png',
 };
 
 function loadSiteConfig() {
