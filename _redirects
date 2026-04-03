@@ -1,7 +1,2 @@
-# Admin panel - JWT kontrolü JavaScript'te yapılır
-/admin /admin/index.html 200!
-/admin/* /admin/:splat 200!
 
-# Old admin.html redirect
-/admin.html /admin 301!
 

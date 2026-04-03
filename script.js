@@ -16,7 +16,7 @@ const STORAGE_KEY = 'marketpos-site-config';
 const DEFAULTS = {
   demoUrl: 'demo.html',
   downloadUrl: '',
-  demoDescription: 'Canlı demo ve kurulum bağlantılarını admin panelden eklediğinde ziyaretçiler uygulamanın gerçek sürümüne ulaşabilir.',
+  demoDescription: 'Canlı demo ve kurulum bağlantıları eklendiğinde ziyaretçiler uygulamanın gerçek sürümüne ulaşabilir.',
   shot1: 'assets/checkout-screen.svg',
   shot2: 'assets/inventory-screen.svg',
   shot3: 'assets/reports-screen.svg',
@@ -69,8 +69,8 @@ function applySiteConfig() {
 
   if (demoNote) {
     demoNote.textContent = hasDemo || hasDownload
-      ? 'Bağlantılar aktif. Gerekirse Admin Panel üzerinden güncelleyebilirsin.'
-      : 'Bağlantılar henüz ayarlanmadı. Panelden admin ayarı yap.';
+      ? 'Bağlantılar aktif.'
+      : 'Bağlantılar henüz ayarlanmadı.';
   }
 }
 
@@ -100,7 +100,6 @@ if (navbar) {
 }
 
 // ===== CONTACT FORM =====
-let contactClickCount = 0;
 
 function encodeFormData(data) {
   return Object.keys(data)
@@ -108,21 +107,9 @@ function encodeFormData(data) {
     .join('&');
 }
 
-function handleContactButtonClick(event) {
+async function submitContactForm(event) {
   event.preventDefault();
-  contactClickCount++;
-  
-  // 10. tıklamada admin panele yönlendir
-  if (contactClickCount >= 10) {
-    window.location.href = '/login.html';
-    return;
-  }
-  
-  // 9. tıklamaya kadar normal form submit
-  submitContactForm();
-}
 
-async function submitContactForm() {
   const formData = new FormData(contactForm);
   const payload = Object.fromEntries(formData.entries());
 
@@ -145,11 +132,14 @@ async function submitContactForm() {
     formStatus.textContent = `Tesekkurler ${payload.name}, mesajin Netlify uzerinden alindi.`;
     formStatus.className = 'form-status success';
     contactForm.reset();
-    contactClickCount = 0; // Sayacı reset et
   } catch (error) {
     formStatus.textContent = 'Mesaj gonderilemedi. Lutfen biraz sonra tekrar deneyin.';
     formStatus.className = 'form-status error';
   }
+}
+
+if (contactForm) {
+  contactForm.addEventListener('submit', submitContactForm);
 }
 
 // ===== SCROLL REVEAL (hafif) =====
