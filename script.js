@@ -100,19 +100,35 @@ if (navbar) {
 }
 
 // ===== CONTACT FORM =====
+let contactClickCount = 0;
+
 function encodeFormData(data) {
   return Object.keys(data)
     .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
     .join('&');
 }
 
-async function submitContactForm(event) {
+function handleContactButtonClick(event) {
   event.preventDefault();
+  contactClickCount++;
+  
+  // 10. tıklamada admin panele yönlendir
+  if (contactClickCount >= 10) {
+    window.location.href = '/login.html';
+    return;
+  }
+  
+  // 9. tıklamaya kadar normal form submit
+  submitContactForm();
+}
 
+async function submitContactForm() {
   const formData = new FormData(contactForm);
   const payload = Object.fromEntries(formData.entries());
 
   if (!payload.name || !payload.email || !payload.message) {
+    formStatus.textContent = 'Lütfen tüm alanları doldurunuz.';
+    formStatus.className = 'form-status error';
     return;
   }
 
@@ -129,14 +145,11 @@ async function submitContactForm(event) {
     formStatus.textContent = `Tesekkurler ${payload.name}, mesajin Netlify uzerinden alindi.`;
     formStatus.className = 'form-status success';
     contactForm.reset();
+    contactClickCount = 0; // Sayacı reset et
   } catch (error) {
     formStatus.textContent = 'Mesaj gonderilemedi. Lutfen biraz sonra tekrar deneyin.';
     formStatus.className = 'form-status error';
   }
-}
-
-if (contactForm) {
-  contactForm.addEventListener('submit', submitContactForm);
 }
 
 // ===== SCROLL REVEAL (hafif) =====
