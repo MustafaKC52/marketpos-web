@@ -1,0 +1,5 @@
+/admin /admin/index.html 200! Role=admin
+/admin/* /admin/:splat 200! Role=admin
+/admin /login.html 401!
+/admin/* /login.html 401!
+/admin.html /admin 301!

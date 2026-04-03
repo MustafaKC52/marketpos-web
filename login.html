@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MarketPOS Admin Giriş</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+  <main class="login-shell">
+    <section class="login-card">
+      <span class="login-badge">Korumalı Alan</span>
+      <h1>Admin panele sadece yetkili hesap girebilir</h1>
+      <p>Bu alan Netlify Identity ve admin rolü ile korunuyor. Giriş sadece davet edilen hesabınla yapılır.</p>
+      <div class="login-actions">
+        <button id="loginBtn" class="login-btn" type="button">Giriş Yap</button>
+        <a href="index.html" class="home-link">Ana sayfaya dön</a>
+      </div>
+      <p id="loginStatus" class="login-status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script src="login.js"></script>
+</body>
+</html>

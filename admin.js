@@ -12,6 +12,12 @@ const defaults = {
 const form = document.getElementById('adminForm');
 const statusText = document.getElementById('adminStatus');
 const resetBtn = document.getElementById('resetBtn');
+const logoutBtn = document.getElementById('logoutBtn');
+const adminUser = document.getElementById('adminUser');
+
+function hasAdminRole(user) {
+  return Boolean(user?.app_metadata?.roles?.includes('admin'));
+}
 
 function getConfig() {
   const raw = localStorage.getItem(STORAGE_KEY);
@@ -29,6 +35,35 @@ function getConfig() {
 function setStatus(text, type = 'success') {
   statusText.textContent = text;
   statusText.className = `status ${type}`;
+}
+
+function initIdentityGuard() {
+  if (!window.netlifyIdentity) {
+    setStatus('Netlify Identity yüklenemedi.', 'error');
+    return;
+  }
+
+  window.netlifyIdentity.on('init', (user) => {
+    if (!user) {
+      window.location.href = '/login.html';
+      return;
+    }
+
+    if (!hasAdminRole(user)) {
+      window.location.href = '/login.html';
+      return;
+    }
+
+    if (adminUser) {
+      adminUser.textContent = user.email || 'Admin';
+    }
+  });
+
+  window.netlifyIdentity.on('logout', () => {
+    window.location.href = '/login.html';
+  });
+
+  window.netlifyIdentity.init();
 }
 
 function loadIntoForm() {
@@ -65,4 +100,11 @@ function resetConfig() {
 form.addEventListener('submit', saveConfig);
 resetBtn.addEventListener('click', resetConfig);
 
+if (logoutBtn) {
+  logoutBtn.addEventListener('click', () => {
+    window.netlifyIdentity?.logout();
+  });
+}
+
+initIdentityGuard();
 loadIntoForm();
