@@ -6,9 +6,12 @@
   <title>MarketPOS – Akıllı Satış Noktası Çözümü</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
 </head>
 <body>
+  <div class="page-glow page-glow-one"></div>
+  <div class="page-glow page-glow-two"></div>
 
   <!-- ======= NAVBAR ======= -->
   <header id="navbar">
@@ -42,21 +45,72 @@
           <a href="#contact" class="btn btn-primary">Hemen Başla</a>
           <a href="#features" class="btn btn-outline">Özellikleri Gör</a>
         </div>
+        <div class="hero-points">
+          <span>Offline satış</span>
+          <span>Anlık stok</span>
+          <span>Hızlı kurulum</span>
+        </div>
       </div>
       <div class="hero-visual">
-        <div class="mockup-card">
-          <div class="mockup-header">
-            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+        <div class="hero-stack">
+          <div class="hero-summary-card glass-card">
+            <span class="mini-label">Bugünün Özeti</span>
+            <div class="summary-grid">
+              <div>
+                <strong>284</strong>
+                <span>Satış</span>
+              </div>
+              <div>
+                <strong>₺41.820</strong>
+                <span>Ciro</span>
+              </div>
+              <div>
+                <strong>12</strong>
+                <span>Kritik stok</span>
+              </div>
+              <div>
+                <strong>3 sn</strong>
+                <span>Ortalama işlem</span>
+              </div>
+            </div>
           </div>
-          <div class="mockup-body">
-            <div class="mock-row"><span>Süt 1L</span><span>₺45,00</span></div>
-            <div class="mock-row"><span>Ekmek</span><span>₺12,50</span></div>
-            <div class="mock-row"><span>Su 0.5L</span><span>₺8,00</span></div>
-            <div class="mock-divider"></div>
-            <div class="mock-row bold"><span>Toplam</span><span>₺65,50</span></div>
-            <div class="mock-btn">Ödeme Al</div>
+          <div class="mockup-card">
+            <div class="mockup-header">
+              <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+            </div>
+            <div class="mockup-body">
+              <div class="mock-panel-top">
+                <span class="mini-label">Kasiyer Paneli</span>
+                <span class="live-pill">Canlı</span>
+              </div>
+              <div class="mock-row"><span>Süt 1L</span><span>₺45,00</span></div>
+              <div class="mock-row"><span>Ekmek</span><span>₺12,50</span></div>
+              <div class="mock-row"><span>Su 0.5L</span><span>₺8,00</span></div>
+              <div class="mock-divider"></div>
+              <div class="mock-row bold"><span>Toplam</span><span>₺65,50</span></div>
+              <div class="mock-chart">
+                <span style="height: 32%"></span>
+                <span style="height: 56%"></span>
+                <span style="height: 42%"></span>
+                <span style="height: 74%"></span>
+                <span style="height: 62%"></span>
+                <span style="height: 88%"></span>
+              </div>
+              <div class="mock-btn">Ödeme Al</div>
+            </div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="trust-bar">
+    <div class="container trust-inner">
+      <p>Mahalle marketlerinden zincir şubelere kadar hızlı operasyon isteyen ekipler için.</p>
+      <div class="trust-metrics">
+        <span>Hızlı barkod akışı</span>
+        <span>Şube bazlı raporlama</span>
+        <span>Gün sonu kapanış</span>
       </div>
     </div>
   </section>
@@ -158,9 +212,54 @@
       <h2 class="section-title">Ekran Görüntüleri</h2>
       <p class="section-sub">Sade ve hızlı bir arayüz sizi bekliyor.</p>
       <div class="screenshots-grid">
-        <div class="screenshot-placeholder">Satış Ekranı</div>
-        <div class="screenshot-placeholder">Stok Yönetimi</div>
-        <div class="screenshot-placeholder">Raporlar</div>
+        <article class="screenshot-card reveal-item">
+          <img src="assets/checkout-screen.svg" alt="MarketPOS satış ekranı" />
+          <div class="screenshot-copy">
+            <h3>Satış Ekranı</h3>
+            <p>Hızlı ürün arama, barkod satırı ve tek tık ödeme akışı aynı panelde.</p>
+          </div>
+        </article>
+        <article class="screenshot-card reveal-item">
+          <img src="assets/inventory-screen.svg" alt="MarketPOS stok yönetimi ekranı" />
+          <div class="screenshot-copy">
+            <h3>Stok Yönetimi</h3>
+            <p>Azalan ürünleri ve tedarik akışını tek listede takip etmenizi sağlar.</p>
+          </div>
+        </article>
+        <article class="screenshot-card reveal-item">
+          <img src="assets/reports-screen.svg" alt="MarketPOS rapor ekranı" />
+          <div class="screenshot-copy">
+            <h3>Raporlar</h3>
+            <p>Günlük ciro, kategori dağılımı ve performans kırılımları net görünür.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="workflow">
+    <div class="container workflow-inner">
+      <div class="workflow-copy reveal-item">
+        <span class="eyebrow">İşleyiş</span>
+        <h2>Kasada hız, yönetimde netlik</h2>
+        <p>MarketPOS günlük operasyonu üç basit akışa indirir: ürün girişi, hızlı satış ve rapor takibi. Böylece işletme sahibi hem ön kasayı hem arka ofisi aynı düzen içinde yönetir.</p>
+      </div>
+      <div class="workflow-steps">
+        <div class="workflow-step reveal-item">
+          <strong>01</strong>
+          <h3>Ürünleri tanımla</h3>
+          <p>Barkod, kategori ve fiyat bilgilerini birkaç dakikada sisteme ekle.</p>
+        </div>
+        <div class="workflow-step reveal-item">
+          <strong>02</strong>
+          <h3>Satışı hızla tamamla</h3>
+          <p>Kasiyer ekranında ürünler akarken nakit ve kart ödemeleri aynı anda yönet.</p>
+        </div>
+        <div class="workflow-step reveal-item">
+          <strong>03</strong>
+          <h3>Raporu anında gör</h3>
+          <p>Gün sonu beklemeden hangi ürün ne kadar döndü anında takip et.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -170,7 +269,11 @@
     <div class="container contact-inner">
       <h2 class="section-title">İletişime Geçin</h2>
       <p class="section-sub">Demo talep edin ya da sorularınızı iletin.</p>
-      <form class="contact-form" id="contactForm">
+      <form class="contact-form reveal-item" id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="contact" />
+        <p class="hidden-field">
+          <label>Bu alanı doldurmayın <input name="bot-field" /></label>
+        </p>
         <div class="form-group">
           <label for="name">Ad Soyad</label>
           <input type="text" id="name" name="name" placeholder="Ahmet Yılmaz" required />
@@ -183,7 +286,11 @@
           <label for="message">Mesaj</label>
           <textarea id="message" name="message" rows="4" placeholder="Mesajınızı yazın..." required></textarea>
         </div>
+        <div class="form-note">
+          Form mesajları doğrudan Netlify paneline düşer. İstersen daha sonra e-posta bildirimini de açabiliriz.
+        </div>
         <button type="submit" class="btn btn-primary full-width">Gönder</button>
+        <p class="form-status" id="formStatus" aria-live="polite"></p>
       </form>
     </div>
   </section>
