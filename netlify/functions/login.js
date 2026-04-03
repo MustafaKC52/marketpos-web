@@ -3,7 +3,7 @@ import crypto from 'crypto';
 // Basit bir secret key (production'da env variable olmalı)
 const JWT_SECRET = process.env.JWT_SECRET || 'marketpos-admin-secret-key-2026';
 const ADMIN_USERNAME = 'admin';
-const ADMIN_PASSWORD = 'marketpos123!';
+const ADMIN_PASSWORD = 'I52H4GCTyesmarketpos';
 
 // Çok basit JWT encode (production'da proper library kullan)
 function encodeJWT(payload) {
