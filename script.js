@@ -4,6 +4,77 @@ const navInner = document.querySelector('.nav-inner');
 const navbar = document.getElementById('navbar');
 const contactForm = document.getElementById('contactForm');
 const formStatus = document.getElementById('formStatus');
+const demoLink = document.getElementById('demoLink');
+const downloadLink = document.getElementById('downloadLink');
+const demoDescription = document.getElementById('demoDescription');
+const demoNote = document.getElementById('demoNote');
+const shot1 = document.getElementById('shot-1');
+const shot2 = document.getElementById('shot-2');
+const shot3 = document.getElementById('shot-3');
+
+const STORAGE_KEY = 'marketpos-site-config';
+const DEFAULTS = {
+  demoUrl: '',
+  downloadUrl: '',
+  demoDescription: 'Canlı demo ve kurulum bağlantılarını admin panelden eklediğinde ziyaretçiler uygulamanın gerçek sürümüne ulaşabilir.',
+  shot1: 'assets/checkout-screen.svg',
+  shot2: 'assets/inventory-screen.svg',
+  shot3: 'assets/reports-screen.svg',
+};
+
+function loadSiteConfig() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) {
+    return { ...DEFAULTS };
+  }
+
+  try {
+    return { ...DEFAULTS, ...JSON.parse(raw) };
+  } catch {
+    return { ...DEFAULTS };
+  }
+}
+
+function applySiteConfig() {
+  const cfg = loadSiteConfig();
+
+  if (demoDescription) {
+    demoDescription.textContent = cfg.demoDescription;
+  }
+
+  if (shot1) {
+    shot1.src = cfg.shot1;
+  }
+  if (shot2) {
+    shot2.src = cfg.sh2 || cfg.shot2;
+  }
+  if (shot3) {
+    shot3.src = cfg.sh3 || cfg.shot3;
+  }
+
+  const hasDemo = Boolean(cfg.demoUrl);
+  const hasDownload = Boolean(cfg.downloadUrl);
+
+  if (demoLink) {
+    demoLink.href = hasDemo ? cfg.demoUrl : '#';
+    demoLink.classList.toggle('is-disabled', !hasDemo);
+    demoLink.setAttribute('aria-disabled', String(!hasDemo));
+  }
+
+  if (downloadLink) {
+    downloadLink.href = hasDownload ? cfg.downloadUrl : '#';
+    downloadLink.classList.toggle('is-disabled', !hasDownload);
+    downloadLink.setAttribute('aria-disabled', String(!hasDownload));
+  }
+
+  if (demoNote) {
+    demoNote.textContent = hasDemo || hasDownload
+      ? 'Bağlantılar aktif. Gerekirse Admin Panel üzerinden güncelleyebilirsin.'
+      : 'Bağlantılar henüz ayarlanmadı. Panelden admin ayarı yap.';
+  }
+}
+
+applySiteConfig();
 
 if (burger && navInner) {
   burger.addEventListener('click', () => {
