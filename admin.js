@@ -1,7 +1,7 @@
 const STORAGE_KEY = 'marketpos-site-config';
 
 const defaults = {
-  demoUrl: '',
+  demoUrl: 'demo.html',
   downloadUrl: '',
   demoDescription: 'Canli demo ve kurulum baglantilarini admin panelden eklediginde ziyaretciler uygulamanin gercek surumune ulasabilir.',
   shot1: 'assets/checkout-screen.svg',

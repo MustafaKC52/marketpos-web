@@ -14,7 +14,7 @@ const shot3 = document.getElementById('shot-3');
 
 const STORAGE_KEY = 'marketpos-site-config';
 const DEFAULTS = {
-  demoUrl: '',
+  demoUrl: 'demo.html',
   downloadUrl: '',
   demoDescription: 'Canlı demo ve kurulum bağlantılarını admin panelden eklediğinde ziyaretçiler uygulamanın gerçek sürümüne ulaşabilir.',
   shot1: 'assets/checkout-screen.svg',
