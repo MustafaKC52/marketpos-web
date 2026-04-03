@@ -154,3 +154,35 @@ document.querySelectorAll('.feature-card, .stat-card, .reveal-item').forEach((el
   el.style.transition = 'opacity .55s ease, transform .55s ease';
   observer.observe(el);
 });
+
+// ===== LIGHTBOX =====
+const overlay = document.createElement('div');
+overlay.className = 'lightbox-overlay';
+overlay.innerHTML = '<button class="lightbox-close" aria-label="Kapat">&times;<\/button><img src="" alt="Ekran görüntüsü" />';
+document.body.appendChild(overlay);
+
+const lbImg = overlay.querySelector('img');
+const lbClose = overlay.querySelector('.lightbox-close');
+
+document.querySelectorAll('.screenshot-card img').forEach((img) => {
+  img.addEventListener('click', () => {
+    lbImg.src = img.src;
+    lbImg.alt = img.alt;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  });
+});
+
+function closeLightbox() {
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+  lbImg.src = '';
+}
+
+lbClose.addEventListener('click', closeLightbox);
+overlay.addEventListener('click', (e) => {
+  if (e.target === overlay) closeLightbox();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeLightbox();
+});
