@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MarketPOS Web Demo</title>
-  <meta name="description" content="MarketPOS web demosunda ürün arama, sepete ekleme, ödeme alma ve toplam hesaplama akışını tarayıcıda deneyin." />
+  <title>MarketPos Web Demo</title>
+  <meta name="description" content="MarketPos web demosunda ürün arama, sepete ekleme, ödeme alma ve toplam hesaplama akışını tarayıcıda deneyin." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://marketpos-web.netlify.app/demo.html" />
-  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="assets/logo-app-icon.png" type="image/png" sizes="512x512" />
+  <link rel="apple-touch-icon" href="assets/logo-app-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
@@ -18,7 +19,10 @@
   <div class="demo-bg demo-bg-two"></div>
 
   <header class="topbar">
-    <a href="index.html" class="brand">Market<span>POS</span> Demo</a>
+    <a href="index.html" class="brand" aria-label="MarketPos Demo — ana sayfaya dön">
+      <img src="assets/logo-lockup.png" alt="MarketPos" class="brand-logo" width="200" height="56" />
+      <span class="brand-demo-suffix">Demo</span>
+    </a>
     <div class="topbar-actions">
       <button id="resetDemo" class="btn ghost">Demoyu Sıfırla</button>
     </div>

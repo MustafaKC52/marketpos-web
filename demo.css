@@ -51,9 +51,28 @@ body {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 1.25rem;
   font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  line-height: 0;
 }
 
-.brand span { color: var(--accent); }
+.brand-logo {
+  height: 48px;
+  width: auto;
+  max-width: min(220px, 52vw);
+  display: block;
+  object-fit: contain;
+}
+
+.brand-demo-suffix {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+}
 
 .topbar-actions {
   display: flex;
