@@ -20,8 +20,7 @@ const shot3 = document.getElementById('shot-3');
 const STORAGE_KEY = 'marketpos-site-config';
 const DEFAULTS = {
   demoUrl: '',
-  downloadUrl:
-    'https://github.com/MustafaKC52/marketpos-web/releases/download/v0.1.100/MarketPOS-Setup-0.1.100.exe',
+  downloadUrl: 'downloads/MarketPOS-Setup-0.1.100.exe',
   demoDescription:
     'Windows kurulum dosyasını indirip MarketPOS’u kendi bilgisayarınızda deneyebilirsiniz. İndirme, size iletilen erişim şifresi ile açılır.',
   shot1: 'assets/marketpos-dashboard.png',

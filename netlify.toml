@@ -3,3 +3,4 @@ publish = "."
 
 [build.environment]
 NODE_VERSION = "20"
+GIT_LFS_ENABLED = "true"

@@ -1,6 +1,3 @@
 .netlify
 Thumbs.db
 Desktop.ini
-
-# Kurulum dosyası GitHub 100MB limitini aşar; Netlify'a elle veya Git LFS ile ekleyin.
-downloads/*.exe
