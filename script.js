@@ -29,7 +29,7 @@ const DEFAULTS = {
 };
 
 const DOWNLOAD_UNLOCK_KEY = 'marketpos-dl-unlocked';
-const DOWNLOAD_PWD_HASH_HEX = '0aba819d820869802beddef2b103d93507a7d8a57c6afbc0b76ab7dc121f98fb';
+const DOWNLOAD_PWD_HASH_HEX = 'efa6bce1bc3d0129d2ce21d62d56d8910d3839a275c5d28fb6d6a376fa9ba72f';
 
 let resolvedDownloadUrl = DEFAULTS.downloadUrl;
 
