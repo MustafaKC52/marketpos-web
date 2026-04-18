@@ -18,9 +18,14 @@ const shot2 = document.getElementById('shot-2');
 const shot3 = document.getElementById('shot-3');
 
 const STORAGE_KEY = 'marketpos-site-config';
+
+// Cloudflare Pages: Git LFS dosyası deploy'a genelde girmez. İndirmeyi hosting'de tutmak en sorunsuz yol.
+const SETUP_DOWNLOAD_URL =
+  'https://dl.marketposs.com/MarketPOS-Setup-0.1.100.exe';
+
 const DEFAULTS = {
   demoUrl: '',
-  downloadUrl: 'downloads/MarketPOS-Setup-0.1.100.exe',
+  downloadUrl: SETUP_DOWNLOAD_URL,
   demoDescription:
     'Windows kurulum dosyasını indirip MarketPOS’u kendi bilgisayarınızda deneyebilirsiniz. İndirme, size iletilen erişim şifresi ile açılır.',
   shot1: 'assets/marketpos-dashboard.png',
