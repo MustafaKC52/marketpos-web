@@ -1,0 +1,10 @@
+# Cloudflare Pages kök; güncel HTML'in edge önbelleğinde eski kalmaması için kısa TTL.
+
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/demo.html
+  Cache-Control: public, max-age=0, must-revalidate
