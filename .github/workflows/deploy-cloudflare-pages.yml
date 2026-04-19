@@ -1,8 +1,9 @@
-# GitHub → Settings → Secrets and variables → Actions (repository secrets):
-#   CLOUDFLARE_API_TOKEN  → Cloudflare Dashboard → My Profile → API Tokens → Create Token
-#     Öneri: "Edit Cloudflare Workers" şablonu VEYA özel: Account → Cloudflare Pages → Edit
-#   CLOUDFLARE_ACCOUNT_ID → Cloudflare ana sayfa sağ üst (Account ID)
-# Pages proje adı farklıysa --project-name değerini Workers & Pages’teki isimle değiştirin.
+# Gerekli repository secrets (isimler birebir böyle olmalı):
+#   CLOUDFLARE_API_TOKEN   — Cloudflare → My Profile → API Tokens → Create Token
+#                            ("Edit Cloudflare Workers" şablonu veya Account → Cloudflare Pages → Edit)
+#   CLOUDFLARE_ACCOUNT_ID  — Cloudflare Dashboard sağ üst menü → kopyalanan Account ID (32 karakter)
+# Eklemek için: GitHub repo → Settings → Secrets and variables → Actions → New repository secret
+# Pages proje adı farklıysa aşağıdaki --project-name satırını değiştirin.
 
 name: Deploy Cloudflare Pages
 
@@ -24,22 +25,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-
-      - name: Secret kontrolü
-        env:
-          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: |
-          set -e
-          if [ -z "${TOKEN}" ]; then
-            echo "::error::CLOUDFLARE_API_TOKEN tanımlı değil. Repo → Settings → Secrets and variables → Actions → New repository secret"
-            exit 1
-          fi
-          if [ -z "${ACCOUNT}" ]; then
-            echo "::error::CLOUDFLARE_ACCOUNT_ID tanımlı değil (Cloudflare hesap özeti sayfasındaki 32 karakterlik ID)."
-            exit 1
-          fi
-          echo "Gerekli secret'lar mevcut."
 
       - name: Cloudflare Pages deploy
         env:
