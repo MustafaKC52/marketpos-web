@@ -36,6 +36,9 @@ const DEFAULTS = {
 const DOWNLOAD_UNLOCK_KEY = 'marketpos-dl-unlocked';
 const DOWNLOAD_PWD_HASH_HEX = 'efa6bce1bc3d0129d2ce21d62d56d8910d3839a275c5d28fb6d6a376fa9ba72f';
 
+// İletişim formu: FormSubmit (statik sayfalar). Gelen kutuyu script.js içinde CONTACT_FORM_EMAIL ile eşleştirin.
+const CONTACT_FORM_EMAIL = 'info@marketposs.com';
+
 let resolvedDownloadUrl = DEFAULTS.downloadUrl;
 
 async function sha256Hex(text) {
@@ -201,17 +204,15 @@ if (navbar) {
 
 // ===== CONTACT FORM =====
 
-function encodeFormData(data) {
-  return Object.keys(data)
-    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
-    .join('&');
-}
-
 async function submitContactForm(event) {
   event.preventDefault();
 
   const formData = new FormData(contactForm);
   const payload = Object.fromEntries(formData.entries());
+
+  if (payload._gotcha) {
+    return;
+  }
 
   if (!payload.name || !payload.email || !payload.message) {
     formStatus.textContent = 'Lütfen tüm alanları doldurunuz.';
@@ -223,17 +224,36 @@ async function submitContactForm(event) {
   formStatus.className = 'form-status';
 
   try {
-    await fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: encodeFormData(payload),
-    });
+    const res = await fetch(
+      `https://formsubmit.co/ajax/${encodeURIComponent(CONTACT_FORM_EMAIL)}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: payload.name,
+          email: payload.email,
+          message: payload.message,
+          _subject: `MarketPos iletişim: ${payload.name}`,
+          _template: 'table',
+          _captcha: 'false',
+        }),
+      }
+    );
 
-    formStatus.textContent = `Tesekkurler ${payload.name}, mesajin Netlify uzerinden alindi.`;
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(data.message || 'Gönderim başarısız');
+    }
+
+    formStatus.textContent = `Teşekkürler ${payload.name}, mesajınız bize ulaştı.`;
     formStatus.className = 'form-status success';
     contactForm.reset();
   } catch (error) {
-    formStatus.textContent = 'Mesaj gonderilemedi. Lutfen biraz sonra tekrar deneyin.';
+    formStatus.textContent =
+      'Mesaj gönderilemedi. Lütfen biraz sonra tekrar deneyin veya doğrudan e-posta ile yazın.';
     formStatus.className = 'form-status error';
   }
 }
