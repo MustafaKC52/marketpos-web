@@ -1,2 +1,5 @@
 Thumbs.db
 Desktop.ini
+
+# Cloudflare deploy: 25 MiB/varlık limiti; kurulum dl.marketposs.com üzerinde
+downloads/*.exe
