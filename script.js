@@ -19,7 +19,7 @@ const shot3 = document.getElementById('shot-3');
 
 /** v2: eski kayıtlarda boş downloadUrl vb. şifre/indirmeyi kırıyordu */
 const STORAGE_KEY = 'marketpos-site-config-v2';
-const ASSET_VER = '20260419';
+const ASSET_VER = '20260420';
 
 // Cloudflare Pages: Git LFS dosyası deploy'a genelde girmez. İndirmeyi hosting'de tutmak en sorunsuz yol.
 const SETUP_DOWNLOAD_URL =
@@ -152,7 +152,7 @@ function applySiteConfig() {
 
   if (demoNote) {
     demoNote.textContent = hasDownload
-      ? 'Butona tıklayıp şifreyi girdikten sonra kurulum indirilir. Bu oturumda bir kez doğrulama yeterlidir.'
+      ? 'Butona tıklayınca şifre penceresi açılır; doğru şifreyle kurulum indirilir.'
       : 'Kurulum bağlantısı henüz ayarlanmadı. İletişim formundan demo talep edebilirsin.';
   }
 }
