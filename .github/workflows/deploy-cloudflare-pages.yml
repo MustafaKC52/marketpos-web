@@ -1,8 +1,8 @@
-# Cloudflare'in Git bağlantısı bazen güncellemeyi almaz; bu workflow ana branch'i doğrudan Pages'e gönderir.
-# GitHub → repo → Settings → Secrets and variables → Actions:
-#   CLOUDFLARE_API_TOKEN   (Workers/Pages Edit izinli API token)
-#   CLOUDFLARE_ACCOUNT_ID  (Cloudflare ana sayfa sağ alt köşe)
-# Pages projesi adı farklıysa aşağıdaki --project-name değerini Cloudflare'deki isimle değiştirin.
+# GitHub → Settings → Secrets and variables → Actions (repository secrets):
+#   CLOUDFLARE_API_TOKEN  → Cloudflare Dashboard → My Profile → API Tokens → Create Token
+#     Öneri: "Edit Cloudflare Workers" şablonu VEYA özel: Account → Cloudflare Pages → Edit
+#   CLOUDFLARE_ACCOUNT_ID → Cloudflare ana sayfa sağ üst (Account ID)
+# Pages proje adı farklıysa --project-name değerini Workers & Pages’teki isimle değiştirin.
 
 name: Deploy Cloudflare Pages
 
@@ -21,9 +21,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@v3
+      - uses: actions/setup-node@v4
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy . --project-name=marketpos-web
+          node-version: "20"
+
+      - name: Secret kontrolü
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -e
+          if [ -z "${TOKEN}" ]; then
+            echo "::error::CLOUDFLARE_API_TOKEN tanımlı değil. Repo → Settings → Secrets and variables → Actions → New repository secret"
+            exit 1
+          fi
+          if [ -z "${ACCOUNT}" ]; then
+            echo "::error::CLOUDFLARE_ACCOUNT_ID tanımlı değil (Cloudflare hesap özeti sayfasındaki 32 karakterlik ID)."
+            exit 1
+          fi
+          echo "Gerekli secret'lar mevcut."
+
+      - name: Cloudflare Pages deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx --yes wrangler@4 pages deploy . --project-name=marketpos-web --branch=main
