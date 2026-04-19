@@ -17,7 +17,9 @@ const shot1 = document.getElementById('shot-1');
 const shot2 = document.getElementById('shot-2');
 const shot3 = document.getElementById('shot-3');
 
-const STORAGE_KEY = 'marketpos-site-config';
+/** v2: eski kayıtlarda boş downloadUrl vb. şifre/indirmeyi kırıyordu */
+const STORAGE_KEY = 'marketpos-site-config-v2';
+const ASSET_VER = '20260419';
 
 // Cloudflare Pages: Git LFS dosyası deploy'a genelde girmez. İndirmeyi hosting'de tutmak en sorunsuz yol.
 const SETUP_DOWNLOAD_URL =
@@ -28,12 +30,11 @@ const DEFAULTS = {
   downloadUrl: SETUP_DOWNLOAD_URL,
   demoDescription:
     'Windows kurulum dosyasını indirip MarketPOS’u kendi bilgisayarınızda deneyebilirsiniz. İndirme, size iletilen erişim şifresi ile açılır.',
-  shot1: 'assets/marketpos-dashboard.png',
-  shot2: 'assets/marketpos-products.png',
-  shot3: 'assets/marketpos-reports.png',
+  shot1: `assets/marketpos-dashboard.png?v=${ASSET_VER}`,
+  shot2: `assets/marketpos-products.png?v=${ASSET_VER}`,
+  shot3: `assets/marketpos-reports.png?v=${ASSET_VER}`,
 };
 
-const DOWNLOAD_UNLOCK_KEY = 'marketpos-dl-unlocked';
 const DOWNLOAD_PWD_HASH_HEX = 'efa6bce1bc3d0129d2ce21d62d56d8910d3839a275c5d28fb6d6a376fa9ba72f';
 
 // İletişim formu: FormSubmit (statik sayfalar). Gelen kutuyu script.js içinde CONTACT_FORM_EMAIL ile eşleştirin.
@@ -88,7 +89,6 @@ async function tryUnlockAndDownload() {
     if (dlModalError) dlModalError.hidden = false;
     return false;
   }
-  sessionStorage.setItem(DOWNLOAD_UNLOCK_KEY, '1');
   closeDownloadModal();
   triggerFileDownload(resolvedDownloadUrl, 'MarketPOS-Setup-0.1.100.exe');
   return true;
@@ -101,7 +101,16 @@ function loadSiteConfig() {
   }
 
   try {
-    return { ...DEFAULTS, ...JSON.parse(raw) };
+    const parsed = JSON.parse(raw);
+    const merged = { ...DEFAULTS, ...parsed };
+    const du = merged.downloadUrl && String(merged.downloadUrl).trim();
+    if (!du) merged.downloadUrl = DEFAULTS.downloadUrl;
+    ['shot1', 'shot2', 'shot3', 'sh2', 'sh3'].forEach((k) => {
+      if (merged[k] !== undefined && merged[k] !== null && !String(merged[k]).trim()) {
+        delete merged[k];
+      }
+    });
+    return { ...DEFAULTS, ...merged };
   } catch {
     return { ...DEFAULTS };
   }
@@ -121,10 +130,10 @@ function applySiteConfig() {
     heroShowcaseImg.src = cfg.shot1;
   }
   if (shot2) {
-    shot2.src = cfg.sh2 || cfg.shot2;
+    shot2.src = cfg.shot2 || cfg.sh2 || DEFAULTS.shot2;
   }
   if (shot3) {
-    shot3.src = cfg.sh3 || cfg.shot3;
+    shot3.src = cfg.shot3 || cfg.sh3 || DEFAULTS.shot3;
   }
 
   const downloadUrl = (cfg.downloadUrl && String(cfg.downloadUrl).trim()) || DEFAULTS.downloadUrl;
@@ -153,10 +162,6 @@ applySiteConfig();
 if (downloadBtn && resolvedDownloadUrl) {
   downloadBtn.addEventListener('click', () => {
     if (downloadBtn.disabled) return;
-    if (sessionStorage.getItem(DOWNLOAD_UNLOCK_KEY) === '1') {
-      triggerFileDownload(resolvedDownloadUrl, 'MarketPOS-Setup-0.1.100.exe');
-      return;
-    }
     openDownloadModal();
   });
 }
