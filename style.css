@@ -115,7 +115,8 @@ button.btn {
   display: flex;
   align-items: center;
   gap: 32px;
-  height: 68px;
+  min-height: 84px;
+  padding-block: 10px;
 }
 
 .logo {
@@ -127,14 +128,19 @@ button.btn {
   display: inline-flex;
   align-items: center;
   line-height: 0;
+  margin-right: 8px;
 }
 
 .logo-img {
-  height: 52px;
+  height: 44px;
   width: auto;
-  max-width: min(220px, 42vw);
+  max-width: min(200px, 40vw);
   display: block;
   object-fit: contain;
+  transition: transform .25s ease;
+}
+.logo:hover .logo-img {
+  transform: scale(1.03);
 }
 
 .logo span { color: var(--accent); }
@@ -1044,7 +1050,8 @@ footer {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 20px;
+  padding-block: 8px;
 }
 
 footer .logo {
@@ -1055,15 +1062,15 @@ footer .logo {
 }
 
 .logo-img-footer {
-  height: 64px;
+  height: 56px;
   width: auto;
-  max-width: min(280px, 70vw);
+  max-width: min(240px, 70vw);
   display: block;
   object-fit: contain;
-  padding: 12px 16px;
-  background: rgba(248,250,252,.98);
-  border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(0,0,0,.22);
+  padding: 10px 18px;
+  background: rgba(248,250,252,.96);
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.18);
 }
 footer p { font-size: 0.85rem; }
 
