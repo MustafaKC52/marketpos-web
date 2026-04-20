@@ -19,7 +19,7 @@ const shot3 = document.getElementById('shot-3');
 
 /** v2: eski kayıtlarda boş downloadUrl vb. şifre/indirmeyi kırıyordu */
 const STORAGE_KEY = 'marketpos-site-config-v2';
-const ASSET_VER = '20260422';
+const ASSET_VER = '20260423';
 
 // Cloudflare Pages: Git LFS dosyası deploy'a genelde girmez. İndirmeyi hosting'de tutmak en sorunsuz yol.
 const SETUP_DOWNLOAD_URL =
@@ -198,14 +198,72 @@ if (burger && navInner) {
 
 // ===== NAVBAR SCROLL =====
 if (navbar) {
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 20) {
-      navbar.style.boxShadow = '0 10px 28px rgba(23,32,51,.08)';
-    } else {
-      navbar.style.boxShadow = 'none';
-    }
-  });
+  const onScroll = () => {
+    if (window.scrollY > 12) navbar.classList.add('scrolled');
+    else navbar.classList.remove('scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 }
+
+// ===== COUNTER ANIMATION =====
+function formatCounterValue(el, value) {
+  if (el.dataset.locale !== undefined) {
+    return Math.round(value).toLocaleString('tr-TR');
+  }
+  return Math.round(value).toString();
+}
+function runCounter(el) {
+  const to = parseFloat(el.dataset.to || '0');
+  if (!isFinite(to) || to <= 0) return;
+  const suffix = el.dataset.suffix || '';
+  const duration = 1400;
+  const start = performance.now();
+  const tick = (now) => {
+    const t = Math.min(1, (now - start) / duration);
+    const eased = 1 - Math.pow(1 - t, 3);
+    el.textContent = formatCounterValue(el, to * eased) + suffix;
+    if (t < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+const counterObs = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        runCounter(entry.target);
+        counterObs.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.4 }
+);
+document.querySelectorAll('.counter').forEach((el) => counterObs.observe(el));
+
+// ===== POINTER SPOTLIGHT (cards/buttons) =====
+document.querySelectorAll('.btn, .who-card, .feature-card').forEach((el) => {
+  el.addEventListener('pointermove', (e) => {
+    const r = el.getBoundingClientRect();
+    el.style.setProperty('--x', ((e.clientX - r.left) / r.width * 100) + '%');
+    el.style.setProperty('--y', ((e.clientY - r.top) / r.height * 100) + '%');
+  });
+});
+
+// ===== SUBTLE 3D TILT (hero app window) =====
+document.querySelectorAll('[data-tilt]').forEach((el) => {
+  let raf;
+  const reset = () => { el.style.transform = ''; };
+  el.addEventListener('pointermove', (e) => {
+    const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      el.style.transform = `perspective(1200px) rotateX(${(-py * 6).toFixed(2)}deg) rotateY(${(px * 8).toFixed(2)}deg)`;
+    });
+  });
+  el.addEventListener('pointerleave', reset);
+});
 
 // ===== CONTACT FORM =====
 
