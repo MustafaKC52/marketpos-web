@@ -19,7 +19,7 @@ const shot3 = document.getElementById('shot-3');
 
 /** v2: eski kayıtlarda boş downloadUrl vb. şifre/indirmeyi kırıyordu */
 const STORAGE_KEY = 'marketpos-site-config-v2';
-const ASSET_VER = '20260426';
+const ASSET_VER = '20260427';
 
 // Cloudflare Pages: Git LFS dosyası deploy'a genelde girmez. İndirmeyi hosting'de tutmak en sorunsuz yol.
 const SETUP_DOWNLOAD_URL =
@@ -389,6 +389,38 @@ overlay.addEventListener('click', (e) => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeLightbox();
 });
+
+// ===== SCROLL PROGRESS BAR =====
+(() => {
+  const bar = document.createElement('div');
+  bar.className = 'scroll-progress';
+  document.body.appendChild(bar);
+  const update = () => {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    bar.style.setProperty('--progress', pct + '%');
+  };
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+})();
+
+// ===== SUBTLE PARALLAX (hero visual + floats) =====
+(() => {
+  const visual = document.querySelector('.hero-visual');
+  if (!visual) return;
+  let raf;
+  const onScroll = () => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      const y = Math.max(0, window.scrollY);
+      if (y > 800) return;
+      visual.style.setProperty('transform', `translateY(${(y * 0.06).toFixed(1)}px)`);
+    });
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
 
 // ===== MAGNETIC BUTTONS =====
 (() => {
