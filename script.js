@@ -19,7 +19,7 @@ const shot3 = document.getElementById('shot-3');
 
 /** v2: eski kayıtlarda boş downloadUrl vb. şifre/indirmeyi kırıyordu */
 const STORAGE_KEY = 'marketpos-site-config-v2';
-const ASSET_VER = '20260425';
+const ASSET_VER = '20260426';
 
 // Cloudflare Pages: Git LFS dosyası deploy'a genelde girmez. İndirmeyi hosting'de tutmak en sorunsuz yol.
 const SETUP_DOWNLOAD_URL =
@@ -339,11 +339,23 @@ const observer = new IntersectionObserver(
   { threshold: 0.12 }
 );
 
-document.querySelectorAll('.feature-card, .stat-card, .reveal-item').forEach((el) => {
-  el.style.opacity = '0';
-  el.style.transform = 'translateY(24px)';
-  el.style.transition = 'opacity .55s ease, transform .55s ease';
-  observer.observe(el);
+// Stagger helper — sibling'ler 70ms gecikmeyle açılır
+function setupRevealGroup(selector) {
+  const items = Array.from(document.querySelectorAll(selector));
+  items.forEach((el) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1)';
+    observer.observe(el);
+  });
+}
+setupRevealGroup('.feature-card, .stat-card, .reveal-item, .trust-badge, .who-card, .down-step, .thumb-strip .screenshot-card');
+
+// Siblings arasında stagger: bir grup reveal olduğunda sıralı açılsın
+document.querySelectorAll('.feature-grid, .who-grid, .trust-grid, .thumb-strip, .benefit-strip, .download-side').forEach((group) => {
+  Array.from(group.children).forEach((child, i) => {
+    child.style.transitionDelay = `${i * 70}ms`;
+  });
 });
 
 // ===== LIGHTBOX =====
