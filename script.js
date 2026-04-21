@@ -19,7 +19,7 @@ const shot3 = document.getElementById('shot-3');
 
 /** v2: eski kayıtlarda boş downloadUrl vb. şifre/indirmeyi kırıyordu */
 const STORAGE_KEY = 'marketpos-site-config-v2';
-const ASSET_VER = '20260423';
+const ASSET_VER = '20260424';
 
 // Cloudflare Pages: Git LFS dosyası deploy'a genelde girmez. İndirmeyi hosting'de tutmak en sorunsuz yol.
 const SETUP_DOWNLOAD_URL =
@@ -377,3 +377,28 @@ overlay.addEventListener('click', (e) => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeLightbox();
 });
+
+// ===== MAGNETIC BUTTONS =====
+(() => {
+  const mq = window.matchMedia('(hover: hover) and (pointer: fine)');
+  if (!mq.matches) return;
+  document.querySelectorAll('.magnetic').forEach((el) => {
+    const strength = 14;
+    let raf;
+    const move = (e) => {
+      const r = el.getBoundingClientRect();
+      const x = e.clientX - (r.left + r.width / 2);
+      const y = e.clientY - (r.top + r.height / 2);
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        el.style.transform = `translate(${(x / r.width * strength).toFixed(2)}px, ${(y / r.height * strength).toFixed(2)}px)`;
+      });
+    };
+    const reset = () => {
+      cancelAnimationFrame(raf);
+      el.style.transform = '';
+    };
+    el.addEventListener('pointermove', move);
+    el.addEventListener('pointerleave', reset);
+  });
+})();
