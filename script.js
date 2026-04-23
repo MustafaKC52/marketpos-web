@@ -19,11 +19,13 @@ const shot3 = document.getElementById('shot-3');
 
 /** v2: eski kayıtlarda boş downloadUrl vb. şifre/indirmeyi kırıyordu */
 const STORAGE_KEY = 'marketpos-site-config-v2';
-const ASSET_VER = '20260428';
+const ASSET_VER = '20260429';
 
 // Cloudflare Pages: Git LFS dosyası deploy'a genelde girmez. İndirmeyi hosting'de tutmak en sorunsuz yol.
+/** Her zaman en güncel sürümü döner: cPanel'de public_html/marketsop/releases/
+ *  klasöründe MarketPOS-Setup.exe dosyası her sürümle üzerine yazılmalı. */
 const SETUP_DOWNLOAD_URL =
-  'https://dl.marketposs.com/marketsop/releases/MarketPOS-Setup-0.1.102.exe';
+  'https://dl.marketposs.com/marketsop/releases/MarketPOS-Setup.exe';
 
 const DEFAULTS = {
   demoUrl: '',
@@ -90,7 +92,7 @@ async function tryUnlockAndDownload() {
     return false;
   }
   closeDownloadModal();
-  triggerFileDownload(resolvedDownloadUrl, 'MarketPOS-Setup-0.1.102.exe');
+  triggerFileDownload(resolvedDownloadUrl, 'MarketPOS-Setup.exe');
   return true;
 }
 
