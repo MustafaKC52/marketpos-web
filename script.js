@@ -19,7 +19,7 @@ const shot3 = document.getElementById('shot-3');
 
 /** v2: eski kayıtlarda boş downloadUrl vb. şifre/indirmeyi kırıyordu */
 const STORAGE_KEY = 'marketpos-site-config-v2';
-const ASSET_VER = '20260503';
+const ASSET_VER = '20260504';
 
 // Cloudflare Pages: Git LFS dosyası deploy'a genelde girmez. İndirmeyi hosting'de tutmak en sorunsuz yol.
 /** Her zaman en güncel sürümü döner: cPanel'de public_html/marketsop/releases/
@@ -476,6 +476,33 @@ overlay.addEventListener('click', (e) => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeLightbox();
 });
+
+// ===== EARLY ACCESS / DEV ANNOUNCE BAR =====
+(() => {
+  const bar = document.getElementById('announceBar');
+  const btn = document.getElementById('announceClose');
+  if (!bar) return;
+
+  const KEY = 'marketpos-announce-dismissed-v1';
+  const TTL = 7 * 24 * 60 * 60 * 1000; // 7 gün
+
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (raw && Number(raw) + TTL > Date.now()) {
+      bar.style.display = 'none';
+    }
+  } catch (_) {}
+
+  if (btn) {
+    btn.addEventListener('click', () => {
+      bar.style.transition = 'opacity .25s ease, transform .25s ease, max-height .3s ease';
+      bar.style.opacity = '0';
+      bar.style.transform = 'translateY(-6px)';
+      setTimeout(() => { bar.style.display = 'none'; }, 260);
+      try { localStorage.setItem(KEY, String(Date.now())); } catch (_) {}
+    });
+  }
+})();
 
 // ===== SCROLL PROGRESS BAR =====
 (() => {

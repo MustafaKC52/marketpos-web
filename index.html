@@ -19,20 +19,20 @@
   <meta property="og:description" content="Kasada hızlanın, stokları kontrol edin, müşterileri yönetin ve işletmenizi büyütün." />
   <meta property="og:url" content="https://www.marketposs.com/" />
   <meta property="og:site_name" content="MarketPOS" />
-  <meta property="og:image" content="https://www.marketposs.com/assets/logo-full-tagline.png?v=20260503" />
+  <meta property="og:image" content="https://www.marketposs.com/assets/logo-full-tagline.png?v=20260504" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="MarketPOS — Yeni Nesil Satış Gücü" />
   <meta name="twitter:description" content="Barkodlu satış, stok, cari hesap, canlı raporlama tek yerli yazılımda." />
-  <meta name="twitter:image" content="https://www.marketposs.com/assets/logo-full-tagline.png?v=20260503" />
+  <meta name="twitter:image" content="https://www.marketposs.com/assets/logo-full-tagline.png?v=20260504" />
 
-  <link rel="icon" href="assets/logo-app-icon.png?v=20260503" type="image/png" sizes="512x512" />
-  <link rel="icon" href="assets/logo-mark.png?v=20260503" type="image/png" sizes="192x192" />
-  <link rel="apple-touch-icon" href="assets/logo-app-icon.png?v=20260503" />
+  <link rel="icon" href="assets/logo-app-icon.png?v=20260504" type="image/png" sizes="512x512" />
+  <link rel="icon" href="assets/logo-mark.png?v=20260504" type="image/png" sizes="192x192" />
+  <link rel="apple-touch-icon" href="assets/logo-app-icon.png?v=20260504" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20260503" />
+  <link rel="stylesheet" href="style.css?v=20260504" />
 
   <script type="application/ld+json">
     {
@@ -49,6 +49,22 @@
   </script>
 </head>
 <body id="top">
+
+  <!-- ============ DEV / EARLY ACCESS BANNER ============ -->
+  <div class="announce-bar" id="announceBar" role="status" aria-live="polite">
+    <div class="container announce-inner">
+      <span class="announce-badge">
+        <span class="dot-pulse"></span>
+        Early Access
+      </span>
+      <p class="announce-text">
+        <strong>MarketPOS aktif geliştirme aşamasındadır.</strong>
+        Yeni özellikler ve iyileştirmeler düzenli aralıklarla yayınlanır; geri bildirimleriniz doğrudan yol haritamıza işlenir.
+        <a href="#contact">Görüş bildirin</a>
+      </p>
+      <button class="announce-close" id="announceClose" aria-label="Duyuruyu kapat">×</button>
+    </div>
+  </div>
 
   <!-- Sahne arka planı -->
   <div class="bg-aurora" aria-hidden="true">
@@ -67,15 +83,15 @@
   <header id="navbar" class="site-header">
     <div class="container nav-inner">
       <a class="logo" href="#top" aria-label="MarketPOS ana sayfa">
-        <img class="logo-img" src="assets/logo-lockup.png?v=20260503" alt="MarketPOS" width="180" height="44" decoding="async" />
+        <img class="logo-img" src="assets/logo-lockup.png?v=20260504" alt="MarketPOS" width="180" height="44" decoding="async" />
       </a>
 
       <nav class="main-nav" aria-label="Ana menü">
         <ul>
           <li><a href="#features">Özellikler</a></li>
-          <li><a href="#story">Hikaye</a></li>
           <li><a href="#showcase">Ürün Turu</a></li>
           <li><a href="#who">Kimler İçin</a></li>
+          <li><a href="#roadmap">Geliştirme</a></li>
           <li><a href="#download">İndir</a></li>
           <li><a href="#contact">İletişim</a></li>
         </ul>
@@ -115,7 +131,7 @@
         <div class="hero-copy reveal-item">
           <span class="eyebrow shine">
             <span class="dot-pulse"></span>
-            Dijital Dönüşüm · Windows için yayında
+            Dijital Dönüşüm · Windows için yayında · Aktif geliştirme
           </span>
           <h1>
             İşletmenizi<br/>
@@ -198,7 +214,7 @@
               <span class="app-live"><span class="dot-pulse"></span> canlı</span>
             </div>
             <div class="app-body">
-              <img id="heroShowcaseImg" src="assets/marketpos-dashboard.png?v=20260503" alt="MarketPOS ana panel — günlük ciro ve canlı satış" width="1200" height="750" loading="eager" decoding="async" />
+              <img id="heroShowcaseImg" src="assets/marketpos-dashboard.png?v=20260504" alt="MarketPOS ana panel — günlük ciro ve canlı satış" width="1200" height="750" loading="eager" decoding="async" />
             </div>
             <div class="app-shine" aria-hidden="true"></div>
           </div>
@@ -392,11 +408,11 @@
 
         <div class="showcase">
           <div class="showcase-tabs" role="tablist" aria-label="Ürün turu sekmeleri">
-            <button class="tab active" role="tab" aria-selected="true" data-shot="assets/marketpos-new-sale.png?v=20260503" data-title="Yeni Satış" data-sub="Barkod, sepet, ödeme tek ekranda.">Kasa</button>
-            <button class="tab" role="tab" aria-selected="false" data-shot="assets/marketpos-products.png?v=20260503" data-title="Ürün Yönetimi" data-sub="Arama, fiyat, stok ve kategori.">Ürünler</button>
-            <button class="tab" role="tab" aria-selected="false" data-shot="assets/marketpos-reports.png?v=20260503" data-title="Satış Raporları" data-sub="Toplam satış, KDV, grafik analiz.">Raporlar</button>
-            <button class="tab" role="tab" aria-selected="false" data-shot="assets/marketpos-customers.png?v=20260503" data-title="Müşteri Takibi" data-sub="Cari bakiye, arama, işlem geçmişi.">Müşteriler</button>
-            <button class="tab" role="tab" aria-selected="false" data-shot="assets/marketpos-dashboard.png?v=20260503" data-title="Analitik Panel" data-sub="Günlük ciro, canlı özet, kısayollar.">Analitik</button>
+            <button class="tab active" role="tab" aria-selected="true" data-shot="assets/marketpos-new-sale.png?v=20260504" data-title="Yeni Satış" data-sub="Barkod, sepet, ödeme tek ekranda.">Kasa</button>
+            <button class="tab" role="tab" aria-selected="false" data-shot="assets/marketpos-products.png?v=20260504" data-title="Ürün Yönetimi" data-sub="Arama, fiyat, stok ve kategori.">Ürünler</button>
+            <button class="tab" role="tab" aria-selected="false" data-shot="assets/marketpos-reports.png?v=20260504" data-title="Satış Raporları" data-sub="Toplam satış, KDV, grafik analiz.">Raporlar</button>
+            <button class="tab" role="tab" aria-selected="false" data-shot="assets/marketpos-customers.png?v=20260504" data-title="Müşteri Takibi" data-sub="Cari bakiye, arama, işlem geçmişi.">Müşteriler</button>
+            <button class="tab" role="tab" aria-selected="false" data-shot="assets/marketpos-dashboard.png?v=20260504" data-title="Analitik Panel" data-sub="Günlük ciro, canlı özet, kısayollar.">Analitik</button>
           </div>
 
           <div class="showcase-stage">
@@ -407,7 +423,7 @@
                 <span class="app-live"><span class="dot-pulse"></span> canlı</span>
               </div>
               <div class="app-body">
-                <img id="showcaseImg" src="assets/marketpos-new-sale.png?v=20260503" alt="Yeni Satış ekranı" />
+                <img id="showcaseImg" src="assets/marketpos-new-sale.png?v=20260504" alt="Yeni Satış ekranı" />
               </div>
               <div class="app-shine" aria-hidden="true"></div>
             </div>
@@ -420,27 +436,27 @@
           <!-- Küçük galeriler (script.js shot-1/2/3 id'lerini koruyoruz) -->
           <div class="thumb-strip">
             <figure class="screenshot-card">
-              <img id="shot-1" src="assets/marketpos-dashboard.png?v=20260503" alt="Ana Panel" loading="lazy" />
+              <img id="shot-1" src="assets/marketpos-dashboard.png?v=20260504" alt="Ana Panel" loading="lazy" />
               <figcaption>Ana Panel</figcaption>
             </figure>
             <figure class="screenshot-card">
-              <img id="shot-2" src="assets/marketpos-products.png?v=20260503" alt="Ürün Yönetimi" loading="lazy" />
+              <img id="shot-2" src="assets/marketpos-products.png?v=20260504" alt="Ürün Yönetimi" loading="lazy" />
               <figcaption>Ürünler</figcaption>
             </figure>
             <figure class="screenshot-card">
-              <img id="shot-3" src="assets/marketpos-reports.png?v=20260503" alt="Raporlar" loading="lazy" />
+              <img id="shot-3" src="assets/marketpos-reports.png?v=20260504" alt="Raporlar" loading="lazy" />
               <figcaption>Raporlar</figcaption>
             </figure>
             <figure class="screenshot-card">
-              <img src="assets/marketpos-categories.png?v=20260503" alt="Kategoriler" loading="lazy" />
+              <img src="assets/marketpos-categories.png?v=20260504" alt="Kategoriler" loading="lazy" />
               <figcaption>Kategoriler</figcaption>
             </figure>
             <figure class="screenshot-card">
-              <img src="assets/marketpos-customers.png?v=20260503" alt="Müşteri Takibi" loading="lazy" />
+              <img src="assets/marketpos-customers.png?v=20260504" alt="Müşteri Takibi" loading="lazy" />
               <figcaption>Müşteriler</figcaption>
             </figure>
             <figure class="screenshot-card">
-              <img src="assets/marketpos-sales-history.png?v=20260503" alt="Geçmiş Satışlar" loading="lazy" />
+              <img src="assets/marketpos-sales-history.png?v=20260504" alt="Geçmiş Satışlar" loading="lazy" />
               <figcaption>Geçmiş Satışlar</figcaption>
             </figure>
           </div>
@@ -500,6 +516,63 @@
             30 gün kullan, memnun kalmazsan tam iade.
           </div>
         </aside>
+      </div>
+    </section>
+
+    <!-- ============ DEVELOPMENT / ROADMAP ============ -->
+    <section id="roadmap" class="section section-alt">
+      <div class="container">
+        <header class="section-head reveal-item">
+          <span class="eyebrow">Geliştirme Durumu</span>
+          <h2>Canlı <span class="gradient-text">Early Access</span> &middot; sürekli gelişen ürün</h2>
+          <p>MarketPOS üretimde kullanıma hazır ancak aktif olarak geliştirilmeye devam etmektedir. Müşteri geri bildirimleri doğrudan yol haritamıza işlenir; yeni özellikler ve iyileştirmeler düzenli aralıklarla otomatik güncelleme ile ulaştırılır.</p>
+        </header>
+
+        <div class="roadmap-grid">
+          <article class="roadmap-card reveal-item">
+            <span class="roadmap-tag done">Yayında</span>
+            <h3>Temel POS Çekirdeği</h3>
+            <ul>
+              <li>Barkodlu hızlı satış</li>
+              <li>Stok, kategori ve fiyat yönetimi</li>
+              <li>Cari hesap ve veresiye takibi</li>
+              <li>Gün sonu &amp; satış raporları</li>
+              <li>Yazıcı / tartı entegrasyonu</li>
+            </ul>
+          </article>
+
+          <article class="roadmap-card reveal-item">
+            <span class="roadmap-tag active">Geliştirmede</span>
+            <h3>Yakın Dönem</h3>
+            <ul>
+              <li>Çoklu şube senkronizasyonu</li>
+              <li>Müşteri sadakat &amp; puan sistemi</li>
+              <li>E-Fatura &amp; e-Arşiv entegrasyonu</li>
+              <li>Gelişmiş analitik raporlar</li>
+              <li>Otomatik tedarik uyarıları</li>
+            </ul>
+          </article>
+
+          <article class="roadmap-card reveal-item">
+            <span class="roadmap-tag planned">Planlanan</span>
+            <h3>Uzun Vadeli</h3>
+            <ul>
+              <li>Mobil yönetim uygulaması</li>
+              <li>Web tabanlı yönetim paneli</li>
+              <li>Bulut yedekleme &amp; senkron</li>
+              <li>Pazaryeri entegrasyonları</li>
+              <li>API &amp; 3. parti entegrasyonlar</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="roadmap-note reveal-item">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm1 15h-2v-2h2Zm0-4h-2V7h2Z"/></svg>
+          <div>
+            <strong>Kurumsal söz</strong>
+            <span>Mevcut sürüm üretimde güvenle kullanılır. Güncellemeler verilerinizi korur; büyük değişikliklerde önceden bilgilendirilirsiniz. Yol haritasıyla ilgili sorularınız için <a href="#contact">bize ulaşabilirsiniz</a>.</span>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -688,7 +761,7 @@
   <footer class="site-footer">
     <div class="container footer-grid">
       <div class="footer-brand">
-        <img src="assets/logo-full-tagline.png?v=20260503" alt="MarketPOS" class="footer-logo" width="220" height="70" />
+        <img src="assets/logo-full-tagline.png?v=20260504" alt="MarketPOS" class="footer-logo" width="220" height="70" />
         <p>Market, bakkal, kasap ve perakende işletmeler için yerli POS yazılımı. Hızlı satış, stok ve raporlama tek panelde.</p>
         <div class="footer-social">
           <a href="https://wa.me/905510335916" target="_blank" rel="noopener">WhatsApp</a>
@@ -731,7 +804,7 @@
     </div>
   </footer>
 
-  <script src="script.js?v=20260503" defer data-cfasync="false"></script>
+  <script src="script.js?v=20260504" defer data-cfasync="false"></script>
   <script>
     // Köprü: "Kurulumu İndir" butonu modalı açar.
     document.addEventListener('click', (e) => {
