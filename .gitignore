@@ -3,3 +3,10 @@ Desktop.ini
 
 # Cloudflare deploy: 25 MiB/varlık limiti; kurulum dl.marketposs.com üzerinde
 downloads/*.exe
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
