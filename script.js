@@ -19,7 +19,7 @@ const shot3 = document.getElementById('shot-3');
 
 /** v2: eski kayıtlarda boş downloadUrl vb. şifre/indirmeyi kırıyordu */
 const STORAGE_KEY = 'marketpos-site-config-v2';
-const ASSET_VER = '20260502';
+const ASSET_VER = '20260503';
 
 // Cloudflare Pages: Git LFS dosyası deploy'a genelde girmez. İndirmeyi hosting'de tutmak en sorunsuz yol.
 /** Her zaman en güncel sürümü döner: cPanel'de public_html/marketsop/releases/
@@ -306,19 +306,47 @@ async function submitContactForm(event) {
 
   const formData = new FormData(contactForm);
   const payload = Object.fromEntries(formData.entries());
+  const submitBtn = document.getElementById('contactSubmit');
 
-  if (payload._gotcha) {
+  if (payload._gotcha) return;
+
+  const name = (payload.name || '').trim();
+  const email = (payload.email || '').trim();
+  const phone = (payload.phone || '').trim();
+  const business = (payload.business || '').trim();
+  const businessType = (payload.businessType || '').trim();
+  const requestType = (payload.requestType || 'İletişim').trim();
+  const message = (payload.message || '').trim();
+  const kvkk = payload.kvkk === 'on' || payload.kvkk === 'true' || !!payload.kvkk;
+
+  // Validasyon
+  if (!name || name.length < 2) {
+    showFormError('Lütfen adınızı ve soyadınızı girin.');
+    return;
+  }
+  if (!/^\S+@\S+\.\S+$/.test(email)) {
+    showFormError('Geçerli bir e-posta adresi girin.');
+    return;
+  }
+  const phoneDigits = phone.replace(/\D/g, '');
+  if (phoneDigits.length < 10) {
+    showFormError('Geçerli bir telefon numarası girin (en az 10 rakam).');
+    return;
+  }
+  if (!kvkk) {
+    showFormError('Devam edebilmek için aydınlatma metnini onaylayın.');
     return;
   }
 
-  if (!payload.name || !payload.email || !payload.message) {
-    formStatus.textContent = 'Lütfen tüm alanları doldurunuz.';
-    formStatus.className = 'form-status error';
-    return;
+  // UI: loading
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.classList.add('is-loading');
   }
-
-  formStatus.textContent = 'Mesaj gönderiliyor...';
+  formStatus.textContent = 'Mesaj gönderiliyor…';
   formStatus.className = 'form-status';
+
+  const subject = `MarketPOS talebi — ${requestType} · ${name}${business ? ' (' + business + ')' : ''}`;
 
   try {
     const res = await fetch(
@@ -330,29 +358,54 @@ async function submitContactForm(event) {
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          name: payload.name,
-          email: payload.email,
-          message: payload.message,
-          _subject: `MarketPos iletişim: ${payload.name}`,
+          'Ad Soyad': name,
+          'Telefon': phone,
+          'E-posta': email,
+          'İşletme Adı': business || '-',
+          'İşletme Türü': businessType || '-',
+          'Talep Konusu': requestType,
+          'Mesaj': message || '-',
+          'Gönderim Zamanı': new Date().toLocaleString('tr-TR'),
+          'Kaynak': location.origin + location.pathname,
+          _subject: subject,
           _template: 'table',
           _captcha: 'false',
+          _replyto: email,
         }),
       }
     );
 
     const data = await res.json().catch(() => ({}));
-    if (!res.ok) {
-      throw new Error(data.message || 'Gönderim başarısız');
-    }
+    if (!res.ok) throw new Error(data.message || 'Gönderim başarısız');
 
-    formStatus.textContent = `Teşekkürler ${payload.name}, mesajınız bize ulaştı.`;
+    formStatus.innerHTML =
+      `Teşekkürler <strong>${escapeHtml(name)}</strong>, mesajın bize ulaştı. ` +
+      `En kısa sürede <strong>${phone}</strong> numarasından dönüş yapacağız.`;
     formStatus.className = 'form-status success';
     contactForm.reset();
   } catch (error) {
-    formStatus.textContent =
-      'Mesaj gönderilemedi. Lütfen biraz sonra tekrar deneyin veya doğrudan e-posta ile yazın.';
+    formStatus.innerHTML =
+      'Mesaj gönderilemedi. Lütfen biraz sonra tekrar deneyin ya da ' +
+      '<a href="https://wa.me/905510335916?text=Merhaba%20MarketPOS" target="_blank" rel="noopener">WhatsApp</a> / ' +
+      '<a href="tel:+905510335916">0551 033 59 16</a> üzerinden bize ulaşın.';
     formStatus.className = 'form-status error';
+  } finally {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.classList.remove('is-loading');
+    }
   }
+}
+
+function showFormError(msg) {
+  formStatus.textContent = msg;
+  formStatus.className = 'form-status error';
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, (m) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  }[m]));
 }
 
 if (contactForm) {

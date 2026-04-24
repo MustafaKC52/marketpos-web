@@ -1194,9 +1194,111 @@ a { color: inherit; text-decoration: none; transition: color .2s ease; }
 }
 .form-note { font-size: .82rem; color: var(--muted); }
 .form-status { margin: 0; font-size: .9rem; color: var(--muted); text-align: center; min-height: 1.2em; }
-.form-status.success { color: #34d399; font-weight: 600; }
-.form-status.error { color: #f87171; font-weight: 600; }
+.form-status.success {
+  color: #34d399; font-weight: 600;
+  padding: 10px 14px;
+  background: rgba(16,185,129,.1);
+  border: 1px solid rgba(16,185,129,.28);
+  border-radius: 12px;
+}
+.form-status.success strong { color: #a7f3d0; }
+.form-status.error {
+  color: #f87171; font-weight: 600;
+  padding: 10px 14px;
+  background: rgba(248,113,113,.1);
+  border: 1px solid rgba(248,113,113,.28);
+  border-radius: 12px;
+}
+.form-status.error a { color: #fda4af; text-decoration: underline; }
 .hidden-field { display: none !important; }
+
+.req { color: #fda4af; margin-left: 4px; font-weight: 700; }
+.field-hint { font-size: .78rem; color: var(--muted); margin-top: 2px; }
+
+.form-group select {
+  font: inherit;
+  color: #fff;
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--line-2);
+  border-radius: 12px;
+  padding: 11px 14px;
+  transition: border-color .2s, box-shadow .2s, background .2s;
+  width: 100%;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, rgba(255,255,255,.6) 50%),
+    linear-gradient(135deg, rgba(255,255,255,.6) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 36px;
+}
+.form-group select:focus {
+  outline: none;
+  border-color: var(--primary);
+  background-color: rgba(255,255,255,.07);
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, .2);
+}
+.form-group select option {
+  background: #0b1020;
+  color: #fff;
+}
+
+.form-check {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: .88rem;
+  color: rgba(255,255,255,.78);
+  padding: 10px 12px;
+  background: rgba(255,255,255,.03);
+  border: 1px dashed var(--line-2);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+.form-check:hover { background: rgba(255,255,255,.05); border-color: rgba(20,184,166,.3); }
+.form-check input[type="checkbox"] {
+  accent-color: var(--primary);
+  width: 18px; height: 18px;
+  margin-top: 2px;
+  flex: none;
+  cursor: pointer;
+}
+.form-check strong { color: #fff; font-weight: 700; }
+
+.form-quick {
+  margin: 4px 0 0;
+  text-align: center;
+  font-size: .85rem;
+  color: var(--muted);
+}
+.form-quick a {
+  color: #5eead4;
+  font-weight: 600;
+}
+.form-quick a:hover { color: #fff; }
+.form-quick .dot-sep { margin: 0 8px; opacity: .5; }
+
+/* Submit button loading state */
+#contactSubmit { position: relative; }
+#contactSubmit .btn-spinner {
+  display: none;
+  width: 18px; height: 18px;
+  border: 2px solid rgba(255,255,255,.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: btnSpin .8s linear infinite;
+}
+#contactSubmit.is-loading .btn-label { opacity: .7; }
+#contactSubmit.is-loading .btn-spinner { display: inline-block; }
+@keyframes btnSpin { to { transform: rotate(360deg); } }
+
+/* Alan hata durumu (browser :invalid yalnızca kullanıcı etkileşim sonrası) */
+.form-group input:not(:placeholder-shown):invalid,
+.form-group select:not(:placeholder-shown):invalid {
+  border-color: rgba(248, 113, 113, .5);
+}
 
 .contact-aside { display: grid; gap: 12px; align-content: start; }
 .contact-card {
