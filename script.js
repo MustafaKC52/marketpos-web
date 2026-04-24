@@ -19,7 +19,7 @@ const shot3 = document.getElementById('shot-3');
 
 /** v2: eski kayıtlarda boş downloadUrl vb. şifre/indirmeyi kırıyordu */
 const STORAGE_KEY = 'marketpos-site-config-v2';
-const ASSET_VER = '20260501';
+const ASSET_VER = '20260502';
 
 // Cloudflare Pages: Git LFS dosyası deploy'a genelde girmez. İndirmeyi hosting'de tutmak en sorunsuz yol.
 /** Her zaman en güncel sürümü döner: cPanel'de public_html/marketsop/releases/
@@ -40,7 +40,7 @@ const DEFAULTS = {
 const DOWNLOAD_PWD_HASH_HEX = 'efa6bce1bc3d0129d2ce21d62d56d8910d3839a275c5d28fb6d6a376fa9ba72f';
 
 // İletişim formu: FormSubmit (statik sayfalar). Gelen kutuyu script.js içinde CONTACT_FORM_EMAIL ile eşleştirin.
-const CONTACT_FORM_EMAIL = 'info@marketposs.com';
+const CONTACT_FORM_EMAIL = 'mustafa.cmk0@gmail.com';
 
 let resolvedDownloadUrl = DEFAULTS.downloadUrl;
 
