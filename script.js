@@ -19,7 +19,7 @@ const shot3 = document.getElementById('shot-3');
 
 /** v2: eski kayıtlarda boş downloadUrl vb. şifre/indirmeyi kırıyordu */
 const STORAGE_KEY = 'marketpos-site-config-v2';
-const ASSET_VER = '20260429';
+const ASSET_VER = '20260430';
 
 // Cloudflare Pages: Git LFS dosyası deploy'a genelde girmez. İndirmeyi hosting'de tutmak en sorunsuz yol.
 /** Her zaman en güncel sürümü döner: cPanel'de public_html/marketsop/releases/
@@ -53,8 +53,13 @@ async function sha256Hex(text) {
 }
 
 function triggerFileDownload(url, filename) {
+  /** Cache-busting: tarayıcılar/CDN aynı URL'li exe'yi önbellekte tutuyor.
+   *  Her tıklamada benzersiz query ekleyerek sunucudan taze dosyayı zorluyoruz. */
+  const sep = url.includes('?') ? '&' : '?';
+  const bustedUrl = `${url}${sep}t=${Date.now()}`;
+
   const a = document.createElement('a');
-  a.href = url;
+  a.href = bustedUrl;
   a.download = filename || '';
   a.rel = 'noopener noreferrer';
   document.body.appendChild(a);
