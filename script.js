@@ -19,7 +19,7 @@ const shot3 = document.getElementById('shot-3');
 
 /** v2: eski kayıtlarda boş downloadUrl vb. şifre/indirmeyi kırıyordu */
 const STORAGE_KEY = 'marketpos-site-config-v2';
-const ASSET_VER = '20260430';
+const ASSET_VER = '20260501';
 
 // Cloudflare Pages: Git LFS dosyası deploy'a genelde girmez. İndirmeyi hosting'de tutmak en sorunsuz yol.
 /** Her zaman en güncel sürümü döner: cPanel'de public_html/marketsop/releases/
@@ -52,15 +52,42 @@ async function sha256Hex(text) {
     .join('');
 }
 
-function triggerFileDownload(url, filename) {
-  /** Cache-busting: tarayıcılar/CDN aynı URL'li exe'yi önbellekte tutuyor.
-   *  Her tıklamada benzersiz query ekleyerek sunucudan taze dosyayı zorluyoruz. */
+async function triggerFileDownload(url, filename) {
+  /** Cache-bust: aynı URL tarayıcıda / CDN'de önbelleğe düşmesin diye
+   *  her tıklamada benzersiz query ekliyoruz. Ayrıca fetch(no-store) ile
+   *  taze bayt isteyip blob olarak kaydederek tarayıcı cache'ini bypass ediyoruz;
+   *  CORS / ağ hatası olursa basit <a download> ile geri düşüyoruz. */
   const sep = url.includes('?') ? '&' : '?';
-  const bustedUrl = `${url}${sep}t=${Date.now()}`;
+  const bustedUrl = `${url}${sep}t=${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+  const fallback = filename || '';
+
+  try {
+    const res = await fetch(bustedUrl, {
+      cache: 'no-store',
+      mode: 'cors',
+      credentials: 'omit',
+      referrerPolicy: 'no-referrer',
+    });
+    if (res.ok) {
+      const blob = await res.blob();
+      const objUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = objUrl;
+      a.download = fallback;
+      a.rel = 'noopener noreferrer';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(objUrl), 10000);
+      return;
+    }
+  } catch (_) {
+    /* CORS / network hatası → aşağıdaki anchor fallback'e düşer */
+  }
 
   const a = document.createElement('a');
   a.href = bustedUrl;
-  a.download = filename || '';
+  a.download = fallback;
   a.rel = 'noopener noreferrer';
   document.body.appendChild(a);
   a.click();
