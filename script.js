@@ -12,6 +12,7 @@ const downloadModal = document.getElementById('downloadModal');
 const downloadUnlockForm = document.getElementById('downloadUnlockForm');
 const dlPassword = document.getElementById('dlPassword');
 const dlModalError = document.getElementById('dlModalError');
+const dlSubmitBtn = document.getElementById('dlSubmitBtn');
 const heroShowcaseImg = document.getElementById('heroShowcaseImg');
 const shot1 = document.getElementById('shot-1');
 const shot2 = document.getElementById('shot-2');
@@ -21,15 +22,12 @@ const shot3 = document.getElementById('shot-3');
 const STORAGE_KEY = 'marketpos-site-config-v2';
 const ASSET_VER = '20260505';
 
-// Cloudflare Pages: Git LFS dosyası deploy'a genelde girmez. İndirmeyi hosting'de tutmak en sorunsuz yol.
-/** Her zaman en güncel sürümü döner: cPanel'de public_html/marketsop/releases/
- *  klasöründe MarketPOS-Setup.exe dosyası her sürümle üzerine yazılmalı. */
-const SETUP_DOWNLOAD_URL =
-  'https://dl.marketposs.com/marketsop/releases/MarketPOS-Setup.exe';
+/** Şifre doğrulama + indirme URL'i artık backend'den geliyor.
+ *  Eski client-side SHA-256 kontrolü ve sabit SETUP_DOWNLOAD_URL kullanımdan kaldırıldı. */
+const DOWNLOAD_VERIFY_ENDPOINT = 'https://api.marketposs.com/api/download/verify';
 
 const DEFAULTS = {
   demoUrl: '',
-  downloadUrl: SETUP_DOWNLOAD_URL,
   demoDescription:
     'Windows kurulum dosyasını indirip MarketPOS’u kendi bilgisayarınızda deneyebilirsiniz. İndirme, size iletilen erişim şifresi ile açılır.',
   shot1: `assets/marketpos-dashboard.png?v=${ASSET_VER}`,
@@ -37,20 +35,8 @@ const DEFAULTS = {
   shot3: `assets/marketpos-reports.png?v=${ASSET_VER}`,
 };
 
-const DOWNLOAD_PWD_HASH_HEX = 'efa6bce1bc3d0129d2ce21d62d56d8910d3839a275c5d28fb6d6a376fa9ba72f';
-
 // İletişim formu: FormSubmit (statik sayfalar). Gelen kutuyu script.js içinde CONTACT_FORM_EMAIL ile eşleştirin.
 const CONTACT_FORM_EMAIL = 'mustafa.cmk0@gmail.com';
-
-let resolvedDownloadUrl = DEFAULTS.downloadUrl;
-
-async function sha256Hex(text) {
-  const buf = new TextEncoder().encode(text);
-  const hash = await crypto.subtle.digest('SHA-256', buf);
-  return Array.from(new Uint8Array(hash))
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('');
-}
 
 async function triggerFileDownload(url, filename) {
   /** Cache-bust: aynı URL tarayıcıda / CDN'de önbelleğe düşmesin diye
@@ -115,17 +101,70 @@ function closeDownloadModal() {
   document.body.style.overflow = '';
 }
 
+function setDlModalError(message) {
+  if (!dlModalError) return;
+  if (message) {
+    dlModalError.textContent = message;
+    dlModalError.hidden = false;
+  } else {
+    dlModalError.hidden = true;
+  }
+}
+
+function setDlSubmitLoading(isLoading) {
+  if (!dlSubmitBtn) return;
+  dlSubmitBtn.disabled = isLoading;
+  dlSubmitBtn.classList.toggle('is-loading', isLoading);
+  if (isLoading) {
+    if (!dlSubmitBtn.dataset.originalLabel) {
+      dlSubmitBtn.dataset.originalLabel = dlSubmitBtn.textContent || 'Doğrula ve indir';
+    }
+    dlSubmitBtn.textContent = 'Doğrulanıyor…';
+  } else if (dlSubmitBtn.dataset.originalLabel) {
+    dlSubmitBtn.textContent = dlSubmitBtn.dataset.originalLabel;
+  }
+}
+
 async function tryUnlockAndDownload() {
-  if (!dlPassword || !resolvedDownloadUrl) return false;
+  if (!dlPassword) return false;
   const entered = dlPassword.value.trim();
-  const hex = await sha256Hex(entered);
-  if (hex !== DOWNLOAD_PWD_HASH_HEX) {
-    if (dlModalError) dlModalError.hidden = false;
+  if (!entered) {
+    setDlModalError('Lütfen erişim şifresini girin.');
     return false;
   }
-  closeDownloadModal();
-  triggerFileDownload(resolvedDownloadUrl, 'MarketPOS-Setup.exe');
-  return true;
+
+  setDlModalError('');
+  setDlSubmitLoading(true);
+
+  try {
+    const res = await fetch(DOWNLOAD_VERIFY_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({ password: entered }),
+    });
+
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok || !data || !data.ok || !data.downloadUrl) {
+      const msg = (data && data.error)
+        ? data.error
+        : 'Şifre doğrulanamadı. Büyük-küçük harfe dikkat edin.';
+      setDlModalError(msg);
+      return false;
+    }
+
+    closeDownloadModal();
+    triggerFileDownload(data.downloadUrl, 'MarketPOS-Setup.exe');
+    return true;
+  } catch (err) {
+    setDlModalError('Sunucuya ulaşılamadı. İnternet bağlantınızı kontrol edip tekrar deneyin.');
+    return false;
+  } finally {
+    setDlSubmitLoading(false);
+  }
 }
 
 function loadSiteConfig() {
@@ -137,8 +176,6 @@ function loadSiteConfig() {
   try {
     const parsed = JSON.parse(raw);
     const merged = { ...DEFAULTS, ...parsed };
-    const du = merged.downloadUrl && String(merged.downloadUrl).trim();
-    if (!du) merged.downloadUrl = DEFAULTS.downloadUrl;
     ['shot1', 'shot2', 'shot3', 'sh2', 'sh3'].forEach((k) => {
       if (merged[k] !== undefined && merged[k] !== null && !String(merged[k]).trim()) {
         delete merged[k];
@@ -170,30 +207,25 @@ function applySiteConfig() {
     shot3.src = cfg.shot3 || cfg.sh3 || DEFAULTS.shot3;
   }
 
-  const downloadUrl = (cfg.downloadUrl && String(cfg.downloadUrl).trim()) || DEFAULTS.downloadUrl;
-  const hasDownload = Boolean(downloadUrl);
-  resolvedDownloadUrl = hasDownload ? downloadUrl : '';
-
   if (downloadBtn) {
-    downloadBtn.disabled = !hasDownload;
-    downloadBtn.classList.toggle('is-disabled', !hasDownload);
-    downloadBtn.setAttribute('aria-disabled', String(!hasDownload));
+    downloadBtn.disabled = false;
+    downloadBtn.classList.remove('is-disabled');
+    downloadBtn.setAttribute('aria-disabled', 'false');
   }
 
   if (demoLockNote) {
-    demoLockNote.hidden = !hasDownload;
+    demoLockNote.hidden = false;
   }
 
   if (demoNote) {
-    demoNote.textContent = hasDownload
-      ? 'Butona tıklayınca şifre penceresi açılır; doğru şifreyle kurulum indirilir.'
-      : 'Kurulum bağlantısı henüz ayarlanmadı. İletişim formundan demo talep edebilirsin.';
+    demoNote.textContent =
+      'Butona tıklayınca şifre penceresi açılır; doğru şifreyle kurulum indirilir.';
   }
 }
 
 applySiteConfig();
 
-if (downloadBtn && resolvedDownloadUrl) {
+if (downloadBtn) {
   downloadBtn.addEventListener('click', () => {
     if (downloadBtn.disabled) return;
     openDownloadModal();
