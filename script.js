@@ -20,7 +20,7 @@ const shot3 = document.getElementById('shot-3');
 
 /** v2: eski kayıtlarda boş downloadUrl vb. şifre/indirmeyi kırıyordu */
 const STORAGE_KEY = 'marketpos-site-config-v2';
-const ASSET_VER = '20260505';
+const ASSET_VER = '20260530';
 
 /** Şifre doğrulama + indirme URL'i artık backend'den geliyor.
  *  Eski client-side SHA-256 kontrolü ve sabit SETUP_DOWNLOAD_URL kullanımdan kaldırıldı. */
