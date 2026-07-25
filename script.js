@@ -39,6 +39,13 @@ const DEFAULTS = {
 const CONTACT_FORM_EMAIL = 'mustafa.cmk0@gmail.com';
 
 async function triggerFileDownload(url, filename) {
+  /** API grant linkleri tek kullanımlık ve 302 yönlendirme döner.
+   *  fetch + blob bu akışı bozar (CDN CORS yok); tarayıcı doğrudan açmalı. */
+  if (/api\.marketposs\.com\/api\/download\/grant\//i.test(url)) {
+    window.location.assign(url);
+    return;
+  }
+
   /** Cache-bust: aynı URL tarayıcıda / CDN'de önbelleğe düşmesin diye
    *  her tıklamada benzersiz query ekliyoruz. Ayrıca fetch(no-store) ile
    *  taze bayt isteyip blob olarak kaydederek tarayıcı cache'ini bypass ediyoruz;
