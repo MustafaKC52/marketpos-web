@@ -20,7 +20,7 @@ const shot3 = document.getElementById('shot-3');
 
 /** v3: herkese açık indirme — şifre modalı kaldırıldı */
 const STORAGE_KEY = 'marketpos-site-config-v3';
-const ASSET_VER = '20260730';
+const ASSET_VER = '20260726c';
 
 /** Kurulum dosyası — backend herkese açık grant endpoint */
 const DOWNLOAD_PUBLIC_ENDPOINT = 'https://api.marketposs.com/api/download/public';
