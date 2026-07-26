@@ -20,7 +20,7 @@ const shot3 = document.getElementById('shot-3');
 
 /** v2: eski kayıtlarda boş downloadUrl vb. şifre/indirmeyi kırıyordu */
 const STORAGE_KEY = 'marketpos-site-config-v2';
-const ASSET_VER = '20260530';
+const ASSET_VER = '20260726';
 
 /** Şifre doğrulama + indirme URL'i artık backend'den geliyor.
  *  Eski client-side SHA-256 kontrolü ve sabit SETUP_DOWNLOAD_URL kullanımdan kaldırıldı. */
@@ -29,7 +29,7 @@ const DOWNLOAD_VERIFY_ENDPOINT = 'https://api.marketposs.com/api/download/verify
 const DEFAULTS = {
   demoUrl: '',
   demoDescription:
-    'Windows kurulum dosyasını indirip MarketPOS’u kendi bilgisayarınızda deneyebilirsiniz. İndirme, size iletilen erişim şifresi ile açılır.',
+    'Windows kurulum dosyasını indirip MarketPOS’u kendi bilgisayarınızda deneyebilirsiniz. Tam demo için size davetiye kodu ve indirme şifresi iletilir.',
   shot1: `assets/marketpos-dashboard.png?v=${ASSET_VER}`,
   shot2: `assets/marketpos-products.png?v=${ASSET_VER}`,
   shot3: `assets/marketpos-reports.png?v=${ASSET_VER}`,
