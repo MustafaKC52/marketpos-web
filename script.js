@@ -18,18 +18,17 @@ const shot1 = document.getElementById('shot-1');
 const shot2 = document.getElementById('shot-2');
 const shot3 = document.getElementById('shot-3');
 
-/** v2: eski kayıtlarda boş downloadUrl vb. şifre/indirmeyi kırıyordu */
-const STORAGE_KEY = 'marketpos-site-config-v2';
-const ASSET_VER = '20260726';
+/** v3: herkese açık indirme — şifre modalı kaldırıldı */
+const STORAGE_KEY = 'marketpos-site-config-v3';
+const ASSET_VER = '20260730';
 
-/** Şifre doğrulama + indirme URL'i artık backend'den geliyor.
- *  Eski client-side SHA-256 kontrolü ve sabit SETUP_DOWNLOAD_URL kullanımdan kaldırıldı. */
-const DOWNLOAD_VERIFY_ENDPOINT = 'https://api.marketposs.com/api/download/verify';
+/** Kurulum dosyası — backend herkese açık grant endpoint */
+const DOWNLOAD_PUBLIC_ENDPOINT = 'https://api.marketposs.com/api/download/public';
 
 const DEFAULTS = {
   demoUrl: '',
   demoDescription:
-    'Windows kurulum dosyasını indirip MarketPOS’u kendi bilgisayarınızda deneyebilirsiniz. Tam demo için size davetiye kodu ve indirme şifresi iletilir.',
+    'Windows kurulum dosyasını doğrudan indirin, uygulamada ücretsiz kayıt olun ve 14 gün boyunca tüm özellikleri deneyin.',
   shot1: `assets/marketpos-dashboard.png?v=${ASSET_VER}`,
   shot2: `assets/marketpos-products.png?v=${ASSET_VER}`,
   shot3: `assets/marketpos-reports.png?v=${ASSET_VER}`,
@@ -87,18 +86,47 @@ async function triggerFileDownload(url, filename) {
   a.remove();
 }
 
+async function startPublicDownload(triggerEl) {
+  const btn = triggerEl instanceof HTMLElement ? triggerEl : null;
+  const originalLabel = btn?.textContent || '';
+
+  if (btn) {
+    btn.disabled = true;
+    btn.classList.add('is-loading');
+    btn.setAttribute('aria-busy', 'true');
+  }
+
+  try {
+    const res = await fetch(DOWNLOAD_PUBLIC_ENDPOINT, {
+      method: 'GET',
+      headers: { Accept: 'application/json' },
+      cache: 'no-store',
+    });
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok || !data || !data.ok || !data.downloadUrl) {
+      const msg = (data && data.error) || 'İndirme bağlantısı alınamadı. Lütfen tekrar deneyin.';
+      alert(msg);
+      return false;
+    }
+
+    triggerFileDownload(data.downloadUrl, data.fileName || 'MarketPOS-Setup.exe');
+    return true;
+  } catch (_) {
+    alert('İndirme başlatılamadı. İnternet bağlantınızı kontrol edip tekrar deneyin.');
+    return false;
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.classList.remove('is-loading');
+      btn.removeAttribute('aria-busy');
+      if (originalLabel) btn.textContent = originalLabel;
+    }
+  }
+}
+
 function openDownloadModal() {
-  if (!downloadModal) return;
-  downloadModal.classList.add('is-open');
-  downloadModal.setAttribute('aria-hidden', 'false');
-  document.body.style.overflow = 'hidden';
-  if (dlModalError) {
-    dlModalError.hidden = true;
-  }
-  if (dlPassword) {
-    dlPassword.value = '';
-    dlPassword.focus();
-  }
+  void startPublicDownload(document.getElementById('downloadBtn'));
 }
 
 function closeDownloadModal() {
@@ -221,12 +249,12 @@ function applySiteConfig() {
   }
 
   if (demoLockNote) {
-    demoLockNote.hidden = false;
+    demoLockNote.hidden = true;
   }
 
   if (demoNote) {
     demoNote.textContent =
-      'Butona tıklayınca şifre penceresi açılır; doğru şifreyle kurulum indirilir.';
+      'İndirme doğrudan başlar; kurulumdan sonra uygulamada ücretsiz kayıt açarak 14 gün deneyebilirsiniz.';
   }
 }
 
@@ -235,9 +263,16 @@ applySiteConfig();
 if (downloadBtn) {
   downloadBtn.addEventListener('click', () => {
     if (downloadBtn.disabled) return;
-    openDownloadModal();
+    void startPublicDownload(downloadBtn);
   });
 }
+
+document.querySelectorAll('[data-open-download]').forEach((el) => {
+  el.addEventListener('click', (e) => {
+    e.preventDefault();
+    void startPublicDownload(el);
+  });
+});
 
 if (downloadUnlockForm) {
   downloadUnlockForm.addEventListener('submit', async (e) => {
