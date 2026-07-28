@@ -20,7 +20,7 @@ const shot3 = document.getElementById('shot-3');
 
 /** v3: herkese açık indirme — şifre modalı kaldırıldı */
 const STORAGE_KEY = 'marketpos-site-config-v3';
-const ASSET_VER = '20260728';
+const ASSET_VER = '20260729';
 
 /** Kurulum dosyası — backend herkese açık grant endpoint */
 const DOWNLOAD_PUBLIC_ENDPOINT = 'https://api.marketposs.com/api/download/public';
@@ -583,7 +583,7 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeLightbox();
 });
 
-// ===== EARLY ACCESS / DEV ANNOUNCE BAR =====
+// ===== TRIAL ANNOUNCE BAR =====
 (() => {
   const bar = document.getElementById('announceBar');
   const btn = document.getElementById('announceClose');
