@@ -2108,3 +2108,56 @@ textarea {
     scroll-behavior: auto !important;
   }
 }
+
+/* ---- Pricing teaser (homepage SEO strip) ---- */
+.pricing-teaser {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 28px;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, rgba(20,184,166,.08), rgba(245,158,11,.05));
+}
+.pricing-teaser-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pricing-teaser-item strong {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  color: var(--text-strong);
+}
+.pricing-teaser-item span {
+  font-size: .82rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.pricing-teaser-highlight strong {
+  color: var(--primary);
+}
+.pricing-page-link {
+  margin-top: 20px;
+  text-align: center;
+  font-size: .92rem;
+}
+.pricing-page-link a {
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+.pricing-page-link a:hover { text-decoration: underline; }
+
+@media (max-width: 900px) {
+  .pricing-teaser {
+    grid-template-columns: 1fr 1fr;
+  }
+  .pricing-teaser .btn { grid-column: 1 / -1; justify-self: center; }
+}
+@media (max-width: 560px) {
+  .pricing-teaser { grid-template-columns: 1fr; }
+}
+

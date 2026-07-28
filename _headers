@@ -6,5 +6,11 @@
 /index.html
   Cache-Control: public, max-age=0, must-revalidate
 
+/pricing.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/blog/*
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /demo.html
   Cache-Control: public, max-age=0, must-revalidate

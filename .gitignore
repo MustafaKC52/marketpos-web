@@ -3,3 +3,8 @@ Desktop.ini
 
 # Cloudflare deploy: 25 MiB/varlık limiti; kurulum dl.marketposs.com üzerinde
 downloads/*.exe
+stable/
+
+# React kaynak (uretim: assets/pricing/)
+pricing-ui/node_modules/
+pricing-ui/dist/

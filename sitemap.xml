@@ -6,8 +6,48 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.marketposs.com/demo.html</loc>
+    <loc>https://www.marketposs.com/pricing.html</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://www.marketposs.com/blog/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.marketposs.com/blog/posts/market-pos-programi-nasil-secilir.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.marketposs.com/blog/posts/bakkal-market-barkodlu-satis.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.marketposs.com/blog/posts/kucuk-isletme-stok-takip-rehberi.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.marketposs.com/blog/posts/market-kasa-programi-kurulumu.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.marketposs.com/blog/posts/veresiye-cari-hesap-takibi.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.marketposs.com/blog/posts/marketpos-ucretsiz-deneme-rehberi.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.marketposs.com/demo.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
 </urlset>
