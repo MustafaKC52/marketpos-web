@@ -110,8 +110,15 @@ h1, h2, h3, h4 {
   color: var(--text-strong);
   margin: 0 0 .4em;
 }
-h1 { font-size: clamp(2.4rem, 5vw, 4.2rem); line-height: 1.02; letter-spacing: -0.028em; }
-h2 { font-size: clamp(1.8rem, 3.5vw, 2.75rem); line-height: 1.15; }
+h1 { font-size: clamp(2rem, 4.2vw, 3.25rem); line-height: 1.12; letter-spacing: -0.022em; }
+h2 { font-size: clamp(1.65rem, 3vw, 2.35rem); line-height: 1.2; }
+h1.hero-title {
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  line-height: 1.15;
+  max-width: 22ch;
+  text-wrap: balance;
+}
+h2.text-balance { text-wrap: balance; max-width: 22ch; margin-left: auto; margin-right: auto; }
 h3 { font-size: 1.15rem; line-height: 1.35; }
 h4 { font-size: .95rem; line-height: 1.3; }
 p { margin: 0 0 1em; color: var(--muted); }
@@ -562,19 +569,28 @@ a { color: inherit; text-decoration: none; transition: color .2s ease; }
 }
 
 .gradient-text {
-  background: linear-gradient(110deg, #22d3ee 0%, #14b8a6 45%, #f59e0b 85%, #fb7185 100%);
-  -webkit-background-clip: text; background-clip: text;
-  color: transparent;
-  background-size: 220% 220%;
-  animation: gradientShift 8s ease-in-out infinite;
-  filter: drop-shadow(0 6px 24px rgba(20, 184, 166, .35));
+  color: #2dd4bf;
+  background: linear-gradient(110deg, #22d3ee 0%, #14b8a6 55%, #2dd4bf 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@supports (background-clip: text) {
+  .gradient-text { color: transparent; }
 }
 .gradient-text.light {
-  background: linear-gradient(110deg, #67e8f9, #f59e0b, #fb7185);
-  -webkit-background-clip: text; background-clip: text;
-  color: transparent;
-  background-size: 220% 220%;
-  animation: gradientShift 8s ease-in-out infinite;
+  color: #67e8f9;
+  background: linear-gradient(110deg, #67e8f9, #14b8a6, #fbbf24);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .gradient-text,
+  .gradient-text.light {
+    background-size: 180% 180%;
+    animation: gradientShift 10s ease-in-out infinite;
+  }
 }
 @keyframes gradientShift {
   0%, 100% { background-position: 0% 50%; }
@@ -2014,7 +2030,37 @@ a { color: inherit; text-decoration: none; transition: color .2s ease; }
 .footer-bottom-inner .muted { color: rgba(255,255,255,.35); }
 
 /* ===== REVEAL ===== */
-.reveal-item { /* script.js inline style kullanıyor */ }
+.reveal-item {
+  opacity: 1;
+  transform: none;
+}
+
+/* Sayfa kabuğu — alt sayfalarda içerik arka planın altında kalmaması için */
+main,
+.blog-main,
+.site-footer,
+.about-strip-section {
+  position: relative;
+  z-index: 1;
+}
+
+/* Mobil / düşük güç: animasyonları azalt */
+@media (max-width: 768px) {
+  .bg-particles,
+  .hero .beams,
+  .bg-aurora .a3 { display: none !important; }
+  .hero-float-a,
+  .hero-float-b,
+  .hero-float-c,
+  .hero-float-d { display: none !important; }
+  .brand-strip { display: none; }
+  .bg-aurora .aurora { filter: blur(90px); opacity: .35; }
+}
+
+@media (max-width: 768px), (prefers-reduced-motion: reduce) {
+  [data-tilt] { transform: none !important; }
+  .magnetic { transform: none !important; }
+}
 
 textarea {
   resize: none;

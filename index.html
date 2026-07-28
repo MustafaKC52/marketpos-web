@@ -32,8 +32,10 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=20260727" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=20260728" />
+  <link rel="stylesheet" href="blog/blog.css?v=20260728" />
+  <link rel="stylesheet" href="assets/pricing/pricing.css?v=20260728" />
 
   <script type="application/ld+json">
     {
@@ -50,17 +52,17 @@
 </head>
 <body id="top">
 
-  <!-- ============ DEV / EARLY ACCESS BANNER ============ -->
+  <!-- ============ TRIAL BANNER ============ -->
   <div class="announce-bar" id="announceBar" role="status" aria-live="polite">
     <div class="container announce-inner">
       <span class="announce-badge">
         <span class="dot-pulse"></span>
-        Early Access
+        14 gün ücretsiz
       </span>
       <p class="announce-text">
-        <strong>MarketPOS aktif geliştirme aşamasındadır.</strong>
-        Yeni özellikler ve iyileştirmeler düzenli aralıklarla yayınlanır; geri bildirimleriniz doğrudan yol haritamıza işlenir.
-        <a href="#contact">Görüş bildirin</a>
+        <strong>Kredi kartı gerekmez.</strong>
+        Windows kurulumunu indirin, kayıt olun ve kasada hemen deneyin.
+        <a href="#download" data-open-download>Hemen indir →</a>
       </p>
       <button class="announce-close" id="announceClose" aria-label="Duyuruyu kapat">×</button>
     </div>
@@ -89,11 +91,10 @@
       <nav class="main-nav" aria-label="Ana menü">
         <ul>
           <li><a href="#features">Özellikler</a></li>
-          <li><a href="#showcase">Ürün Turu</a></li>
+          <li><a href="#showcase">Ekran Görüntüleri</a></li>
           <li><a href="#pricing">Fiyat</a></li>
           <li><a href="blog/index.html">Blog</a></li>
           <li><a href="#faq">SSS</a></li>
-          <li><a href="#roadmap">Geliştirme</a></li>
           <li><a href="#contact">İletişim</a></li>
         </ul>
       </nav>
@@ -129,27 +130,22 @@
 
       <div class="container hero-inner">
 
-        <div class="hero-copy reveal-item">
+        <div class="hero-copy">
           <span class="eyebrow shine">
             <span class="dot-pulse"></span>
-            Dijital Dönüşüm · Windows için yayında · Aktif geliştirme
+            Market · Bakkal · Perakende · Windows
           </span>
-          <h1>
-            İşletmenizi<br/>
-            <span class="gradient-text">Dijitalleştirmeye</span><br/>
-            Hazır mısınız?
+          <h1 class="hero-title">
+            Kasada hızlı satış, stokta <span class="gradient-text">tam kontrol</span>
           </h1>
           <p class="lead">
-            Satıştan stoğa, cariden raporlamaya <strong>tüm süreçleri tek panelden</strong> yönetin. Kurulum ve eğitim tamamen bizden — siz sadece büyümeye odaklanın.
+            <strong>14 gün ücretsiz</strong> deneyin — form yok, kredi kartı yok.
+            Barkodlu satış, stok, cari hesap ve raporlar tek programda; internet kesilse de satış devam eder.
           </p>
 
           <div class="hero-cta">
-            <a class="btn btn-primary btn-lg magnetic" href="#download" data-open-download>Hemen Dene</a>
-            <a class="btn btn-secondary btn-lg magnetic" href="#showcase">Ürün Turu</a>
-            <a class="btn btn-ghost btn-lg magnetic btn-wa" href="https://wa.me/905510335916?text=Merhaba%20MarketPOS%20hakkında%20bilgi%20almak%20istiyorum" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M20.5 3.5A11 11 0 0 0 3.1 17.1L2 22l5.1-1.1A11 11 0 1 0 20.5 3.5Zm-3.4 10.3c-.3-.1-1.6-.8-1.8-.9-.3-.1-.5-.1-.6.1l-.8 1c-.2.2-.3.2-.6.1a7.3 7.3 0 0 1-3.6-3.1c-.1-.3 0-.4.1-.5l.4-.4.2-.3.1-.3v-.3l-.8-2c-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.6 1.1 2.8a10 10 0 0 0 4.6 4.1 12 12 0 0 0 1.5.5 3.9 3.9 0 0 0 1.7.1c.5-.1 1.6-.7 1.8-1.3.2-.6.2-1.2.2-1.3 0-.1-.2-.2-.5-.3Z"/></svg>
-              WhatsApp İletişim
-            </a>
+            <a class="btn btn-primary btn-lg" href="#download" data-open-download>Hemen Dene — Ücretsiz İndir</a>
+            <a class="btn btn-secondary btn-lg" href="#showcase">Nasıl görünüyor?</a>
           </div>
 
           <button type="button" id="downloadBtn" class="hero-ghost-link">
@@ -158,14 +154,14 @@
           </button>
 
           <ul class="hero-chips">
-            <li>⚡ 3 sn'de ürün ekle</li>
-            <li>📶 Offline çalışır</li>
-            <li>🇹🇷 Yerli yazılım</li>
-            <li>🔒 Güvenli veri</li>
+            <li>14 gün ücretsiz</li>
+            <li>Offline çalışır</li>
+            <li>Yerli yazılım</li>
+            <li>Kurulum ~10 dk</li>
           </ul>
         </div>
 
-        <div class="hero-visual reveal-item">
+        <div class="hero-visual">
           <div class="glow glow-a" aria-hidden="true"></div>
           <div class="glow glow-b" aria-hidden="true"></div>
 
@@ -384,7 +380,7 @@
               <div class="app-chrome">
                 <span class="app-dot r"></span><span class="app-dot y"></span><span class="app-dot g"></span>
                 <span class="app-url" id="showcaseUrl">marketpos.app · Kasa</span>
-                <span class="app-live">v0.1.199</span>
+                <span class="app-live">v0.1.200</span>
               </div>
               <div class="app-body">
                 <img id="showcaseImg" src="assets/marketpos-new-sale.png?v=20260726c" alt="Hızlı Satış ekranı" />
@@ -450,25 +446,6 @@
       </div>
     </section>
 
-    <!-- ============ PILOT PROGRAM ============ -->
-    <section id="testimonials" class="section">
-      <div class="container">
-        <header class="section-head reveal-item">
-          <span class="eyebrow">Pilot Program</span>
-          <h2>Ürünü birlikte <span class="gradient-text">sahada olgunlaştıralım</span></h2>
-          <p>MarketPOS aktif geliştirme sürecinde. Bu nedenle abartılı vaatler yerine, pilot işletmelerle ölçülebilir çıktılar üretmeye odaklanıyoruz.</p>
-        </header>
-
-        <div class="roadmap-note reveal-item">
-          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm1 15h-2v-2h2Zm0-4h-2V7h2Z"/></svg>
-          <div>
-            <strong>Pilot programa dahil olun</strong>
-            <span>Windows kurulumunu indirin, ücretsiz kayıt açın — <strong>14 gün</strong> boyunca tüm özellikleri deneyin. Form doldurmanıza gerek yok.</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- ============ DOWNLOAD ============ -->
     <section id="download" class="section download-section">
       <div class="container download-inner">
@@ -478,7 +455,7 @@
         <p id="demoDescription">Windows kurulum dosyasını doğrudan indirin. Uygulamada ücretsiz kayıt açın — <strong>14 gün</strong> boyunca tüm özellikleri deneyin.</p>
 
           <div class="download-cta">
-            <button type="button" class="btn btn-primary btn-lg magnetic" data-open-download>
+            <button type="button" class="btn btn-primary btn-lg" data-open-download>
               <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 3v10.6l3.3-3.3 1.4 1.4L12 17.4 7.3 12.7l1.4-1.4L12 14.6V3Zm-8 16h16v2H4Z"/></svg>
               Kurulumu İndir
             </button>
@@ -523,16 +500,16 @@
         <p class="pricing-page-link reveal-item"><a href="pricing.html">Detaylı fiyatlandırma sayfası →</a></p>
       </div>
     </section>
-    <link rel="stylesheet" href="assets/pricing/pricing.css?v=20260727" />
-    <script type="module" src="assets/pricing/pricing.js?v=20260727"></script>
+    <link rel="stylesheet" href="assets/pricing/pricing.css?v=20260728" />
+    <script type="module" src="assets/pricing/pricing.js?v=20260728"></script>
 
     <!-- ============ DEVELOPMENT / ROADMAP ============ -->
     <section id="roadmap" class="section section-alt">
       <div class="container">
         <header class="section-head reveal-item">
-          <span class="eyebrow">Geliştirme Durumu</span>
-          <h2>Canlı <span class="gradient-text">Early Access</span> &middot; sürekli gelişen ürün</h2>
-          <p>MarketPOS üretimde kullanıma hazır ancak aktif olarak geliştirilmeye devam etmektedir. Müşteri geri bildirimleri doğrudan yol haritamıza işlenir; yeni özellikler ve iyileştirmeler düzenli aralıklarla otomatik güncelleme ile ulaştırılır.</p>
+          <span class="eyebrow">Yol Haritası</span>
+          <h2 class="text-balance">Sürekli gelişen, <span class="gradient-text">güvenilir</span> bir ürün</h2>
+          <p>Temel POS özellikleri yayında. Yeni özellikler otomatik güncellemeyle gelir; verileriniz korunur.</p>
         </header>
 
         <div class="roadmap-grid">
@@ -684,20 +661,18 @@
         <p style="text-align:center;margin-top:24px;"><a href="blog/index.html" class="btn btn-ghost">Tüm blog yazıları →</a></p>
       </div>
     </section>
-    <link rel="stylesheet" href="blog/blog.css?v=20260727" />
 
     <!-- ============ FINAL CTA ============ -->
     <section class="cta-band">
       <div class="container cta-inner">
         <div class="cta-copy">
           <span class="eyebrow light">Hemen Başlayın</span>
-          <h2>Bugün denemeye başlayın, <span class="gradient-text light">yarın farkı görün</span></h2>
-          <p>Kurulum, veri aktarımı ve eğitim tamamen bizden. Siz sadece satışa odaklanın; kârı birlikte büyütelim.</p>
+          <h2>Bugün deneyin — <span class="gradient-text light">14 gün ücretsiz</span></h2>
+          <p>Kurulum desteği bizden. İndirin, kayıt olun, kasada test edin.</p>
         </div>
         <div class="cta-actions">
-          <a class="btn btn-primary btn-lg magnetic" href="#download" data-open-download>Hemen Dene</a>
-          <a class="btn btn-outline-light btn-lg magnetic" href="#contact">Uzmanla Görüşün</a>
-          <a class="btn btn-ghost btn-lg btn-wa-light" href="https://wa.me/905510335916?text=Merhaba%20MarketPOS" target="_blank" rel="noopener">WhatsApp İletişim</a>
+          <a class="btn btn-primary btn-lg" href="#download" data-open-download>Hemen Dene</a>
+          <a class="btn btn-outline-light btn-lg" href="https://wa.me/905510335916?text=Merhaba%20MarketPOS" target="_blank" rel="noopener">WhatsApp</a>
         </div>
       </div>
     </section>
@@ -781,7 +756,7 @@
               </span>
             </label>
 
-            <button type="submit" class="btn btn-primary full-width btn-lg magnetic" id="contactSubmit">
+            <button type="submit" class="btn btn-primary full-width btn-lg" id="contactSubmit">
               <span class="btn-label">Bize Ulaşın</span>
               <span class="btn-spinner" aria-hidden="true"></span>
             </button>
@@ -923,7 +898,7 @@
           <li><a href="pricing.html">Fiyatlandırma</a></li>
           <li><a href="blog/index.html">Blog</a></li>
           <li><a href="#faq">SSS</a></li>
-          <li><a href="#testimonials">Pilot Program</a></li>
+          <li><a href="#roadmap">Yol Haritası</a></li>
           <li><a href="#about">Hakkımızda</a></li>
         </ul>
       </div>
@@ -953,7 +928,7 @@
     </div>
   </footer>
 
-  <script src="script.js?v=20260727" defer data-cfasync="false"></script>
+  <script src="script.js?v=20260728" defer data-cfasync="false"></script>
   <script>
     // Showcase tablarını kur.
     (function setupShowcase() {

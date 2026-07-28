@@ -20,7 +20,7 @@ const shot3 = document.getElementById('shot-3');
 
 /** v3: herkese açık indirme — şifre modalı kaldırıldı */
 const STORAGE_KEY = 'marketpos-site-config-v3';
-const ASSET_VER = '20260726c';
+const ASSET_VER = '20260728';
 
 /** Kurulum dosyası — backend herkese açık grant endpoint */
 const DOWNLOAD_PUBLIC_ENDPOINT = 'https://api.marketposs.com/api/download/public';
@@ -348,30 +348,34 @@ const counterObs = new IntersectionObserver(
 );
 document.querySelectorAll('.counter').forEach((el) => counterObs.observe(el));
 
-// ===== POINTER SPOTLIGHT (cards/buttons) =====
-document.querySelectorAll('.btn, .who-card, .feature-card').forEach((el) => {
-  el.addEventListener('pointermove', (e) => {
-    const r = el.getBoundingClientRect();
-    el.style.setProperty('--x', ((e.clientX - r.left) / r.width * 100) + '%');
-    el.style.setProperty('--y', ((e.clientY - r.top) / r.height * 100) + '%');
-  });
-});
-
-// ===== SUBTLE 3D TILT (hero app window) =====
-document.querySelectorAll('[data-tilt]').forEach((el) => {
-  let raf;
-  const reset = () => { el.style.transform = ''; };
-  el.addEventListener('pointermove', (e) => {
-    const r = el.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5;
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(() => {
-      el.style.transform = `perspective(1200px) rotateX(${(-py * 6).toFixed(2)}deg) rotateY(${(px * 8).toFixed(2)}deg)`;
+// ===== POINTER SPOTLIGHT (masaüstü only) =====
+if (!isTouchCoarse && !prefersReducedMotion) {
+  document.querySelectorAll('.btn, .who-card, .feature-card').forEach((el) => {
+    el.addEventListener('pointermove', (e) => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--x', ((e.clientX - r.left) / r.width * 100) + '%');
+      el.style.setProperty('--y', ((e.clientY - r.top) / r.height * 100) + '%');
     });
   });
-  el.addEventListener('pointerleave', reset);
-});
+}
+
+// ===== SUBTLE 3D TILT (masaüstü only) =====
+if (!isTouchCoarse && !prefersReducedMotion) {
+  document.querySelectorAll('[data-tilt]').forEach((el) => {
+    let raf;
+    const reset = () => { el.style.transform = ''; };
+    el.addEventListener('pointermove', (e) => {
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        el.style.transform = `perspective(1200px) rotateX(${(-py * 4).toFixed(2)}deg) rotateY(${(px * 5).toFixed(2)}deg)`;
+      });
+    });
+    el.addEventListener('pointerleave', reset);
+  });
+}
 
 // ===== CONTACT FORM =====
 
@@ -486,36 +490,64 @@ if (contactForm) {
   contactForm.addEventListener('submit', submitContactForm);
 }
 
-// ===== SCROLL REVEAL (hafif) =====
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity  = '1';
-        entry.target.style.transform = 'translateY(0)';
-        observer.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.12 }
-);
+// ===== SCROLL REVEAL (hafif — hero ve üst katman asla gizlenmez) =====
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isTouchCoarse = window.matchMedia('(pointer: coarse)').matches;
 
-// Stagger helper — sibling'ler 70ms gecikmeyle açılır
+const revealObserver = prefersReducedMotion
+  ? null
+  : new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' },
+    );
+
+function revealNow(el) {
+  el.style.opacity = '1';
+  el.style.transform = 'translateY(0)';
+  if (revealObserver) revealObserver.unobserve(el);
+}
+
 function setupRevealGroup(selector) {
+  if (prefersReducedMotion || !revealObserver) return;
+
   const items = Array.from(document.querySelectorAll(selector));
   items.forEach((el) => {
+    if (el.closest('.hero')) return;
+
     el.style.opacity = '0';
-    el.style.transform = 'translateY(24px)';
-    el.style.transition = 'opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1)';
-    observer.observe(el);
+    el.style.transform = 'translateY(18px)';
+    el.style.transition =
+      'opacity .55s cubic-bezier(.2,.7,.2,1), transform .55s cubic-bezier(.2,.7,.2,1)';
+    revealObserver.observe(el);
+
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.92) {
+      requestAnimationFrame(() => revealNow(el));
+    }
   });
+
+  // Güvenlik: 2 sn sonra hâlâ gizli kalanları göster (JS hatası / IO sorunu)
+  setTimeout(() => {
+    items.forEach((el) => {
+      if (el.style.opacity === '0') revealNow(el);
+    });
+  }, 2000);
 }
+
 setupRevealGroup('.feature-card, .stat-card, .reveal-item, .trust-badge, .who-card, .down-step, .thumb-strip .screenshot-card');
 
-// Siblings arasında stagger: bir grup reveal olduğunda sıralı açılsın
 document.querySelectorAll('.feature-grid, .who-grid, .trust-grid, .thumb-strip, .benefit-strip, .download-side').forEach((group) => {
   Array.from(group.children).forEach((child, i) => {
-    child.style.transitionDelay = `${i * 70}ms`;
+    if (prefersReducedMotion) return;
+    child.style.transitionDelay = `${Math.min(i * 50, 300)}ms`;
   });
 });
 
