@@ -120,7 +120,157 @@
   color: transparent;
 }
 
-/* ===== AI Chat demo ===== */
+.section-ai-platform .section-head h2 {
+  font-size: clamp(2rem, 4.2vw, 2.85rem);
+  line-height: 1.12;
+  max-width: 20ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-ai-platform .section-head p {
+  font-size: 1.05rem;
+  max-width: 52ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ===== AI floating chat (sağ alt) ===== */
+.ai-float-root {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.ai-float-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem 0.65rem 0.85rem;
+  border: 1px solid rgba(139, 92, 246, 0.45);
+  border-radius: 999px;
+  background: linear-gradient(135deg, #6d28d9 0%, #8b5cf6 55%, #a78bfa 100%);
+  color: #fff;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 12px 32px rgba(109, 40, 217, 0.45);
+  transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
+}
+
+.ai-float-toggle:hover,
+.ai-float-toggle.is-open {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+  box-shadow: 0 16px 40px rgba(109, 40, 217, 0.55);
+}
+
+.ai-float-toggle span {
+  letter-spacing: -0.01em;
+}
+
+.ai-float-panel {
+  width: min(360px, calc(100vw - 32px));
+  max-height: min(480px, calc(100dvh - 120px));
+  display: flex;
+  flex-direction: column;
+  background: rgba(8, 12, 28, 0.96);
+  border: 1px solid var(--saas-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(14px);
+}
+
+.ai-float-panel[hidden] {
+  display: none !important;
+}
+
+.ai-float-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--saas-border);
+  background: rgba(139, 92, 246, 0.12);
+}
+
+.ai-float-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #e9d5ff;
+}
+
+.ai-float-close {
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.85);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 8px;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ai-float-close:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.ai-float-panel .ai-chat-messages {
+  flex: 1;
+  min-height: 180px;
+  max-height: 260px;
+  overflow-y: auto;
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.ai-float-panel .ai-chat-suggestions {
+  padding: 0 0.85rem 0.65rem;
+}
+
+.ai-float-panel .ai-chat-input-row {
+  padding: 0.65rem 0.85rem 0.85rem;
+  border-top: 1px solid var(--saas-border);
+}
+
+@media (max-width: 640px) {
+  .ai-float-toggle span {
+    display: none;
+  }
+
+  .ai-float-toggle {
+    width: 56px;
+    height: 56px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  .ai-float-root {
+    right: 16px;
+    bottom: 84px;
+  }
+
+  .wa-float {
+    bottom: 152px;
+  }
+}
+
+/* ===== AI Chat demo (legacy inline — kullanılmıyor) ===== */
 .ai-chat-section {
   padding-block: clamp(3rem, 8vw, 5rem);
 }

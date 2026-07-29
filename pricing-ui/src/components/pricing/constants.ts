@@ -15,7 +15,7 @@ export const TRIAL = {
 	days: 14,
 	label: "14 gün ücretsiz deneme",
 	subtitle: "Windows kurulumunu indirin, kayıt olun — kredi kartı gerekmez.",
-	ctaLabel: "Hemen Dene",
+	ctaLabel: "MarketPOS'u İndir",
 } as const;
 
 export const CLOUD_PRICING = {

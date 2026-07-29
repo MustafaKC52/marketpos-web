@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
@@ -19,11 +19,10 @@
   <div class="portal-auth-page">
     <div class="portal-auth-card" style="max-width:28rem">
       <a href="../index.html"><img src="../assets/logo-lockup.png?v=20260530" alt="MarketPOS" height="28" style="margin-bottom:1rem" /></a>
-      <h1>14 gün ücretsiz başlayın</h1>
+      <h1>MarketPOS'u İndir başlayın</h1>
       <p class="portal-sub">Hesabınızı oluşturun, Windows uygulamasını indirip mağazanızı hemen kurun.</p>
 
       <div id="alert" class="portal-alert portal-alert-error" hidden></div>
-      <div id="closedNote" class="portal-alert portal-alert-info" hidden></div>
 
       <form id="registerForm">
         <div class="portal-field">
@@ -33,6 +32,11 @@
         <div class="portal-field">
           <label for="email">E-posta</label>
           <input id="email" type="email" autocomplete="username" required />
+        </div>
+        <div class="portal-field">
+          <label for="phone">Cep telefonu</label>
+          <input id="phone" type="tel" autocomplete="tel-national" required />
+          <p class="portal-field-hint">Şifre sıfırlama ve doğrulama için kullanılır.</p>
         </div>
         <div class="portal-field">
           <label for="password">Şifre (en az 8 karakter)</label>
@@ -55,31 +59,28 @@
     </div>
   </div>
 
+  <script src="../js/turkish-phone.js?v=20260730"></script>
   <script src="portal.js?v=20260730"></script>
   <script>
     (function () {
       var P = window.MarketPortal;
+      var TP = window.TurkishPhone;
       if (P.redirectIfAuthed()) return;
 
       var alertEl = document.getElementById("alert");
-      var closedNote = document.getElementById("closedNote");
       var form = document.getElementById("registerForm");
-
-      P.fetchPublicConfig()
-        .then(function (cfg) {
-          if (cfg && cfg.registrationEnabled === false) {
-            closedNote.hidden = false;
-            closedNote.textContent =
-              cfg.registrationDeniedMessage ||
-              "Kayıt şu an kapalı. Uygulamayı indirip destek ile iletişime geçebilirsiniz.";
-            form.querySelector("button").disabled = true;
-          }
-        })
-        .catch(function () {});
+      var phoneInput = TP.wrapPhoneInput(document.getElementById("phone"));
 
       form.addEventListener("submit", async function (e) {
         e.preventDefault();
         P.hideAlert(alertEl);
+
+        var phoneErr = TP.validateTurkishMobilePhone(phoneInput.value);
+        if (phoneErr) {
+          P.showAlert(alertEl, phoneErr);
+          return;
+        }
+
         var btn = document.getElementById("submitBtn");
         P.setLoading(btn, true, "Oluşturuluyor…");
         try {
@@ -87,10 +88,14 @@
             name: document.getElementById("name").value.trim(),
             email: document.getElementById("email").value.trim(),
             password: document.getElementById("password").value,
+            phone: TP.formatTurkishPhoneForStorage(phoneInput.value),
             storeName: document.getElementById("storeName").value.trim(),
             storeCode: document.getElementById("storeCode").value.trim().toUpperCase(),
           });
           P.saveSession(data);
+          try {
+            await P.sendPhoneVerifyCode();
+          } catch (_) {}
           window.location.href = "index.html";
         } catch (err) {
           P.showAlert(alertEl, err.error || "Kayıt başarısız.");

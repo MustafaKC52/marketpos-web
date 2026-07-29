@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css?v=20260730" />
   <link rel="stylesheet" href="portal.css?v=20260730" />
+  <link rel="stylesheet" href="../saas.css?v=20260730" />
 </head>
 <body>
   <div class="bg-aurora" aria-hidden="true"><span class="aurora a1"></span><span class="aurora a2"></span></div>
@@ -18,28 +19,35 @@
 
   <div class="portal-auth-page">
     <div class="portal-auth-card">
-      <a href="../index.html"><img src="../assets/logo-lockup.png?v=20260530" alt="MarketPOS" height="28" style="margin-bottom:1rem" /></a>
+      <a href="../index.html" class="portal-auth-logo"><img src="../assets/logo-lockup.png?v=20260530" alt="MarketPOS" width="160" height="24" /></a>
       <h1>Hesabınıza giriş</h1>
       <p class="portal-sub">Mağaza bilgilerinizi, lisans durumunuzu ve kayıtlı cihazlarınızı web üzerinden yönetin.</p>
+      <p class="portal-alert portal-alert-info" style="margin-bottom:1.25rem">
+        Web hesabı ile Windows uygulaması <strong>ayrı oturumlarda</strong> çalışır; siteye giriş yapmak masaüstü kasayı kapatmaz.
+      </p>
 
       <div id="alert" class="portal-alert portal-alert-error" hidden></div>
-      <div id="sessionInfo" class="portal-alert portal-alert-info" hidden></div>
 
       <form id="loginForm">
         <div class="portal-field">
           <label for="email">E-posta</label>
-          <input id="email" name="email" type="email" autocomplete="username" required />
+          <input id="email" name="email" type="email" autocomplete="username" placeholder="ornek@market.com" required />
+          <label class="portal-field-foot portal-field-foot-left portal-remember">
+            <input type="checkbox" id="rememberMe" name="rememberMe" />
+            <span>E-postamı hatırla</span>
+          </label>
         </div>
         <div class="portal-field">
           <label for="password">Şifre</label>
-          <input id="password" name="password" type="password" autocomplete="current-password" required />
+          <input id="password" name="password" type="password" autocomplete="current-password" placeholder="••••••••" required />
+          <p class="portal-field-foot portal-field-foot-right">
+            <a href="sifremi-unuttum.html">Şifremi unuttum</a>
+          </p>
         </div>
-        <button class="btn btn-primary" style="width:100%;margin-top:0.25rem" type="submit" id="submitBtn">Giriş yap</button>
+        <button class="btn btn-primary portal-submit" type="submit" id="submitBtn">Giriş yap</button>
       </form>
 
       <p class="portal-auth-links">
-        <a href="sifremi-unuttum.html">Şifremi unuttum</a>
-        ·
         <a href="kayit.html">Ücretsiz kayıt ol</a>
         ·
         <a href="../index.html">Ana sayfa</a>
@@ -48,16 +56,24 @@
   </div>
 
   <script src="portal.js?v=20260730"></script>
+  <script src="../js/saas-ai-chat.js?v=20260730" defer></script>
   <script>
     (function () {
       var P = window.MarketPortal;
       if (P.redirectIfAuthed()) return;
 
       var alertEl = document.getElementById("alert");
-      var sessionInfo = document.getElementById("sessionInfo");
-      sessionInfo.hidden = false;
-      sessionInfo.textContent =
-        "Not: Web girişi yaparsanız masaüstü uygulamasındaki oturum sonlanabilir (tek aktif oturum).";
+      var rememberEl = document.getElementById("rememberMe");
+      try {
+        var saved = localStorage.getItem("marketpos-portal-remember");
+        if (saved) {
+          var parsed = JSON.parse(saved);
+          if (parsed && parsed.email) {
+            document.getElementById("email").value = parsed.email;
+            rememberEl.checked = true;
+          }
+        }
+      } catch (_) {}
 
       document.getElementById("loginForm").addEventListener("submit", async function (e) {
         e.preventDefault();
@@ -65,11 +81,19 @@
         var btn = document.getElementById("submitBtn");
         P.setLoading(btn, true, "Giriş yapılıyor…");
         try {
+          var email = document.getElementById("email").value.trim();
           var data = await P.login(
-            document.getElementById("email").value,
+            email,
             document.getElementById("password").value,
           );
           P.saveSession(data);
+          try {
+            if (rememberEl.checked) {
+              localStorage.setItem("marketpos-portal-remember", JSON.stringify({ email: email }));
+            } else {
+              localStorage.removeItem("marketpos-portal-remember");
+            }
+          } catch (_) {}
           var next = new URLSearchParams(window.location.search).get("next") || "index.html";
           window.location.href = next;
         } catch (err) {

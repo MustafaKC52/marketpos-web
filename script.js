@@ -20,7 +20,7 @@ const shot3 = document.getElementById('shot-3');
 
 /** v3: herkese açık indirme — şifre modalı kaldırıldı */
 const STORAGE_KEY = 'marketpos-site-config-v3';
-const ASSET_VER = '20260729';
+const ASSET_VER = '20260730';
 
 /** Kurulum dosyası — backend herkese açık grant endpoint */
 const DOWNLOAD_PUBLIC_ENDPOINT = 'https://api.marketposs.com/api/download/public';
@@ -665,4 +665,24 @@ document.addEventListener('keydown', (e) => {
     el.addEventListener('pointermove', move);
     el.addEventListener('pointerleave', reset);
   });
+})();
+
+// ===== AI FLOAT WIDGET (tüm script.js kullanan sayfalar) =====
+(() => {
+  if (document.getElementById('aiFloatRoot') || document.querySelector('script[data-ai-chat-loaded]')) return;
+  const scripts = document.getElementsByTagName('script');
+  let base = '';
+  for (let i = 0; i < scripts.length; i++) {
+    const src = scripts[i].getAttribute('src') || '';
+    if (src.includes('script.js')) {
+      base = src.replace(/script\.js.*$/, '');
+      break;
+    }
+  }
+  if (!base) return;
+  const s = document.createElement('script');
+  s.src = `${base}js/saas-ai-chat.js?v=20260730`;
+  s.defer = true;
+  s.setAttribute('data-ai-chat-loaded', '1');
+  document.body.appendChild(s);
 })();

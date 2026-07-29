@@ -222,20 +222,33 @@ function postHtml(article, index) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../style.css?v=20260730" />
+  <link rel="stylesheet" href="../../saas.css?v=20260730" />
   <link rel="stylesheet" href="../blog.css?v=20260730" />
 </head>
 <body id="top">
-  <div class="bg-aurora" aria-hidden="true"><span class="aurora a1"></span></div>
+  <div class="bg-aurora" aria-hidden="true"><span class="aurora a1"></span><span class="aurora a2"></span><span class="aurora a3"></span></div>
   <div class="bg-grid" aria-hidden="true"></div>
-  <header class="blog-header">
-    <div class="container blog-header-inner">
-      <a href="../../index.html" class="logo"><img class="logo-img" src="../../assets/logo-lockup.png?v=20260530" alt="MarketPOS" /></a>
-      <nav class="blog-nav" aria-label="Blog menü">
-        <a href="../../index.html" class="blog-nav-home">Ana Sayfa</a>
-        <a href="../../pricing.html" class="blog-nav-hide-sm">Fiyat</a>
-        <a href="../index.html">Blog</a>
-        <a class="btn btn-primary btn-sm" href="../../index.html#download" data-open-download>Hemen Dene</a>
+  <header id="navbar" class="site-header">
+    <div class="container nav-inner">
+      <a class="logo" href="../../index.html" aria-label="MarketPOS ana sayfa">
+        <img class="logo-img" src="../../assets/logo-lockup.png?v=20260530" alt="MarketPOS" width="180" height="27" decoding="async" />
+      </a>
+      <nav class="main-nav" aria-label="Ana menü">
+        <ul>
+          <li><a href="../../index.html#ai-platform">AI Özellikleri</a></li>
+          <li><a href="../../index.html#features">Özellikler</a></li>
+          <li><a href="../../pricing.html">Fiyat</a></li>
+          <li><a href="../index.html">Blog</a></li>
+          <li><a href="../../hesap/index.html">Hesabım</a></li>
+        </ul>
       </nav>
+      <div class="nav-cta">
+        <a class="btn btn-primary" href="../../index.html#download" data-open-download>MarketPOS'u İndir</a>
+        <a class="btn btn-ghost" href="../../hesap/giris.html">Giriş</a>
+      </div>
+      <button class="burger" id="burger" aria-label="Menüyü aç/kapat" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
   <main class="blog-main container">
@@ -250,9 +263,9 @@ function postHtml(article, index) {
 ${body}
 
       <div class="blog-cta-box">
-        <h2>MarketPOS'u ücretsiz deneyin</h2>
-        <p>Dijital işletme ortağınız — 14 gün ücretsiz, offline çalışır.</p>
-        <a class="btn btn-primary btn-lg" href="../../index.html#download" data-open-download>Hemen Dene</a>
+        <h2>Rehberleri uygulamaya dökün</h2>
+        <p>MarketPOS'u indirin — stok, satış ve AI analizler tek panelde.</p>
+        <a class="btn btn-primary btn-lg" href="../../index.html#download" data-open-download>MarketPOS'u İndir</a>
         <p style="margin-top:12px;font-size:.85rem;"><a href="../../pricing.html">Fiyatlandırma →</a></p>
       </div>
     </article>
@@ -304,31 +317,52 @@ function indexHtml(articles) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../style.css?v=20260730" />
+  <link rel="stylesheet" href="../saas.css?v=20260730" />
   <link rel="stylesheet" href="blog.css?v=20260730" />
 </head>
 <body id="top">
-  <div class="bg-aurora" aria-hidden="true"><span class="aurora a1"></span><span class="aurora a2"></span></div>
+  <div class="bg-aurora" aria-hidden="true"><span class="aurora a1"></span><span class="aurora a2"></span><span class="aurora a3"></span></div>
   <div class="bg-grid" aria-hidden="true"></div>
 
-  <header class="blog-header">
-    <div class="container blog-header-inner">
-      <a href="../index.html" class="logo"><img class="logo-img" src="../assets/logo-lockup.png?v=20260530" alt="MarketPOS" /></a>
-      <nav class="blog-nav" aria-label="Blog menü">
-        <a href="../index.html" class="blog-nav-home">Ana Sayfa</a>
-        <a href="../index.html#features" class="blog-nav-hide-sm">Özellikler</a>
-        <a href="../pricing.html" class="blog-nav-hide-sm">Fiyat</a>
-        <a href="index.html">Blog</a>
-        <a class="btn btn-primary btn-sm" href="../index.html#download" data-open-download>Hemen Dene</a>
+  <header id="navbar" class="site-header">
+    <div class="container nav-inner">
+      <a class="logo" href="../index.html" aria-label="MarketPOS ana sayfa">
+        <img class="logo-img" src="../assets/logo-lockup.png?v=20260530" alt="MarketPOS" width="180" height="27" decoding="async" />
+      </a>
+      <nav class="main-nav" aria-label="Ana menü">
+        <ul>
+          <li><a href="../index.html#ai-platform">AI Özellikleri</a></li>
+          <li><a href="../index.html#features">Özellikler</a></li>
+          <li><a href="../pricing.html">Fiyat</a></li>
+          <li><a href="index.html">Blog</a></li>
+          <li><a href="../hesap/index.html">Hesabım</a></li>
+          <li><a href="../index.html#faq">SSS</a></li>
+        </ul>
       </nav>
+      <div class="nav-cta">
+        <a class="btn btn-primary" href="../index.html#download" data-open-download>MarketPOS'u İndir</a>
+        <a class="btn btn-ghost" href="../hesap/giris.html">Giriş</a>
+      </div>
+      <button class="burger" id="burger" aria-label="Menüyü aç/kapat" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
 
   <main class="blog-main container">
     <header class="blog-hero">
       <span class="eyebrow">100 Rehber · MarketPOS Blog</span>
-      <h1>Google'dan müşteri getiren <span class="gradient-text">perakende rehberleri</span></h1>
-      <p>Market nasıl açılır, POS nedir, stok nasıl tutulur, kârlılık nasıl artırılır — arama yapan her müşteriye cevap.</p>
+      <h1>Perakende işletmeniz için <span class="gradient-text">pratik rehberler</span></h1>
+      <p>Market açmaktan stok takibine, POS seçiminden kârlılığa — işletmenizi büyütmek için ihtiyacınız olan bilgiler.</p>
     </header>
+
+    <nav class="blog-filters blog-filters-seo" aria-label="SEO kategori">
+      <span class="blog-filter-label">Kategoriler:</span>
+      <button type="button" class="blog-filter-btn" data-filter="POS Rehberi">POS Rehberi</button>
+      <button type="button" class="blog-filter-btn" data-filter="Market Yönetimi">Market Yönetimi</button>
+      <button type="button" class="blog-filter-btn" data-filter="Stok Yönetimi">Stok Yönetimi</button>
+      <button type="button" class="blog-filter-btn" data-filter="Perakende Teknolojileri">Perakende Teknolojileri</button>
+    </nav>
 
     <nav class="blog-filters" aria-label="Kategori filtresi">
       <button type="button" class="blog-filter-btn active" data-filter="all">Tümü (${articles.length})</button>
@@ -340,19 +374,23 @@ ${cards}
     </div>
 
     <div class="blog-cta-box" style="max-width: 640px; margin: 48px auto 0;">
-      <h2>Okumak yetmez — deneyin</h2>
-      <p>MarketPOS'u 14 gün ücretsiz kullanın. Dijital işletme ortağınız kasada hazır.</p>
-      <a class="btn btn-primary btn-lg" href="../index.html#download" data-open-download>Hemen Dene</a>
+      <h2>Rehberleri uygulamaya dökün</h2>
+      <p>MarketPOS'u indirin, kasada deneyin — stok, satış ve AI analizler tek panelde.</p>
+      <a class="btn btn-primary btn-lg" href="../index.html#download" data-open-download>MarketPOS'u İndir</a>
     </div>
   </main>
 
-  <footer class="blog-footer-mini container">
-    <p>© 2026 MarketPOS</p>
-    <nav aria-label="Alt menü">
-      <a href="../index.html">Ana Sayfa</a>
-      <a href="../pricing.html">Fiyatlandırma</a>
-      <a href="../index.html#download" data-open-download>Ücretsiz İndir</a>
-    </nav>
+  <footer class="site-footer">
+    <div class="container footer-bottom">
+      <div class="footer-bottom-inner">
+        <span>© 2026 MarketPOS</span>
+        <nav class="footer-inline-nav" aria-label="Alt menü">
+          <a href="../index.html">Ana Sayfa</a>
+          <a href="../pricing.html">Fiyatlandırma</a>
+          <a href="../index.html#download" data-open-download>İndir</a>
+        </nav>
+      </div>
+    </div>
   </footer>
   <script src="../script.js?v=20260730" defer data-cfasync="false"></script>
   <script src="blog-filter.js?v=20260730" defer data-cfasync="false"></script>

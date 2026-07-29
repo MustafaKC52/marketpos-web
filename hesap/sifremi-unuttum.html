@@ -1,58 +1,384 @@
 <!DOCTYPE html>
+
 <html lang="tr">
+
 <head>
+
   <meta charset="UTF-8" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Şifremi Unuttum — MarketPOS</title>
+
   <meta name="robots" content="noindex, nofollow" />
+
   <link rel="icon" href="../favicon.svg?v=20260530" type="image/svg+xml" />
+
   <link rel="stylesheet" href="../style.css?v=20260730" />
+
   <link rel="stylesheet" href="portal.css?v=20260730" />
+
 </head>
+
 <body>
-  <div class="bg-aurora" aria-hidden="true"><span class="aurora a1"></span></div>
+
+  <div class="bg-aurora" aria-hidden="true"><span class="aurora a1"></span><span class="aurora a2"></span></div>
+
   <div class="bg-grid" aria-hidden="true"></div>
 
+
+
   <div class="portal-auth-page">
+
     <div class="portal-auth-card">
+
       <h1>Şifre sıfırlama</h1>
-      <p class="portal-sub">E-posta, mağaza kodu ve yeni şifrenizi girin. Tüm oturumlar kapanır.</p>
+
+      <p class="portal-sub" id="stepDesc">E-posta adresinizle hesabınızı doğrulayın; kayıtlı telefon varsa onu da girin.</p>
+
+
+
+      <div class="portal-steps" aria-hidden="true">
+
+        <span class="portal-step is-active" id="stepBadge1">1. Doğrulama</span>
+
+        <span class="portal-step" id="stepBadge2">2. Yeni şifre</span>
+
+      </div>
+
+
+
       <div id="alert" hidden></div>
-      <form id="form">
-        <div class="portal-field"><label for="email">E-posta</label><input id="email" type="email" required /></div>
-        <div class="portal-field"><label for="storeCode">Mağaza kodu</label><input id="storeCode" required style="text-transform:uppercase" /></div>
-        <div class="portal-field"><label for="newPassword">Yeni şifre</label><input id="newPassword" type="password" minlength="8" required /></div>
-        <button class="btn btn-primary" style="width:100%" type="submit" id="submitBtn">Şifreyi güncelle</button>
+
+
+
+      <form id="identifyForm">
+
+        <div class="portal-field">
+
+          <label for="email">E-posta</label>
+
+          <input id="email" type="email" autocomplete="username" required />
+
+        </div>
+
+        <div class="portal-field">
+
+          <div class="portal-field-row">
+
+            <label for="phone">Telefon <span id="phoneOptional">(varsa)</span></label>
+
+            <button type="button" class="portal-link-btn" id="hintBtn">Telefonumu hatırlamıyorum</button>
+
+          </div>
+
+          <input id="phone" type="tel" autocomplete="tel" placeholder="05XX XXX XX XX" />
+
+          <p class="portal-field-hint" id="hintText" hidden></p>
+
+        </div>
+
+        <button class="btn btn-primary" style="width:100%" type="submit" id="verifyBtn">Devam et</button>
+
       </form>
+
+
+
+      <form id="passwordForm" hidden>
+
+        <div class="portal-alert portal-alert-info" id="verifiedBanner" hidden></div>
+
+        <div class="portal-field">
+
+          <label for="newPassword">Yeni şifre</label>
+
+          <input id="newPassword" type="password" minlength="8" required autocomplete="new-password" />
+
+        </div>
+
+        <div class="portal-field">
+
+          <label for="confirmPassword">Yeni şifre (tekrar)</label>
+
+          <input id="confirmPassword" type="password" minlength="8" required autocomplete="new-password" />
+
+        </div>
+
+        <button class="btn btn-primary" style="width:100%" type="submit" id="completeBtn">Yeni şifreyi kaydet</button>
+
+        <button type="button" class="btn btn-ghost" style="width:100%;margin-top:0.5rem" id="backBtn">Geri — bilgileri düzelt</button>
+
+      </form>
+
+
+
       <p class="portal-auth-links"><a href="giris.html">Giriş sayfasına dön</a></p>
+
     </div>
+
   </div>
 
+
+
+  <script src="../js/turkish-phone.js?v=20260730"></script>
   <script src="portal.js?v=20260730"></script>
   <script>
     (function () {
       var P = window.MarketPortal;
+      var TP = window.TurkishPhone;
+
       var alertEl = document.getElementById("alert");
-      document.getElementById("form").addEventListener("submit", async function (e) {
-        e.preventDefault();
-        var btn = document.getElementById("submitBtn");
-        P.setLoading(btn, true);
-        try {
-          await P.forgotPassword({
-            email: document.getElementById("email").value.trim(),
-            storeCode: document.getElementById("storeCode").value.trim().toUpperCase(),
-            newPassword: document.getElementById("newPassword").value,
-          });
-          alertEl.hidden = false;
-          alertEl.className = "portal-alert portal-alert-success";
-          alertEl.textContent = "Şifre güncellendi. Yeni şifrenizle giriş yapabilirsiniz.";
-        } catch (err) {
-          P.showAlert(alertEl, err.error || "İşlem başarısız.");
-        } finally {
-          P.setLoading(btn, false);
+
+      var identifyForm = document.getElementById("identifyForm");
+
+      var passwordForm = document.getElementById("passwordForm");
+
+      var stepDesc = document.getElementById("stepDesc");
+
+      var stepBadge1 = document.getElementById("stepBadge1");
+
+      var stepBadge2 = document.getElementById("stepBadge2");
+
+      var hintText = document.getElementById("hintText");
+
+      var verifiedBanner = document.getElementById("verifiedBanner");
+
+      var phoneOptional = document.getElementById("phoneOptional");
+
+      var resetToken = "";
+
+      var requiresPhone = false;
+
+      var hintLoaded = false;
+
+      var phoneInput = TP.wrapPhoneInput(document.getElementById("phone"));
+
+
+
+      function showStep(step) {
+
+        var isIdentify = step === "identify";
+
+        identifyForm.hidden = !isIdentify;
+
+        passwordForm.hidden = isIdentify;
+
+        stepBadge1.classList.toggle("is-active", isIdentify);
+
+        stepBadge2.classList.toggle("is-active", !isIdentify);
+
+        stepDesc.textContent = isIdentify
+
+          ? "E-posta adresinizle hesabınızı doğrulayın; kayıtlı telefon varsa onu da girin."
+
+          : "Yeni şifrenizi girin. Tüm oturumlar güvenlik için kapatılır.";
+
+      }
+
+
+
+      function applyHint(hint) {
+
+        hintText.hidden = false;
+
+        if (hint.found) {
+
+          requiresPhone = Boolean(hint.requiresPhone);
+
+          phoneOptional.hidden = requiresPhone;
+
+          if (hint.phoneHint) {
+
+            hintText.textContent = (hint.storeName ? hint.storeName + " — " : "") + "Kayıtlı telefon: " + hint.phoneHint;
+
+          } else {
+
+            hintText.textContent = (hint.storeName ? hint.storeName + " — " : "") + "Telefon kaydı yok; yalnızca e-posta ile devam edebilirsiniz.";
+
+          }
+
+        } else {
+
+          requiresPhone = false;
+
+          phoneOptional.hidden = false;
+
+          hintText.textContent = hint.message || "Bu e-posta kayıtlı değilse doğrulama yapılamaz.";
+
         }
+
+        hintLoaded = true;
+
+      }
+
+
+
+      document.getElementById("hintBtn").addEventListener("click", async function () {
+
+        P.hideAlert(alertEl);
+
+        var email = document.getElementById("email").value.trim();
+
+        if (!email) {
+
+          P.showAlert(alertEl, "Önce e-posta adresinizi girin.");
+
+          return;
+
+        }
+
+        try {
+
+          var hint = await P.forgotPasswordHint(email);
+
+          applyHint(hint);
+
+        } catch (err) {
+
+          P.showAlert(alertEl, err.error || "İpucu alınamadı.");
+
+        }
+
       });
+
+
+
+      identifyForm.addEventListener("submit", async function (e) {
+
+        e.preventDefault();
+
+        P.hideAlert(alertEl);
+
+        var btn = document.getElementById("verifyBtn");
+
+        var email = document.getElementById("email").value.trim();
+
+        var phone = phoneInput.value.trim();
+
+        P.setLoading(btn, true, "Doğrulanıyor…");
+
+        try {
+
+          if (!hintLoaded) {
+
+            applyHint(await P.forgotPasswordHint(email));
+
+          }
+
+          if (requiresPhone && !phone) {
+
+            P.showAlert(alertEl, "Kayıtlı telefon numaranızı girin.");
+
+            return;
+
+          }
+
+          var data = await P.forgotPasswordVerify({
+            email: email,
+            phone: phone ? TP.formatTurkishPhoneForStorage(phone) : undefined,
+          });
+
+          resetToken = data.resetToken;
+
+          verifiedBanner.hidden = false;
+
+          verifiedBanner.textContent =
+
+            "Hesap doğrulandı" +
+
+            (data.storeName ? " — " + data.storeName : "") +
+
+            (data.phoneHint ? " · Tel: " + data.phoneHint : "");
+
+          showStep("password");
+
+        } catch (err) {
+
+          P.showAlert(alertEl, err.error || "Bilgiler doğrulanamadı.");
+
+        } finally {
+
+          P.setLoading(btn, false);
+
+        }
+
+      });
+
+
+
+      document.getElementById("backBtn").addEventListener("click", function () {
+
+        resetToken = "";
+
+        showStep("identify");
+
+        P.hideAlert(alertEl);
+
+      });
+
+
+
+      passwordForm.addEventListener("submit", async function (e) {
+
+        e.preventDefault();
+
+        P.hideAlert(alertEl);
+
+        var pw = document.getElementById("newPassword").value;
+
+        var pw2 = document.getElementById("confirmPassword").value;
+
+        if (pw !== pw2) {
+
+          P.showAlert(alertEl, "Şifreler eşleşmiyor.");
+
+          return;
+
+        }
+
+        var btn = document.getElementById("completeBtn");
+
+        P.setLoading(btn, true, "Kaydediliyor…");
+
+        try {
+
+          await P.forgotPasswordComplete({ resetToken: resetToken, newPassword: pw });
+
+          alertEl.hidden = false;
+
+          alertEl.className = "portal-alert portal-alert-success";
+
+          alertEl.textContent = "Şifre güncellendi. Yeni şifrenizle giriş yapabilirsiniz.";
+
+          passwordForm.hidden = true;
+
+          identifyForm.hidden = true;
+
+        } catch (err) {
+
+          P.showAlert(alertEl, err.error || "Şifre güncellenemedi.");
+
+          if ((err.error || "").indexOf("süresi doldu") >= 0) {
+
+            showStep("identify");
+
+            resetToken = "";
+
+          }
+
+        } finally {
+
+          P.setLoading(btn, false);
+
+        }
+
+      });
+
     })();
+
   </script>
+
 </body>
+
 </html>
+

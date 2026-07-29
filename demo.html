@@ -1,47 +1,47 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MarketPos Web Demo</title>
-  <meta name="description" content="MarketPos web demosunda ürün arama, sepete ekleme, ödeme alma ve toplam hesaplama akışını tarayıcıda deneyin." />
+  <title>Satış Ekranı Demo | MarketPOS</title>
+  <meta name="description" content="MarketPOS satış ekranı web önizlemesi: ürün arama, sepete ekleme ve ödeme akışını deneyin." />
   <meta name="robots" content="noindex, nofollow" />
   <link rel="canonical" href="https://www.marketposs.com/demo.html" />
-  <link rel="icon" href="favicon.svg?v=20260530" type="image/svg+xml" />
-  <link rel="icon" href="assets/logo-app-icon.png?v=20260530" type="image/png" sizes="512x512" />
-  <link rel="apple-touch-icon" href="assets/logo-app-icon.png?v=20260530" />
+  <link rel="icon" href="favicon.svg?v=20260730" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="demo.css?v=20260726" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=20260730" />
+  <link rel="stylesheet" href="demo.css?v=20260730" />
 </head>
-<body>
-  <p style="margin:0;padding:10px 16px;background:#fef3c7;color:#92400e;font-size:13px;text-align:center;">
-    Bu sayfa basit bir web önizlemesidir — gerçek MarketPOS masaüstü uygulaması değildir.
-    Tam sürüm için <a href="index.html#download" data-open-download style="color:#b45309;font-weight:600;">hemen indirip deneyin</a> — 14 gün ücretsiz.
-  </p>
-  <div class="demo-bg demo-bg-one"></div>
-  <div class="demo-bg demo-bg-two"></div>
+<body class="demo-page">
+  <div class="bg-aurora" aria-hidden="true"><span class="aurora a1"></span><span class="aurora a2"></span></div>
+  <div class="bg-grid" aria-hidden="true"></div>
 
-  <header class="topbar">
-    <a href="index.html" class="brand" aria-label="MarketPos Demo — ana sayfaya dön">
-      <img src="assets/logo-lockup.png?v=20260530" alt="MarketPOS" class="brand-logo" width="200" height="30" />
-      <span class="brand-demo-suffix">Web Önizleme</span>
-    </a>
-    <div class="topbar-actions">
-      <button id="resetDemo" class="btn ghost">Demoyu Sıfırla</button>
+  <p class="demo-banner">Web önizleme — gerçek masaüstü uygulaması değildir. Tam sürüm için <a href="index.html#download" data-open-download>MarketPOS'u indirin</a>.</p>
+
+  <header class="site-header">
+    <div class="container nav-inner">
+      <a class="logo" href="index.html" aria-label="MarketPOS ana sayfa">
+        <img class="logo-img" src="assets/logo-lockup.png?v=20260730" alt="MarketPOS" height="27" />
+      </a>
+      <span class="demo-badge">Satış demosu</span>
+      <div class="nav-cta">
+        <a class="btn btn-ghost btn-sm" href="canli-demo.html">← Panel demosu</a>
+        <button type="button" id="resetDemo" class="btn btn-outline btn-sm">Sıfırla</button>
+      </div>
     </div>
   </header>
 
-  <main class="layout">
-    <section class="catalog card">
-      <div class="card-head">
-        <h1>Hızlı Satış Ekranı</h1>
-        <p>Ürün seç, sepete ekle, ödemeyi tamamla.</p>
+  <main class="demo-layout container">
+    <section class="demo-card demo-catalog">
+      <div class="demo-card-head">
+        <h1>Hızlı Satış</h1>
+        <p>Ürün seçin, sepete ekleyin, ödemeyi tamamlayın.</p>
       </div>
 
-      <div class="toolbar">
-        <input id="searchInput" type="search" placeholder="Ürün adı veya barkod ara" />
+      <div class="demo-toolbar">
+        <input id="searchInput" type="search" placeholder="Ürün adı veya barkod ara" autocomplete="off" />
         <select id="categoryFilter">
           <option value="all">Tüm kategoriler</option>
           <option value="Temel Gıda">Temel Gıda</option>
@@ -51,35 +51,36 @@
         </select>
       </div>
 
-      <div id="productGrid" class="product-grid"></div>
+      <div id="productGrid" class="demo-product-grid"></div>
     </section>
 
-    <aside class="checkout card">
-      <div class="card-head">
+    <aside class="demo-card demo-checkout">
+      <div class="demo-card-head">
         <h2>Sepet</h2>
         <p id="cartMeta">0 ürün</p>
       </div>
 
-      <div id="cartList" class="cart-list"></div>
+      <div id="cartList" class="demo-cart-list"></div>
 
-      <div class="totals">
+      <div class="demo-totals">
         <div><span>Ara Toplam</span><strong id="subtotal">₺0,00</strong></div>
         <div><span>KDV (%18)</span><strong id="tax">₺0,00</strong></div>
-        <div class="grand"><span>Genel Toplam</span><strong id="total">₺0,00</strong></div>
+        <div class="demo-grand"><span>Genel Toplam</span><strong id="total">₺0,00</strong></div>
       </div>
 
-      <div class="payment">
+      <div class="demo-payment">
         <label><input type="radio" name="pay" value="Nakit" checked /> Nakit</label>
         <label><input type="radio" name="pay" value="Kart" /> Kart</label>
         <label><input type="radio" name="pay" value="Karma" /> Karma</label>
       </div>
 
-      <button id="checkoutBtn" class="btn primary full">Ödeme Al</button>
-      <p id="checkoutStatus" class="status" aria-live="polite"></p>
+      <button id="checkoutBtn" class="btn btn-primary full">Ödeme Al</button>
+      <p id="checkoutStatus" class="demo-status" aria-live="polite"></p>
     </aside>
   </main>
 
-  <script src="demo.js?v=20260726"></script>
-  <script src="script.js?v=20260729" defer data-cfasync="false"></script>
+  <script src="demo.js?v=20260730"></script>
+  <script src="js/site-chrome.js?v=20260730" defer></script>
+  <script src="script.js?v=20260730" defer data-cfasync="false"></script>
 </body>
 </html>

@@ -30,7 +30,7 @@
 }
 .blog-nav a:hover { color: var(--text-strong); }
 
-.blog-main { padding: 48px 0 80px; position: relative; z-index: 1; }
+.blog-main { padding: 32px 0 80px; position: relative; z-index: 1; }
 .blog-hero {
   max-width: 720px;
   margin: 0 auto 40px;
@@ -61,28 +61,49 @@
   margin-right: 0.35rem;
 }
 
+.blog-filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   justify-content: center;
   margin-bottom: 28px;
 }
+
 .blog-filter-btn {
-  border: 1px solid var(--line);
-  background: var(--glass);
-  color: var(--muted);
-  font-size: .8rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(234, 240, 246, 0.78);
+  font-size: 0.82rem;
   font-weight: 600;
-  padding: 6px 14px;
+  padding: 8px 16px;
   border-radius: 999px;
   cursor: pointer;
-  transition: border-color .15s, color .15s, background .15s;
+  transition: border-color .18s, color .18s, background .18s, box-shadow .18s, transform .12s;
+  user-select: none;
 }
-.blog-filter-btn:hover,
+
+.blog-filter-btn:hover {
+  border-color: rgba(20, 184, 166, 0.55);
+  color: var(--text-strong);
+  background: rgba(20, 184, 166, 0.1);
+  transform: translateY(-1px);
+}
+
 .blog-filter-btn.active {
   border-color: var(--primary);
-  color: var(--text-strong);
-  background: rgba(16, 185, 129, 0.08);
+  color: #fff;
+  background: rgba(20, 184, 166, 0.22);
+  box-shadow: 0 0 0 1px rgba(20, 184, 166, 0.35), 0 8px 20px rgba(20, 184, 166, 0.15);
+}
+
+.blog-filters-seo .blog-filter-btn {
+  font-size: 0.86rem;
+  padding: 9px 18px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.blog-filters-seo .blog-filter-btn.active {
+  background: rgba(20, 184, 166, 0.28);
 }
 .blog-card {
   display: flex;
@@ -207,6 +228,25 @@
 }
 .blog-back:hover { color: var(--primary); }
 
+.footer-inline-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+.footer-inline-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.88rem;
+}
+.footer-inline-nav a:hover { color: var(--primary); }
+.footer-bottom-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
 .blog-footer-mini {
   margin-top: 48px;
   padding-top: 24px;
@@ -227,6 +267,5 @@
 }
 
 @media (max-width: 640px) {
-  .blog-nav { gap: 8px; font-size: .85rem; }
-  .blog-nav .blog-nav-hide-sm { display: none; }
+  .blog-filter-btn { padding: 7px 13px; }
 }

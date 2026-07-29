@@ -90,7 +90,10 @@
     } catch (_) {}
     if (!res.ok) {
       if (res.status === 401 && (body.code === "SESSION_REVOKED" || body.message === "Yetkisiz")) {
-        clearSession();
+        var currentToken = getToken();
+        if (currentToken && headers.Authorization === "Bearer " + currentToken) {
+          clearSession();
+        }
       }
       throw {
         status: res.status,
@@ -360,6 +363,162 @@
     });
   }
 
+  async function forgotPasswordHint(email) {
+    return apiFetch("/api/auth/forgot-password/hint", {
+      method: "POST",
+      json: { email: String(email || "").trim() },
+    });
+  }
+
+  async function forgotPasswordVerify(payload) {
+    return apiFetch("/api/auth/forgot-password/verify", {
+      method: "POST",
+      json: payload,
+    });
+  }
+
+  async function forgotPasswordComplete(payload) {
+    return apiFetch("/api/auth/forgot-password/complete", {
+      method: "POST",
+      json: payload,
+    });
+  }
+
+  async function sendPhoneVerifyCode() {
+    return apiFetch("/api/auth/phone/send-code", {
+      method: "POST",
+      auth: true,
+      json: {},
+    });
+  }
+
+  async function verifyPhoneCode(code) {
+    return apiFetch("/api/auth/phone/verify-code", {
+      method: "POST",
+      auth: true,
+      json: { code: String(code || "").trim() },
+    });
+  }
+
+  /** Mağaza telefon doğrulama paneli (magaza.html vb.) */
+  function mountPhoneVerifyPanel(container, opts) {
+    opts = opts || {};
+    var phoneVerified = Boolean(opts.phoneVerified);
+    var disabled = Boolean(opts.disabled);
+    var onVerified = typeof opts.onVerified === "function" ? opts.onVerified : function () {};
+
+    if (!container) return;
+
+    function render() {
+      if (phoneVerified) {
+        container.className = "portal-phone-verify is-verified";
+        container.innerHTML = "✓ Telefon numaranız doğrulandı.";
+        return;
+      }
+
+      container.className = "portal-phone-verify";
+      container.innerHTML =
+        "<p>Telefon numaranızı doğrulamak için 6 haneli kod <strong>kayıtlı e-posta adresinize</strong> gönderilir.</p>" +
+        '<div class="portal-phone-verify-actions">' +
+        '<button type="button" class="btn btn-ghost btn-sm" id="phoneVerifySend">Doğrulama kodu gönder</button>' +
+        "</div>" +
+        '<div class="portal-phone-verify-code" id="phoneVerifyCodeRow" hidden>' +
+        '<input id="phoneVerifyCode" inputmode="numeric" maxlength="6" placeholder="6 haneli kod" />' +
+        '<button type="button" class="btn btn-primary btn-sm" id="phoneVerifyBtn">Doğrula</button>' +
+        "</div>";
+
+      var sendBtn = container.querySelector("#phoneVerifySend");
+      var codeRow = container.querySelector("#phoneVerifyCodeRow");
+      var codeInput = container.querySelector("#phoneVerifyCode");
+      var verifyBtn = container.querySelector("#phoneVerifyBtn");
+
+      sendBtn.addEventListener("click", async function () {
+        if (disabled) return;
+        sendBtn.disabled = true;
+        sendBtn.textContent = "Gönderiliyor…";
+        try {
+          var result = await sendPhoneVerifyCode();
+          if (result.alreadyVerified) {
+            phoneVerified = true;
+            onVerified();
+            render();
+            return;
+          }
+          codeRow.hidden = false;
+          sendBtn.textContent = "Kodu tekrar gönder";
+        } catch (err) {
+          alert(err.error || "Kod gönderilemedi.");
+          sendBtn.textContent = "Doğrulama kodu gönder";
+        } finally {
+          sendBtn.disabled = disabled;
+        }
+      });
+
+      verifyBtn.addEventListener("click", async function () {
+        if (disabled || !codeInput.value.trim()) return;
+        verifyBtn.disabled = true;
+        verifyBtn.textContent = "Doğrulanıyor…";
+        try {
+          await verifyPhoneCode(codeInput.value.trim());
+          phoneVerified = true;
+          onVerified();
+          render();
+        } catch (err) {
+          alert(err.error || "Doğrulama başarısız.");
+        } finally {
+          verifyBtn.disabled = false;
+          verifyBtn.textContent = "Doğrula";
+        }
+      });
+    }
+
+    render();
+    return {
+      setVerified: function (v) {
+        phoneVerified = Boolean(v);
+        render();
+      },
+    };
+  }
+
+  var EYE_OPEN =
+    '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>';
+  var EYE_CLOSED =
+    '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg>';
+
+  function enhancePasswordFields(root) {
+    var scope = root || document;
+    scope.querySelectorAll('input[type="password"]').forEach(function (input) {
+      if (input.dataset.passwordEnhanced === "1") return;
+      if (input.closest(".portal-password-wrap")) return;
+      input.dataset.passwordEnhanced = "1";
+      var wrap = document.createElement("div");
+      wrap.className = "portal-password-wrap";
+      input.parentNode.insertBefore(wrap, input);
+      wrap.appendChild(input);
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "portal-password-toggle";
+      btn.setAttribute("aria-label", "Şifreyi göster");
+      btn.innerHTML = EYE_OPEN;
+      btn.addEventListener("click", function () {
+        var visible = input.type === "text";
+        input.type = visible ? "password" : "text";
+        btn.innerHTML = visible ? EYE_OPEN : EYE_CLOSED;
+        btn.setAttribute("aria-label", visible ? "Şifreyi göster" : "Şifreyi gizle");
+      });
+      wrap.appendChild(btn);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", function () {
+      enhancePasswordFields(document);
+    });
+  } else {
+    enhancePasswordFields(document);
+  }
+
   global.MarketPortal = {
     API_BASE: API_BASE,
     getToken: getToken,
@@ -396,5 +555,12 @@
     removeDevice: removeDevice,
     fetchPublicConfig: fetchPublicConfig,
     forgotPassword: forgotPassword,
+    forgotPasswordHint: forgotPasswordHint,
+    forgotPasswordVerify: forgotPasswordVerify,
+    forgotPasswordComplete: forgotPasswordComplete,
+    sendPhoneVerifyCode: sendPhoneVerifyCode,
+    verifyPhoneCode: verifyPhoneCode,
+    mountPhoneVerifyPanel: mountPhoneVerifyPanel,
+    enhancePasswordFields: enhancePasswordFields,
   };
 })(window);

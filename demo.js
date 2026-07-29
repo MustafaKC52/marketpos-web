@@ -151,7 +151,7 @@ function renderCart() {
 function checkout() {
   if (cart.length === 0) {
     checkoutStatus.textContent = 'Sepet bosken odeme alinamaz.';
-    checkoutStatus.className = 'status warn';
+    checkoutStatus.className = 'demo-status warn';
     return;
   }
 
@@ -159,7 +159,7 @@ function checkout() {
   const totals = getTotals();
 
   checkoutStatus.textContent = `${formatMoney(totals.total)} tutarli satis ${method} ile tamamlandi.`;
-  checkoutStatus.className = 'status ok';
+  checkoutStatus.className = 'demo-status ok';
 
   cart.length = 0;
   renderCart();
@@ -171,7 +171,7 @@ function resetDemo() {
   });
   cart.length = 0;
   checkoutStatus.textContent = 'Demo sifirlandi.';
-  checkoutStatus.className = 'status ok';
+  checkoutStatus.className = 'demo-status ok';
   renderProducts();
   renderCart();
 }

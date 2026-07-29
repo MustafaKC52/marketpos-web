@@ -10,16 +10,19 @@
   <link rel="stylesheet" href="portal.css?v=20260730" />
 </head>
 <body>
+  <script src="../js/turkish-phone.js?v=20260730"></script>
   <script src="portal.js?v=20260730"></script>
   <script>
     (function () {
       var P = window.MarketPortal;
+      var TP = window.TurkishPhone;
       if (!P.requireAuth()) return;
       var storeId = P.getStoreId();
 
       P.renderShell("magaza", "Mağaza bilgileri", '<p class="portal-loading">Yükleniyor…</p>');
 
       P.fetchStore(storeId).then(function (store) {
+        var formattedPhone = TP.parseStoredTurkishPhone(store.phone || "");
         document.querySelector(".portal-content").innerHTML =
           '<div class="portal-card">' +
           "<p>Fiş ve raporlarda görünen mağaza bilgileri. Uygulama ile senkronize olur.</p>" +
@@ -35,23 +38,52 @@
           P.escapeHtml(store.address || "") +
           "</textarea></div>" +
           '<div class="portal-field"><label for="phone">Telefon</label><input id="phone" value="' +
-          P.escapeHtml(store.phone || "") +
-          '" /></div>' +
+          P.escapeHtml(formattedPhone) +
+          '" required /><div id="phoneVerifyPanel"></div></div>' +
           '<div class="portal-form-actions"><button type="submit" class="btn btn-primary" id="saveBtn">Kaydet</button></div>' +
           "</form></div>";
+
+        var phoneInput = TP.wrapPhoneInput(document.getElementById("phone"));
+        var phoneVerified = Boolean(store.phoneVerified);
+        var savedPhone = formattedPhone;
+        var verifyPanelEl = document.getElementById("phoneVerifyPanel");
+        var verifyPanel = P.mountPhoneVerifyPanel(verifyPanelEl, {
+          phoneVerified: phoneVerified,
+          onVerified: function () {
+            phoneVerified = true;
+          },
+        });
+
+        phoneInput.addEventListener("input", function () {
+          if (phoneInput.value !== savedPhone) {
+            phoneVerified = false;
+            verifyPanel.setVerified(false);
+          }
+        });
 
         var alertEl = document.getElementById("alert");
         document.getElementById("storeForm").addEventListener("submit", async function (e) {
           e.preventDefault();
+          var phoneErr = TP.validateTurkishMobilePhone(phoneInput.value);
+          if (phoneErr) {
+            P.showAlert(alertEl, phoneErr);
+            return;
+          }
           var btn = document.getElementById("saveBtn");
           P.setLoading(btn, true);
           try {
+            var phoneStored = TP.formatTurkishPhoneForStorage(phoneInput.value);
             await P.updateStore(storeId, {
               name: document.getElementById("name").value.trim(),
               code: document.getElementById("code").value.trim().toUpperCase(),
               address: document.getElementById("address").value.trim(),
-              phone: document.getElementById("phone").value.trim(),
+              phone: phoneStored,
             });
+            if (phoneStored !== TP.formatTurkishPhoneForStorage(savedPhone)) {
+              phoneVerified = false;
+              verifyPanel.setVerified(false);
+            }
+            savedPhone = phoneInput.value;
             try {
               localStorage.setItem(
                 "marketpos:portal:storeName",
