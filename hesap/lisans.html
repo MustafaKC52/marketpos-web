@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lisans — MarketPOS Hesabım</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="../favicon.svg?v=20260530" type="image/svg+xml" />
+  <link rel="stylesheet" href="../style.css?v=20260730" />
+  <link rel="stylesheet" href="portal.css?v=20260730" />
+</head>
+<body>
+  <script src="portal.js?v=20260730"></script>
+  <script>
+    (function () {
+      var P = window.MarketPortal;
+      if (!P.requireAuth()) return;
+
+      P.renderShell("lisans", "Lisans durumu", '<p class="portal-loading">Yükleniyor…</p>');
+
+      P.fetchLicense().then(function (data) {
+        var lic = data.license || {};
+        var plans = (data.servicePlans || [])
+          .map(function (p) {
+            return "<li><strong>" + P.escapeHtml(p.label) + "</strong> — " + P.escapeHtml(p.description || "") + "</li>";
+          })
+          .join("");
+
+        document.querySelector(".portal-content").innerHTML =
+          '<div class="portal-card">' +
+          '<dl class="portal-dl">' +
+          '<div class="portal-dl-row"><dt>Durum</dt><dd><span class="' +
+          P.licensePhaseClass(lic.phase) +
+          '">' +
+          P.escapeHtml(P.licensePhaseLabel(lic.phase)) +
+          "</span></dd></div>" +
+          '<div class="portal-dl-row"><dt>Plan</dt><dd>' +
+          P.escapeHtml(lic.planLabel || lic.tierLabel || "—") +
+          "</dd></div>" +
+          '<div class="portal-dl-row"><dt>Faturalama</dt><dd>' +
+          P.escapeHtml(lic.billingLabel || "—") +
+          "</dd></div>" +
+          (lic.phase === "trial"
+            ? '<div class="portal-dl-row"><dt>Deneme süresi</dt><dd>' +
+              (lic.daysRemaining != null ? lic.daysRemaining + " gün kaldı" : "—") +
+              "</dd></div>"
+            : "") +
+          (lic.expiresAt
+            ? '<div class="portal-dl-row"><dt>Bitiş tarihi</dt><dd>' +
+              P.formatDateShort(lic.expiresAt) +
+              "</dd></div>"
+            : "") +
+          '<div class="portal-dl-row"><dt>Uygulama kullanımı</dt><dd>' +
+          (lic.canUseApp ? "Açık" : "Kısıtlı / süresi doldu") +
+          "</dd></div>" +
+          "</dl></div>" +
+          '<div class="portal-card">' +
+          "<h2>Lisans yenileme</h2>" +
+          "<p>Lisans satın alma ve yenileme işlemleri için uygulama içi lisans ekranını veya destek hattını kullanın.</p>" +
+          '<div class="portal-quick-links">' +
+          '<a class="btn btn-primary btn-sm" href="../index.html#pricing">Fiyatlandırma</a>' +
+          '<a class="btn btn-secondary btn-sm" href="https://wa.me/905510335916?text=Merhaba%2C%20MarketPOS%20lisans%20yenilemek%20istiyorum." target="_blank" rel="noopener">WhatsApp destek</a>' +
+          "</div></div>" +
+          (plans
+            ? '<div class="portal-card"><h2>Plan seçenekleri</h2><ul style="margin:0;padding-left:1.1rem;line-height:1.6;font-size:0.9rem;color:rgba(255,255,255,0.75)">' +
+              plans +
+              "</ul></div>"
+            : "");
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,602 @@
+[
+  {
+    "slug": "market-nasil-acilir",
+    "title": "Market Nasıl Açılır?",
+    "tag": "İşletme",
+    "description": "Market açmak için ruhsat, sermaye, lokasyon ve ekipman adımlarını anlatan 2026 rehberi."
+  },
+  {
+    "slug": "bakkal-dukkani-nasil-acilir",
+    "title": "Bakkal Dükkanı Nasıl Açılır?",
+    "tag": "İşletme",
+    "description": "Mahalle bakkalı açmak: belgeler, maliyet, raf düzeni ve ilk ay yapılacaklar."
+  },
+  {
+    "slug": "mini-market-acmak-gerekli-belgeler",
+    "title": "Mini Market Açmak İçin Gerekli Belgeler",
+    "tag": "İşletme",
+    "description": "Mini market ruhsatı, iş yeri açma, gıda kayıt ve vergi levhası listesi."
+  },
+  {
+    "slug": "market-acmak-ne-kadar-tutar",
+    "title": "Market Açmak Ne Kadar Tutar?",
+    "tag": "İşletme",
+    "description": "2026'da market açma maliyeti: kira, depozito, raf, kasa ve ilk stok bütçesi."
+  },
+  {
+    "slug": "market-ruhsati-nasil-alinir",
+    "title": "Market Ruhsatı Nasıl Alınır?",
+    "tag": "İşletme",
+    "description": "Belediye ve il sağlık müdürlüğünden market ruhsatı alma süreci adım adım."
+  },
+  {
+    "slug": "gida-isletmesi-acma-sartlari",
+    "title": "Gıda İşletmesi Açma Şartları (2026)",
+    "tag": "İşletme",
+    "description": "Gıda işletmesi açmak için hijyen, personel sağlık ve fiziki şartlar."
+  },
+  {
+    "slug": "market-franchise-mi-kendi-markam-mi",
+    "title": "Market Franchise mı Kendi Markam mı?",
+    "tag": "İşletme",
+    "description": "Franchise ve bağımsız market karşılaştırması: maliyet, kâr ve özgürlük."
+  },
+  {
+    "slug": "mahalle-marketi-isletmeciligi",
+    "title": "Mahalle Marketi İşletmeciliği Rehberi",
+    "tag": "İşletme",
+    "description": "Mahalle marketinde müşteri sadakati, veresiye ve stok yönetimi ipuçları."
+  },
+  {
+    "slug": "market-acmadan-once-yapilacaklar",
+    "title": "Market Açmadan Önce Yapılması Gerekenler",
+    "tag": "İşletme",
+    "description": "Lokasyon analizi, rakip araştırması, tedarikçi görüşmeleri kontrol listesi."
+  },
+  {
+    "slug": "perakende-isletme-plani-nasil-hazirlanir",
+    "title": "Perakende İşletme Planı Nasıl Hazırlanır?",
+    "tag": "İşletme",
+    "description": "Market iş planı şablonu: gelir tahmini, giderler ve nakit akışı."
+  },
+  {
+    "slug": "pos-nedir",
+    "title": "POS Nedir?",
+    "tag": "POS",
+    "description": "POS (Point of Sale) sistemi nedir, market ve bakkal için neden gereklidir?"
+  },
+  {
+    "slug": "market-pos-programi-nedir",
+    "title": "Market POS Programı Nedir?",
+    "tag": "POS",
+    "description": "Market POS yazılımının temel modülleri: satış, stok, cari ve raporlama."
+  },
+  {
+    "slug": "barkod-sistemi-nedir",
+    "title": "Barkod Sistemi Nedir?",
+    "tag": "POS",
+    "description": "Barkod türleri, EAN-13 ve market satışında barkod okuyucu kullanımı."
+  },
+  {
+    "slug": "barkod-okuyucu-nasil-calisir",
+    "title": "Barkod Okuyucu Nasıl Çalışır?",
+    "tag": "POS",
+    "description": "USB ve kablosuz barkod okuyucu kurulumu, POS entegrasyonu ve sorun giderme."
+  },
+  {
+    "slug": "ean-13-barkod-nedir",
+    "title": "EAN-13 Barkod Nedir?",
+    "tag": "POS",
+    "description": "Türkiye'de perakende barkod standardı EAN-13 nasıl okunur ve basılır?"
+  },
+  {
+    "slug": "terazi-entegrasyonu-nedir",
+    "title": "Terazi Entegrasyonu Nedir?",
+    "tag": "POS",
+    "description": "Kasap, manav ve şarküteride elektronik terazi–POS bağlantısı rehberi."
+  },
+  {
+    "slug": "kasa-yazilimi-muhasebe-farki",
+    "title": "Kasa Yazılımı ile Muhasebe Programı Farkı",
+    "tag": "POS",
+    "description": "POS ve muhasebe yazılımı görevleri; hangisi ne zaman kullanılır?"
+  },
+  {
+    "slug": "bulut-pos-masaustu-pos",
+    "title": "Bulut POS mu Masaüstü POS mu?",
+    "tag": "POS",
+    "description": "İnternet kesintisinde satış: bulut ve offline masaüstü POS karşılaştırması."
+  },
+  {
+    "slug": "offline-pos-neden-onemli",
+    "title": "Offline POS Neden Önemli?",
+    "tag": "POS",
+    "description": "Internetsiz çalışan kasa yazılımının marketlerde kritik avantajları."
+  },
+  {
+    "slug": "hizli-satis-ekrani-nasil-olmali",
+    "title": "Hızlı Satış Ekranı Nasıl Olmalı?",
+    "tag": "POS",
+    "description": "Kasiyer verimliliği için hızlı satış arayüzü tasarım kriterleri."
+  },
+  {
+    "slug": "markette-stok-nasil-tutulur",
+    "title": "Markette Stok Nasıl Tutulur?",
+    "tag": "Stok",
+    "description": "Market stok takibi: giriş-çıkış, sayım, kritik seviye ve POS entegrasyonu."
+  },
+  {
+    "slug": "stok-sayimi-nasil-yapilir",
+    "title": "Stok Sayımı Nasıl Yapılır?",
+    "tag": "Stok",
+    "description": "Aylık stok sayımı adımları, fire kaydı ve sayım farkı analizi."
+  },
+  {
+    "slug": "kritik-stok-seviyesi-nedir",
+    "title": "Kritik Stok Seviyesi Nedir?",
+    "tag": "Stok",
+    "description": "Kritik stok eşiği belirleme ve otomatik sipariş uyarıları."
+  },
+  {
+    "slug": "fifo-stok-yonetimi-nedir",
+    "title": "FIFO Stok Yönetimi Nedir?",
+    "tag": "Stok",
+    "description": "İlk giren ilk çıkar: gıda marketlerinde FIFO uygulaması."
+  },
+  {
+    "slug": "excel-ile-stok-takibi-yeterli-mi",
+    "title": "Excel ile Stok Takibi Yeterli mi?",
+    "tag": "Stok",
+    "description": "Excel stok listesinin limitleri ve POS'a geçiş zamanı."
+  },
+  {
+    "slug": "stok-fire-kaydi-nasil-tutulur",
+    "title": "Stok Fire Kaydı Nasıl Tutulur?",
+    "tag": "Stok",
+    "description": "Bozulan, kırılan ve SKT geçen ürünlerde fire kayıt süreci."
+  },
+  {
+    "slug": "depo-raf-organizasyonu",
+    "title": "Depo ve Raf Organizasyonu",
+    "tag": "Stok",
+    "description": "Market deposu düzeni, FIFO raf yerleşimi ve sayım kolaylığı."
+  },
+  {
+    "slug": "tedarikci-siparis-planlamasi",
+    "title": "Tedarikçi Sipariş Planlaması",
+    "tag": "Stok",
+    "description": "Satış hızına göre otomatik sipariş önerisi ve tedarikçi takvimi."
+  },
+  {
+    "slug": "hizli-tukenen-urunler-nasil-belirlenir",
+    "title": "Hızlı Tükenen Ürünler Nasıl Belirlenir?",
+    "tag": "Stok",
+    "description": "Günlük satış hızı, stok gün sayısı ve yeniden sipariş noktası."
+  },
+  {
+    "slug": "stok-devir-hizi-nedir",
+    "title": "Stok Devir Hızı Nedir?",
+    "tag": "Stok",
+    "description": "Stok devir hızı formülü ve market kârlılığına etkisi."
+  },
+  {
+    "slug": "az-satan-urunler-ne-yapilir",
+    "title": "Az Satan Ürünler Ne Yapılır?",
+    "tag": "Stok",
+    "description": "Düşük hızlı SKU'lar: indirim, de-listing ve raf alanı optimizasyonu."
+  },
+  {
+    "slug": "kategori-bazli-stok-yonetimi",
+    "title": "Kategori Bazlı Stok Yönetimi",
+    "tag": "Stok",
+    "description": "Gıda, temizlik, içecek kategorilerinde ayrı stok politikaları."
+  },
+  {
+    "slug": "dondurulmus-urun-stok-takibi",
+    "title": "Dondurulmuş Ürün Stok Takibi",
+    "tag": "Stok",
+    "description": "Soğuk depo stok sayımı ve sıcaklık kayıtları."
+  },
+  {
+    "slug": "mesrubat-stok-yonetimi",
+    "title": "Meşrubat Stok Yönetimi İpuçları",
+    "tag": "Stok",
+    "description": "İçecek kategorisinde mevsimsel sipariş ve depo rotasyonu."
+  },
+  {
+    "slug": "stok-sayim-farklari-nasil-onlenir",
+    "title": "Stok Sayım Farkları Nasıl Önlenir?",
+    "tag": "Stok",
+    "description": "Kayıp, hırsızlık ve barkod hatalarından kaynaklanan farklar."
+  },
+  {
+    "slug": "market-karliligi-nasil-artirilir",
+    "title": "Market Kârlılığı Nasıl Artırılır?",
+    "tag": "Kâr",
+    "description": "Marj yönetimi, fiyat optimizasyonu ve stok verimliliği ile kâr artırma."
+  },
+  {
+    "slug": "urun-fiyatlandirmasi-nasil-yapilir",
+    "title": "Ürün Fiyatlandırması Nasıl Yapılır?",
+    "tag": "Kâr",
+    "description": "Alış fiyatı, KDV ve raf marjı ile satış fiyatı belirleme."
+  },
+  {
+    "slug": "kar-marji-nasil-hesaplanir",
+    "title": "Kâr Marjı Nasıl Hesaplanır?",
+    "tag": "Kâr",
+    "description": "Brüt marj, net kâr ve ürün bazlı kârlılık hesaplama formülleri."
+  },
+  {
+    "slug": "rekabetci-fiyat-stratejisi",
+    "title": "Rekabetçi Fiyat Stratejisi",
+    "tag": "Kâr",
+    "description": "Rakip fiyat takibi ve dinamik fiyatlandırma markette."
+  },
+  {
+    "slug": "kampanya-planlamasi-markette",
+    "title": "Kampanya Planlaması Markette",
+    "tag": "Kâr",
+    "description": "İndirim kampanyası planlama, marj koruma ve satış artışı ölçümü."
+  },
+  {
+    "slug": "sepet-ortalamasi-nasil-artirilir",
+    "title": "Sepet Ortalaması Nasıl Artırılır?",
+    "tag": "Kâr",
+    "description": "Çapraz satış, raf yerleşimi ve kasa önerileri ile sepet büyütme."
+  },
+  {
+    "slug": "zarar-ettiren-urunler-nasil-tespit-edilir",
+    "title": "Zarar Ettiren Ürünler Nasıl Tespit Edilir?",
+    "tag": "Kâr",
+    "description": "Negatif marjlı SKU analizi ve fiyat veya tedarikçi revizyonu."
+  },
+  {
+    "slug": "raf-yerlesimi-satis-artirir-mi",
+    "title": "Raf Yerleşimi Satışları Artırır mı?",
+    "tag": "Kâr",
+    "description": "Planogram, göz hizası raf ve impulse buy alanları."
+  },
+  {
+    "slug": "gun-sonu-ciro-analizi",
+    "title": "Gün Sonu Ciro Analizi",
+    "tag": "Kâr",
+    "description": "Günlük ciro raporu okuma, trend ve haftalık karşılaştırma."
+  },
+  {
+    "slug": "en-cok-kar-birakan-urunler",
+    "title": "En Çok Kâr Bırakan Ürünler",
+    "tag": "Kâr",
+    "description": "Kâr haritası: yüksek hacim düşük marj vs. yıldız ürünler."
+  },
+  {
+    "slug": "fiyat-artirimi-ne-zaman-yapilir",
+    "title": "Fiyat Artırımı Ne Zaman Yapılır?",
+    "tag": "Kâr",
+    "description": "Enflasyon döneminde fiyat güncelleme stratejisi ve müşteri iletişimi."
+  },
+  {
+    "slug": "indirim-yapmadan-satis-artirma",
+    "title": "İndirim Yapmadan Satış Artırma",
+    "tag": "Kâr",
+    "description": "Marj koruyarak hacim artırma: birlikte satış ve raf optimizasyonu."
+  },
+  {
+    "slug": "cuma-aksami-satis-stratejisi",
+    "title": "Cuma Akşamı Satış Stratejisi",
+    "tag": "Kâr",
+    "description": "Hafta sonu öncesi içecek ve atıştırmalık kampanya zamanlaması."
+  },
+  {
+    "slug": "mevsimsel-satis-planlamasi",
+    "title": "Mevsimsel Satış Planlaması",
+    "tag": "Kâr",
+    "description": "Yaz-kış SKU planı, sipariş takvimi ve stok bütçesi."
+  },
+  {
+    "slug": "son-kullanma-tarihi-nasil-takip-edilir",
+    "title": "Son Kullanma Tarihi Nasıl Takip Edilir?",
+    "tag": "Gıda",
+    "description": "SKT takibi: raf rotasyonu, uyarı sistemi ve fire önleme markette."
+  },
+  {
+    "slug": "skt-yaklasan-urunler-ne-yapilir",
+    "title": "SKT Yaklaşan Ürünler Ne Yapılır?",
+    "tag": "Gıda",
+    "description": "Son kullanma tarihi yaklaşan ürünlerde indirim ve iade politikası."
+  },
+  {
+    "slug": "gida-guvenligi-markette",
+    "title": "Gıda Güvenliği Markette",
+    "tag": "Gıda",
+    "description": "Market gıda güvenliği temel kuralları ve denetim hazırlığı."
+  },
+  {
+    "slug": "soguk-zincir-takibi",
+    "title": "Soğuk Zincir Takibi",
+    "tag": "Gıda",
+    "description": "Süt, et ve dondurulmuş ürünlerde sıcaklık ve SKT kontrolü."
+  },
+  {
+    "slug": "iade-bozulmus-urun-kaydi",
+    "title": "İade ve Bozulmuş Ürün Kaydı",
+    "tag": "Gıda",
+    "description": "Tedarikçi iadesi, fire fişi ve stok düzeltme süreci."
+  },
+  {
+    "slug": "haccp-market-nedir",
+    "title": "HACCP Market İçin Nedir?",
+    "tag": "Gıda",
+    "description": "HACCP prensipleri ve küçük gıda işletmelerinde uygulama."
+  },
+  {
+    "slug": "et-sut-urunlerinde-skt",
+    "title": "Et ve Süt Ürünlerinde SKT",
+    "tag": "Gıda",
+    "description": "Soğuk reyon SKT yönetimi ve günlük kontrol listesi."
+  },
+  {
+    "slug": "raf-omru-yonetimi",
+    "title": "Raf Ömrü Yönetimi",
+    "tag": "Gıda",
+    "description": "Raf ömrü vs. son kullanma tarihi farkı ve FIFO uygulaması."
+  },
+  {
+    "slug": "lot-numarasi-takibi",
+    "title": "Lot Numarası Takibi",
+    "tag": "Gıda",
+    "description": "Parti numarası ile geri çağırma ve tedarikçi izlenebilirlik."
+  },
+  {
+    "slug": "gida-israfi-azaltma-markette",
+    "title": "Gıda İsrafını Azaltma Markette",
+    "tag": "Gıda",
+    "description": "SKT indirimi, bağış ve stok optimizasyonu ile israf azaltma."
+  },
+  {
+    "slug": "veresiye-defteri-dijital-takip",
+    "title": "Veresiye Defteri Dijital Takip",
+    "tag": "Cari",
+    "description": "Veresiye kayıtlarını POS ile dijitalleştirme ve tahsilat takibi."
+  },
+  {
+    "slug": "cari-hesap-risk-yonetimi",
+    "title": "Cari Hesap Risk Yönetimi",
+    "tag": "Cari",
+    "description": "Müşteri borç limiti, vade ve risk skoru belirleme."
+  },
+  {
+    "slug": "musteri-borc-limiti-belirleme",
+    "title": "Müşteri Borç Limiti Belirleme",
+    "tag": "Cari",
+    "description": "Veresiye limiti politikası ve otomatik uyarı kuralları."
+  },
+  {
+    "slug": "tahsilat-takibi-nasil-yapilir",
+    "title": "Tahsilat Takibi Nasıl Yapılır?",
+    "tag": "Cari",
+    "description": "Geciken alacaklar, hatırlatma ve nakit akışı yönetimi."
+  },
+  {
+    "slug": "gunluk-kasa-kapanisi-rehberi",
+    "title": "Günlük Kasa Kapanışı Rehberi",
+    "tag": "Cari",
+    "description": "Gün sonu kasa sayımı, POS raporu ve nakit-kart mutabakatı."
+  },
+  {
+    "slug": "kasa-acigi-neden-olur",
+    "title": "Kasa Açığı Neden Olur?",
+    "tag": "Cari",
+    "description": "Kasa farkı nedenleri: iade, yanlış para üstü, kayıt hataları."
+  },
+  {
+    "slug": "nakit-kart-mutabakati",
+    "title": "Nakit ve Kart Mutabakatı",
+    "tag": "Cari",
+    "description": "POS slip toplamı ile banka havalesi eşleştirme rehberi."
+  },
+  {
+    "slug": "gun-sonu-raporu-nasil-okunur",
+    "title": "Gün Sonu Raporu Nasıl Okunur?",
+    "tag": "Cari",
+    "description": "Z raporu, ciro özeti ve kâr satırlarını yorumlama."
+  },
+  {
+    "slug": "kdv-perakende-fatura",
+    "title": "KDV ve Perakende Fatura",
+    "tag": "Cari",
+    "description": "Perakende satışta KDV oranları ve basit usul esnaf."
+  },
+  {
+    "slug": "e-fatura-market-isletmeleri",
+    "title": "E-Fatura Market İşletmeleri",
+    "tag": "Cari",
+    "description": "Market ve bakkallarda e-fatura yükümlülüğü ve geçiş rehberi."
+  },
+  {
+    "slug": "kasiyer-egitimi-rehberi",
+    "title": "Kasiyer Eğitimi Rehberi",
+    "tag": "Personel",
+    "description": "Yeni kasiyer eğitim programı: POS, müşteri ve stok temelleri."
+  },
+  {
+    "slug": "market-personel-vardiya-plani",
+    "title": "Market Personel Vardiya Planı",
+    "tag": "Personel",
+    "description": "Yoğun saatlere göre vardiya çizelgesi ve kasa kapasitesi."
+  },
+  {
+    "slug": "hirsizlik-onleme-markette",
+    "title": "Hırsızlık Önleme Markette",
+    "tag": "Personel",
+    "description": "Shrinkage azaltma: kamera, sayım ve kasa kontrolleri."
+  },
+  {
+    "slug": "kasada-musteri-memnuniyeti",
+    "title": "Kasada Müşteri Memnuniyeti",
+    "tag": "Personel",
+    "description": "Hızlı checkout, güleryüz ve sorun çözme teknikleri."
+  },
+  {
+    "slug": "yogun-saatlerde-kasa-yonetimi",
+    "title": "Yoğun Saatlerde Kasa Yönetimi",
+    "tag": "Personel",
+    "description": "Akşam ve hafta sonu kasa kuyruğu yönetimi ipuçları."
+  },
+  {
+    "slug": "yeni-kasiyer-oryantasyonu",
+    "title": "Yeni Kasiyer Oryantasyonu",
+    "tag": "Personel",
+    "description": "İlk hafta kasiyer checklist: POS, iade, terazi ve güvenlik."
+  },
+  {
+    "slug": "barkod-okuma-hatalari",
+    "title": "Barkod Okuma Hataları",
+    "tag": "Personel",
+    "description": "Okunmayan barkod, çift okuma ve manuel giriş prosedürü."
+  },
+  {
+    "slug": "iade-islemi-nasil-yapilir",
+    "title": "İade İşlemi Nasıl Yapılır?",
+    "tag": "Personel",
+    "description": "POS üzerinden iade, stok geri alımı ve fiş iptali."
+  },
+  {
+    "slug": "musteri-sikayeti-yonetimi",
+    "title": "Müşteri Şikayeti Yönetimi",
+    "tag": "Personel",
+    "description": "Şikayet kaydı, çözüm süresi ve müşteri geri kazanma."
+  },
+  {
+    "slug": "market-hijyen-kontrol-listesi",
+    "title": "Market Hijyen Kontrol Listesi",
+    "tag": "Personel",
+    "description": "Günlük ve haftalık market hijyen denetim formu."
+  },
+  {
+    "slug": "ramazan-donemi-market-satislari",
+    "title": "Ramazan Dönemi Market Satışları",
+    "tag": "Satış",
+    "description": "Ramazan stok planı, iftar ürünleri ve ciro artırma."
+  },
+  {
+    "slug": "bayram-alisverisi-hazirligi",
+    "title": "Bayram Alışverişi Hazırlığı",
+    "tag": "Satış",
+    "description": "Kurban ve sürü bayramı öncesi stok ve kampanya planı."
+  },
+  {
+    "slug": "okul-donemi-market-kampanyalari",
+    "title": "Okul Dönemi Market Kampanyaları",
+    "tag": "Satış",
+    "description": "Eylül kırtasiye-atıştırmalık çapraz satış fırsatları."
+  },
+  {
+    "slug": "yaz-sezonu-icecek-satislari",
+    "title": "Yaz Sezonu İçecek Satışları",
+    "tag": "Satış",
+    "description": "Yaz mevsiminde soğuk içecek stok ve raf stratejisi."
+  },
+  {
+    "slug": "kis-aylarinda-market-yonetimi",
+    "title": "Kış Aylarında Market Yönetimi",
+    "tag": "Satış",
+    "description": "Kış SKU'ları, sıcak içecek ve depo ısıtma maliyetleri."
+  },
+  {
+    "slug": "cross-selling-teknikleri-markette",
+    "title": "Cross-Selling Teknikleri Markette",
+    "tag": "Satış",
+    "description": "Kasa ve raf çapraz satış: makarna-salça, ekmek-süt örnekleri."
+  },
+  {
+    "slug": "sadakat-programi-kucuk-marketler",
+    "title": "Sadakat Programı Küçük Marketler",
+    "tag": "Satış",
+    "description": "Puan kartı, veresiye avantajı ve mahalle sadakati."
+  },
+  {
+    "slug": "whatsapp-ile-siparis-yonetimi",
+    "title": "WhatsApp ile Sipariş Yönetimi",
+    "tag": "Satış",
+    "description": "WhatsApp siparişlerini POS'a aktarma ve teslimat takibi."
+  },
+  {
+    "slug": "sosyal-medya-market-icin",
+    "title": "Sosyal Medya Market İçin",
+    "tag": "Satış",
+    "description": "Instagram ve Facebook ile mahalle marketine müşteri çekme."
+  },
+  {
+    "slug": "yerel-tedarikci-ile-calisma",
+    "title": "Yerel Tedarikçi ile Çalışma",
+    "tag": "Satış",
+    "description": "Yerel üretici tedariki, taze ürün ve marj avantajı."
+  },
+  {
+    "slug": "yapay-zeka-destekli-market-yonetimi",
+    "title": "Yapay Zekâ Destekli Market Yönetimi",
+    "tag": "YZ",
+    "description": "YZ ile stok, fiyat ve kampanya önerileri — dijital işletme ortağı."
+  },
+  {
+    "slug": "rakip-fiyat-takibi-markette",
+    "title": "Rakip Fiyat Takibi Markette",
+    "tag": "YZ",
+    "description": "Yakın market kampanyalarını izleme ve fiyat uyumu stratejisi."
+  },
+  {
+    "slug": "tahmini-ciro-analizi",
+    "title": "Tahmini Ciro Analizi",
+    "tag": "YZ",
+    "description": "Gün sonu ciro tahmini ve satış trendi okuma rehberi."
+  },
+  {
+    "slug": "dijital-isletme-ortagi-nedir",
+    "title": "Dijital İşletme Ortağı Nedir?",
+    "tag": "YZ",
+    "description": "Kayıt tutan POS değil; yöneten, tahmin eden dijital ortak kavramı."
+  },
+  {
+    "slug": "marketpos-ile-dijital-donusum",
+    "title": "MarketPOS ile Dijital Dönüşüm",
+    "tag": "YZ",
+    "description": "Market ve bakkalda 14 günde dijital dönüşüm adımları."
+  },
+  {
+    "slug": "market-pos-programi-nasil-secilir",
+    "title": "Market POS Programı Nasıl Seçilir? (2026 Rehberi)",
+    "tag": "POS",
+    "description": "Market POS seçiminde 7 kritik kriter: offline, barkod, stok, cari."
+  },
+  {
+    "slug": "bakkal-market-barkodlu-satis",
+    "title": "Bakkal ve Market İçin Barkodlu Satış Programının 5 Avantajı",
+    "tag": "POS",
+    "description": "Barkodlu POS'un hız, doğruluk ve stok avantajları."
+  },
+  {
+    "slug": "kucuk-isletme-stok-takip-rehberi",
+    "title": "Küçük İşletmeler İçin Stok Takip Rehberi",
+    "tag": "Stok",
+    "description": "Excel'den POS'a stok geçişi ve kritik stok uyarıları."
+  },
+  {
+    "slug": "market-kasa-programi-kurulumu",
+    "title": "Market Kasa Programı Kurulumu: Adım Adım",
+    "tag": "POS",
+    "description": "Windows POS kurulumu, barkod okuyucu ve ilk satış."
+  },
+  {
+    "slug": "veresiye-cari-hesap-takibi",
+    "title": "Veresiye ve Cari Hesap Takibi Nasıl Yapılır?",
+    "tag": "Cari",
+    "description": "Müşteri borçları, tahsilat ve risk yönetimi rehberi."
+  },
+  {
+    "slug": "marketpos-ucretsiz-deneme-rehberi",
+    "title": "MarketPOS Ücretsiz Deneme: Nasıl Başlanır?",
+    "tag": "YZ",
+    "description": "14 gün ücretsiz deneme — indirme, kayıt ve ilk gün listesi."
+  }
+]

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mağaza — MarketPOS Hesabım</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="../favicon.svg?v=20260530" type="image/svg+xml" />
+  <link rel="stylesheet" href="../style.css?v=20260730" />
+  <link rel="stylesheet" href="portal.css?v=20260730" />
+</head>
+<body>
+  <script src="portal.js?v=20260730"></script>
+  <script>
+    (function () {
+      var P = window.MarketPortal;
+      if (!P.requireAuth()) return;
+      var storeId = P.getStoreId();
+
+      P.renderShell("magaza", "Mağaza bilgileri", '<p class="portal-loading">Yükleniyor…</p>');
+
+      P.fetchStore(storeId).then(function (store) {
+        document.querySelector(".portal-content").innerHTML =
+          '<div class="portal-card">' +
+          "<p>Fiş ve raporlarda görünen mağaza bilgileri. Uygulama ile senkronize olur.</p>" +
+          '<div id="alert" hidden></div>' +
+          '<form id="storeForm">' +
+          '<div class="portal-field"><label for="name">Mağaza adı</label><input id="name" required value="' +
+          P.escapeHtml(store.name || "") +
+          '" /></div>' +
+          '<div class="portal-field"><label for="code">Mağaza kodu</label><input id="code" required value="' +
+          P.escapeHtml(store.code || "") +
+          '" style="text-transform:uppercase" /></div>' +
+          '<div class="portal-field"><label for="address">Adres</label><textarea id="address" rows="2">' +
+          P.escapeHtml(store.address || "") +
+          "</textarea></div>" +
+          '<div class="portal-field"><label for="phone">Telefon</label><input id="phone" value="' +
+          P.escapeHtml(store.phone || "") +
+          '" /></div>' +
+          '<div class="portal-form-actions"><button type="submit" class="btn btn-primary" id="saveBtn">Kaydet</button></div>' +
+          "</form></div>";
+
+        var alertEl = document.getElementById("alert");
+        document.getElementById("storeForm").addEventListener("submit", async function (e) {
+          e.preventDefault();
+          var btn = document.getElementById("saveBtn");
+          P.setLoading(btn, true);
+          try {
+            await P.updateStore(storeId, {
+              name: document.getElementById("name").value.trim(),
+              code: document.getElementById("code").value.trim().toUpperCase(),
+              address: document.getElementById("address").value.trim(),
+              phone: document.getElementById("phone").value.trim(),
+            });
+            try {
+              localStorage.setItem(
+                "marketpos:portal:storeName",
+                document.getElementById("name").value.trim(),
+              );
+            } catch (_) {}
+            alertEl.hidden = false;
+            alertEl.className = "portal-alert portal-alert-success";
+            alertEl.textContent = "Mağaza bilgileri kaydedildi.";
+            document.querySelector(".portal-sidebar-user").textContent =
+              document.getElementById("name").value.trim();
+          } catch (err) {
+            P.showAlert(alertEl, err.error || "Kaydedilemedi.");
+          } finally {
+            P.setLoading(btn, false);
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

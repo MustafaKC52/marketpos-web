@@ -1,0 +1,367 @@
+/* MarketPOS SaaS refresh — AI accent + hero v2 + modular sections */
+
+:root {
+  --ai-violet: #8b5cf6;
+  --ai-violet-2: #a78bfa;
+  --ai-glow: rgba(139, 92, 246, 0.35);
+  --saas-surface: rgba(255, 255, 255, 0.035);
+  --saas-border: rgba(255, 255, 255, 0.09);
+}
+
+/* ===== Hero v2 ===== */
+.hero-v2 .hero-title {
+  max-width: 24ch;
+  font-size: clamp(2.1rem, 4.8vw, 3.55rem);
+  line-height: 1.08;
+}
+
+.hero-v2 .lead {
+  max-width: 52ch;
+  font-size: clamp(1rem, 1.8vw, 1.125rem);
+  line-height: 1.65;
+}
+
+.hero-trust-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.25rem;
+  margin-top: 1.75rem;
+  padding: 0;
+  list-style: none;
+}
+
+.hero-trust-row li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.88rem;
+  color: rgba(234, 240, 246, 0.82);
+  font-weight: 500;
+}
+
+.hero-trust-row li::before {
+  content: "✓";
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.btn-ai {
+  background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 50%, #a78bfa 100%);
+  color: #fff;
+  border: 1px solid rgba(167, 139, 250, 0.45);
+  box-shadow: 0 12px 32px var(--ai-glow);
+}
+
+.btn-ai:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 16px 40px rgba(139, 92, 246, 0.45);
+}
+
+/* ===== AI feature cards (4-up) ===== */
+.section-ai-platform {
+  background:
+    radial-gradient(55% 45% at 15% 20%, rgba(139, 92, 246, 0.14), transparent 55%),
+    radial-gradient(45% 40% at 88% 75%, rgba(20, 184, 166, 0.12), transparent 55%);
+}
+
+.ai-platform-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+}
+
+.ai-platform-card {
+  background: var(--saas-surface);
+  border: 1px solid var(--saas-border);
+  border-radius: var(--radius-lg);
+  padding: 1.35rem 1.4rem;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.ai-platform-card:hover {
+  border-color: rgba(139, 92, 246, 0.35);
+  transform: translateY(-2px);
+}
+
+.ai-platform-card .ai-card-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  margin-bottom: 0.85rem;
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+}
+
+.ai-platform-card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+}
+
+.ai-platform-card ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.ai-platform-card ul li + li {
+  margin-top: 0.25rem;
+}
+
+.gradient-text-ai {
+  background: linear-gradient(135deg, #c4b5fd 0%, #8b5cf6 45%, #22d3ee 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ===== AI Chat demo ===== */
+.ai-chat-section {
+  padding-block: clamp(3rem, 8vw, 5rem);
+}
+
+.ai-chat-wrap {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+
+@media (min-width: 920px) {
+  .ai-chat-wrap {
+    grid-template-columns: 1fr 1.1fr;
+  }
+}
+
+.ai-chat-panel {
+  background: rgba(8, 12, 28, 0.75);
+  border: 1px solid var(--saas-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.ai-chat-head {
+  padding: 0.85rem 1.15rem;
+  border-bottom: 1px solid var(--line-dim);
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.ai-chat-head .dot-live {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 8px var(--success);
+}
+
+.ai-chat-messages {
+  min-height: 280px;
+  max-height: 360px;
+  overflow-y: auto;
+  padding: 1rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ai-chat-bubble {
+  max-width: 92%;
+  padding: 0.65rem 0.9rem;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.ai-chat-bubble.user {
+  align-self: flex-end;
+  background: rgba(20, 184, 166, 0.18);
+  border: 1px solid rgba(20, 184, 166, 0.3);
+}
+
+.ai-chat-bubble.ai {
+  align-self: flex-start;
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.28);
+}
+
+.ai-chat-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0 1rem 0.75rem;
+}
+
+.ai-chat-suggestions button {
+  font: inherit;
+  font-size: 0.78rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.ai-chat-suggestions button:hover {
+  border-color: rgba(139, 92, 246, 0.4);
+  color: #fff;
+}
+
+.ai-chat-input-row {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem 1rem;
+  border-top: 1px solid var(--line-dim);
+}
+
+.ai-chat-input-row input {
+  flex: 1;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.25);
+  color: #fff;
+  padding: 0.6rem 0.85rem;
+  font: inherit;
+}
+
+.ai-chat-input-row button {
+  border: none;
+  border-radius: 10px;
+  padding: 0 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--grad-primary);
+  color: #fff;
+}
+
+/* ===== 3-step demo request ===== */
+.demo-request-form {
+  background: var(--saas-surface);
+  border: 1px solid var(--saas-border);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem 1.65rem;
+}
+
+.demo-steps-indicator {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.demo-step-dot {
+  flex: 1;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  transition: background 0.25s;
+}
+
+.demo-step-dot.active {
+  background: linear-gradient(90deg, var(--primary), var(--ai-violet));
+}
+
+.demo-step-dot.done {
+  background: var(--primary);
+}
+
+.demo-step-panel {
+  display: none;
+}
+
+.demo-step-panel.active {
+  display: block;
+}
+
+.demo-type-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.55rem;
+}
+
+.demo-type-btn {
+  font: inherit;
+  padding: 0.85rem 0.65rem;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.demo-type-btn:hover,
+.demo-type-btn.selected {
+  border-color: rgba(139, 92, 246, 0.5);
+  background: rgba(139, 92, 246, 0.12);
+}
+
+.demo-form-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.demo-wa-final {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.demo-wa-final p {
+  margin-bottom: 1rem;
+}
+
+/* ===== Sector page shared ===== */
+.sector-hero {
+  padding: calc(var(--header-h) + 2.5rem) 0 3rem;
+  text-align: center;
+}
+
+.sector-hero h1 {
+  max-width: 20ch;
+  margin-inline: auto;
+}
+
+.sector-features {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.sector-feature {
+  padding: 1.25rem;
+  border-radius: var(--radius);
+  background: var(--saas-surface);
+  border: 1px solid var(--saas-border);
+}
+
+.sector-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.sector-benefits li {
+  padding-left: 1.5rem;
+  position: relative;
+  color: var(--muted);
+}
+
+.sector-benefits li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+}

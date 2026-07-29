@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /admin.html
 
-Sitemap: https://www.marketposs.com/sitemap.xml
+Sitemap: https://www.marketposs.com/blog/sitemap-blog.xml

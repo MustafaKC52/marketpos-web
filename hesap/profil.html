@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profil — MarketPOS Hesabım</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="../favicon.svg?v=20260530" type="image/svg+xml" />
+  <link rel="stylesheet" href="../style.css?v=20260730" />
+  <link rel="stylesheet" href="portal.css?v=20260730" />
+</head>
+<body>
+  <script src="portal.js?v=20260730"></script>
+  <script>
+    (function () {
+      var P = window.MarketPortal;
+      if (!P.requireAuth()) return;
+
+      P.renderShell("profil", "Profil", '<p class="portal-loading">Yükleniyor…</p>');
+
+      P.fetchMe().then(function (me) {
+        document.querySelector(".portal-content").innerHTML =
+          '<div class="portal-card">' +
+          '<p>Hesap sahibi bilgilerinizi güncelleyin. Şifre alanını boş bırakırsanız değişmez.</p>' +
+          '<div id="alert" hidden></div>' +
+          '<form id="profileForm">' +
+          '<div class="portal-field"><label for="name">Ad Soyad</label><input id="name" required value="' +
+          P.escapeHtml(me.name) +
+          '" /></div>' +
+          '<div class="portal-field"><label for="email">E-posta</label><input id="email" type="email" required value="' +
+          P.escapeHtml(me.email) +
+          '" /></div>' +
+          '<div class="portal-field"><label for="password">Yeni şifre (isteğe bağlı)</label><input id="password" type="password" autocomplete="new-password" minlength="8" placeholder="Değiştirmek istemiyorsanız boş bırakın" /></div>' +
+          '<div class="portal-form-actions"><button type="submit" class="btn btn-primary" id="saveBtn">Kaydet</button></div>' +
+          "</form></div>";
+
+        var alertEl = document.getElementById("alert");
+        document.getElementById("profileForm").addEventListener("submit", async function (e) {
+          e.preventDefault();
+          var payload = {
+            name: document.getElementById("name").value.trim(),
+            email: document.getElementById("email").value.trim(),
+          };
+          var pw = document.getElementById("password").value;
+          if (pw) payload.password = pw;
+          var btn = document.getElementById("saveBtn");
+          P.setLoading(btn, true);
+          try {
+            await P.updateUser(payload);
+            try {
+              localStorage.setItem("marketpos:portal:userName", payload.name);
+              localStorage.setItem("marketpos:portal:userEmail", payload.email);
+            } catch (_) {}
+            alertEl.hidden = false;
+            alertEl.className = "portal-alert portal-alert-success";
+            alertEl.textContent = "Profil güncellendi.";
+            document.querySelector(".portal-sidebar-email").textContent = payload.email;
+          } catch (err) {
+            P.showAlert(alertEl, err.error || "Kaydedilemedi.");
+          } finally {
+            P.setLoading(btn, false);
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

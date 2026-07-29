@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cihazlar — MarketPOS Hesabım</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="../favicon.svg?v=20260530" type="image/svg+xml" />
+  <link rel="stylesheet" href="../style.css?v=20260730" />
+  <link rel="stylesheet" href="portal.css?v=20260730" />
+</head>
+<body>
+  <script src="portal.js?v=20260730"></script>
+  <script>
+    (function () {
+      var P = window.MarketPortal;
+      if (!P.requireAuth()) return;
+      var storeId = P.getStoreId();
+
+      P.renderShell("cihazlar", "Kayıtlı cihazlar", '<p class="portal-loading">Yükleniyor…</p>');
+
+      function renderDevices(payload) {
+        var mainId = payload.mainDeviceId || "";
+        var devices = payload.devices || [];
+        var blocked = payload.blockedDevices || [];
+
+        function deviceRow(d, isBlocked) {
+          var isMain = !isBlocked && d.id === mainId;
+          var actions = "";
+          if (!isBlocked) {
+            if (!isMain) {
+              actions +=
+                '<button type="button" class="portal-btn-sm primary" data-action="main" data-id="' +
+                P.escapeHtml(d.id) +
+                '">Ana cihaz yap</button>';
+            }
+            actions +=
+              '<button type="button" class="portal-btn-sm" data-action="block" data-id="' +
+              P.escapeHtml(d.id) +
+              '">Engelle</button>' +
+              '<button type="button" class="portal-btn-sm danger" data-action="remove" data-id="' +
+              P.escapeHtml(d.id) +
+              '">Kaldır</button>';
+          } else {
+            actions +=
+              '<button type="button" class="portal-btn-sm primary" data-action="unblock" data-id="' +
+              P.escapeHtml(d.id) +
+              '">Engeli kaldır</button>';
+          }
+          return (
+            '<div class="portal-device">' +
+            "<div>" +
+            '<div class="portal-device-name">' +
+            P.escapeHtml(d.name || d.id) +
+            (isMain ? ' <span class="portal-badge portal-badge-ok">Ana</span>' : "") +
+            (isBlocked ? ' <span class="portal-badge portal-badge-warn">Engelli</span>' : "") +
+            "</div>" +
+            '<div class="portal-device-meta">Son görülme: ' +
+            P.formatDate(d.lastSeenAt) +
+            "</div></div>" +
+            '<div class="portal-device-actions">' +
+            actions +
+            "</div></div>"
+          );
+        }
+
+        var listHtml = devices.map(function (d) {
+          return deviceRow(d, false);
+        }).join("");
+        blocked.forEach(function (d) {
+          listHtml += deviceRow(d, true);
+        });
+
+        document.querySelector(".portal-content").innerHTML =
+          '<div class="portal-card">' +
+          "<p>MarketPOS uygulamasının kurulu olduğu kasa ve yönetim bilgisayarları. Ana cihaz senkron ve yedekleme için referans alınır.</p>" +
+          '<div id="alert" hidden></div>' +
+          (listHtml
+            ? '<div class="portal-device-list" id="deviceList">' + listHtml + "</div>"
+            : '<p style="color:rgba(255,255,255,0.6)">Henüz kayıtlı cihaz yok. Uygulamada giriş yapınca cihaz burada görünür.</p>') +
+          "</div>";
+
+        var alertEl = document.getElementById("alert");
+        document.getElementById("deviceList") &&
+          document.getElementById("deviceList").addEventListener("click", async function (e) {
+            var btn = e.target.closest("button[data-action]");
+            if (!btn) return;
+            var action = btn.getAttribute("data-action");
+            var id = btn.getAttribute("data-id");
+            if (!id) return;
+            if (action === "remove" && !confirm("Bu cihazı listeden kaldırmak istediğinize emin misiniz?")) return;
+            if (action === "block" && !confirm("Bu cihazın girişini engellemek istiyor musunuz?")) return;
+            btn.disabled = true;
+            try {
+              if (action === "main") await P.setMainDevice(storeId, id);
+              else if (action === "block") await P.blockDevice(storeId, id);
+              else if (action === "unblock") await P.unblockDevice(storeId, id);
+              else if (action === "remove") await P.removeDevice(storeId, id);
+              var fresh = await P.fetchDevices(storeId);
+              renderDevices(fresh);
+            } catch (err) {
+              P.showAlert(alertEl, err.error || "İşlem başarısız.");
+              btn.disabled = false;
+            }
+          });
+      }
+
+      P.fetchDevices(storeId).then(renderDevices).catch(function (err) {
+        document.querySelector(".portal-content").innerHTML =
+          '<div class="portal-alert portal-alert-error">' +
+          P.escapeHtml(err.error || "Cihaz listesi alınamadı.") +
+          "</div>";
+      });
+    })();
+  </script>
+</body>
+</html>

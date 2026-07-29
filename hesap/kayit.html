@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kayıt Ol — MarketPOS Hesabım</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="../favicon.svg?v=20260530" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css?v=20260730" />
+  <link rel="stylesheet" href="portal.css?v=20260730" />
+</head>
+<body>
+  <div class="bg-aurora" aria-hidden="true"><span class="aurora a1"></span><span class="aurora a2"></span></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <div class="portal-auth-page">
+    <div class="portal-auth-card" style="max-width:28rem">
+      <a href="../index.html"><img src="../assets/logo-lockup.png?v=20260530" alt="MarketPOS" height="28" style="margin-bottom:1rem" /></a>
+      <h1>14 gün ücretsiz başlayın</h1>
+      <p class="portal-sub">Hesabınızı oluşturun, Windows uygulamasını indirip mağazanızı hemen kurun.</p>
+
+      <div id="alert" class="portal-alert portal-alert-error" hidden></div>
+      <div id="closedNote" class="portal-alert portal-alert-info" hidden></div>
+
+      <form id="registerForm">
+        <div class="portal-field">
+          <label for="name">Ad Soyad</label>
+          <input id="name" required />
+        </div>
+        <div class="portal-field">
+          <label for="email">E-posta</label>
+          <input id="email" type="email" autocomplete="username" required />
+        </div>
+        <div class="portal-field">
+          <label for="password">Şifre (en az 8 karakter)</label>
+          <input id="password" type="password" autocomplete="new-password" required minlength="8" />
+        </div>
+        <div class="portal-field">
+          <label for="storeName">Mağaza adı</label>
+          <input id="storeName" required />
+        </div>
+        <div class="portal-field">
+          <label for="storeCode">Mağaza kodu (fişte görünür, örn. MRKT01)</label>
+          <input id="storeCode" required maxlength="16" style="text-transform:uppercase" />
+        </div>
+        <button class="btn btn-primary" style="width:100%" type="submit" id="submitBtn">Hesap oluştur</button>
+      </form>
+
+      <p class="portal-auth-links">
+        Zaten hesabınız var mı? <a href="giris.html">Giriş yapın</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="portal.js?v=20260730"></script>
+  <script>
+    (function () {
+      var P = window.MarketPortal;
+      if (P.redirectIfAuthed()) return;
+
+      var alertEl = document.getElementById("alert");
+      var closedNote = document.getElementById("closedNote");
+      var form = document.getElementById("registerForm");
+
+      P.fetchPublicConfig()
+        .then(function (cfg) {
+          if (cfg && cfg.registrationEnabled === false) {
+            closedNote.hidden = false;
+            closedNote.textContent =
+              cfg.registrationDeniedMessage ||
+              "Kayıt şu an kapalı. Uygulamayı indirip destek ile iletişime geçebilirsiniz.";
+            form.querySelector("button").disabled = true;
+          }
+        })
+        .catch(function () {});
+
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        P.hideAlert(alertEl);
+        var btn = document.getElementById("submitBtn");
+        P.setLoading(btn, true, "Oluşturuluyor…");
+        try {
+          var data = await P.register({
+            name: document.getElementById("name").value.trim(),
+            email: document.getElementById("email").value.trim(),
+            password: document.getElementById("password").value,
+            storeName: document.getElementById("storeName").value.trim(),
+            storeCode: document.getElementById("storeCode").value.trim().toUpperCase(),
+          });
+          P.saveSession(data);
+          window.location.href = "index.html";
+        } catch (err) {
+          P.showAlert(alertEl, err.error || "Kayıt başarısız.");
+        } finally {
+          P.setLoading(btn, false);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

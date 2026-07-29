@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Giriş — MarketPOS Hesabım</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="../favicon.svg?v=20260530" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css?v=20260730" />
+  <link rel="stylesheet" href="portal.css?v=20260730" />
+</head>
+<body>
+  <div class="bg-aurora" aria-hidden="true"><span class="aurora a1"></span><span class="aurora a2"></span></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <div class="portal-auth-page">
+    <div class="portal-auth-card">
+      <a href="../index.html"><img src="../assets/logo-lockup.png?v=20260530" alt="MarketPOS" height="28" style="margin-bottom:1rem" /></a>
+      <h1>Hesabınıza giriş</h1>
+      <p class="portal-sub">Mağaza bilgilerinizi, lisans durumunuzu ve kayıtlı cihazlarınızı web üzerinden yönetin.</p>
+
+      <div id="alert" class="portal-alert portal-alert-error" hidden></div>
+      <div id="sessionInfo" class="portal-alert portal-alert-info" hidden></div>
+
+      <form id="loginForm">
+        <div class="portal-field">
+          <label for="email">E-posta</label>
+          <input id="email" name="email" type="email" autocomplete="username" required />
+        </div>
+        <div class="portal-field">
+          <label for="password">Şifre</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required />
+        </div>
+        <button class="btn btn-primary" style="width:100%;margin-top:0.25rem" type="submit" id="submitBtn">Giriş yap</button>
+      </form>
+
+      <p class="portal-auth-links">
+        <a href="sifremi-unuttum.html">Şifremi unuttum</a>
+        ·
+        <a href="kayit.html">Ücretsiz kayıt ol</a>
+        ·
+        <a href="../index.html">Ana sayfa</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="portal.js?v=20260730"></script>
+  <script>
+    (function () {
+      var P = window.MarketPortal;
+      if (P.redirectIfAuthed()) return;
+
+      var alertEl = document.getElementById("alert");
+      var sessionInfo = document.getElementById("sessionInfo");
+      sessionInfo.hidden = false;
+      sessionInfo.textContent =
+        "Not: Web girişi yaparsanız masaüstü uygulamasındaki oturum sonlanabilir (tek aktif oturum).";
+
+      document.getElementById("loginForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+        P.hideAlert(alertEl);
+        var btn = document.getElementById("submitBtn");
+        P.setLoading(btn, true, "Giriş yapılıyor…");
+        try {
+          var data = await P.login(
+            document.getElementById("email").value,
+            document.getElementById("password").value,
+          );
+          P.saveSession(data);
+          var next = new URLSearchParams(window.location.search).get("next") || "index.html";
+          window.location.href = next;
+        } catch (err) {
+          P.showAlert(alertEl, err.error || "Giriş başarısız.");
+        } finally {
+          P.setLoading(btn, false);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

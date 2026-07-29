@@ -49,6 +49,41 @@
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
 }
+.blog-filters-seo {
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.blog-filter-label {
+  font-size: 0.78rem;
+  color: rgba(234, 240, 246, 0.5);
+  margin-right: 0.35rem;
+}
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+.blog-filter-btn {
+  border: 1px solid var(--line);
+  background: var(--glass);
+  color: var(--muted);
+  font-size: .8rem;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color .15s, color .15s, background .15s;
+}
+.blog-filter-btn:hover,
+.blog-filter-btn.active {
+  border-color: var(--primary);
+  color: var(--text-strong);
+  background: rgba(16, 185, 129, 0.08);
+}
 .blog-card {
   display: flex;
   flex-direction: column;

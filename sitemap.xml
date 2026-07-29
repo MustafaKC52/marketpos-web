@@ -46,6 +46,19 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://www.marketposs.com/canli-demo.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url><loc>https://www.marketposs.com/market-programi.html</loc><changefreq>monthly</changefreq><priority>0.88</priority></url>
+  <url><loc>https://www.marketposs.com/kasap-programi.html</loc><changefreq>monthly</changefreq><priority>0.88</priority></url>
+  <url><loc>https://www.marketposs.com/manav-programi.html</loc><changefreq>monthly</changefreq><priority>0.88</priority></url>
+  <url><loc>https://www.marketposs.com/bakkal-programi.html</loc><changefreq>monthly</changefreq><priority>0.88</priority></url>
+  <url><loc>https://www.marketposs.com/sarkuteri-programi.html</loc><changefreq>monthly</changefreq><priority>0.88</priority></url>
+  <url><loc>https://www.marketposs.com/kuruyemis-programi.html</loc><changefreq>monthly</changefreq><priority>0.88</priority></url>
+  <url><loc>https://www.marketposs.com/mini-market-programi.html</loc><changefreq>monthly</changefreq><priority>0.88</priority></url>
+  <url><loc>https://www.marketposs.com/perakende-programi.html</loc><changefreq>monthly</changefreq><priority>0.88</priority></url>
+  <url>
     <loc>https://www.marketposs.com/demo.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>

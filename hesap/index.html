@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hesabım — MarketPOS</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="../favicon.svg?v=20260530" type="image/svg+xml" />
+  <link rel="stylesheet" href="../style.css?v=20260730" />
+  <link rel="stylesheet" href="portal.css?v=20260730" />
+</head>
+<body>
+  <script src="portal.js?v=20260730"></script>
+  <script>
+    (function () {
+      var P = window.MarketPortal;
+      if (!P.requireAuth()) return;
+
+      var storeId = P.getStoreId();
+      var html = '<p class="portal-loading" id="load">Yükleniyor…</p>';
+
+      P.renderShell("index", "Hesap özeti", html);
+
+      Promise.all([P.fetchMe(), P.fetchCloudStats(storeId), P.fetchStore(storeId)])
+        .then(function (results) {
+          var me = results[0];
+          var stats = results[1];
+          var store = results[2];
+          var lic = me.license || {};
+          if (store.name) {
+            try {
+              localStorage.setItem("marketpos:portal:storeName", store.name);
+            } catch (_) {}
+          }
+
+          document.querySelector(".portal-content").innerHTML =
+            '<div class="portal-card">' +
+            '<p>Hoş geldiniz, <strong>' +
+            P.escapeHtml(me.name) +
+            "</strong>. Buradan mağazanızı, lisansınızı ve cihazlarınızı yönetebilirsiniz.</p>" +
+            '<p>Lisans: <span class="' +
+            P.licensePhaseClass(lic.phase) +
+            '">' +
+            P.escapeHtml(P.licensePhaseLabel(lic.phase)) +
+            "</span>" +
+            (lic.daysRemaining != null && lic.phase === "trial"
+              ? " · " + lic.daysRemaining + " gün kaldı"
+              : "") +
+            "</p>" +
+            "</div>" +
+            '<div class="portal-grid">' +
+            '<div class="portal-stat"><strong>' +
+            (stats.products || 0) +
+            '</strong><span>Bulut ürün</span></div>' +
+            '<div class="portal-stat"><strong>' +
+            (stats.customers || 0) +
+            '</strong><span>Müşteri</span></div>' +
+            '<div class="portal-stat"><strong>' +
+            (stats.sales || 0) +
+            '</strong><span>Satış kaydı</span></div>' +
+            '<div class="portal-stat"><strong>' +
+            (stats.categories || 0) +
+            '</strong><span>Kategori</span></div>' +
+            "</div>" +
+            '<div class="portal-card" style="margin-top:1rem">' +
+            "<h2>Hızlı işlemler</h2>" +
+            '<div class="portal-quick-links">' +
+            '<a class="btn btn-secondary btn-sm" href="profil.html">Profili düzenle</a>' +
+            '<a class="btn btn-secondary btn-sm" href="magaza.html">Mağaza bilgileri</a>' +
+            '<a class="btn btn-secondary btn-sm" href="lisans.html">Lisans durumu</a>' +
+            '<a class="btn btn-secondary btn-sm" href="cihazlar.html">Cihazları yönet</a>' +
+            '<a class="btn btn-primary btn-sm" href="../index.html#download">Uygulamayı indir</a>' +
+            '<a class="btn btn-ghost btn-sm" href="../degerlendirme.html">Değerlendirmeler</a>' +
+            "</div></div>" +
+            (stats.lastSync
+              ? '<p style="font-size:0.8rem;color:rgba(255,255,255,0.5);margin-top:1rem">Son bulut senkron: ' +
+                P.formatDate(stats.lastSync) +
+                "</p>"
+              : "");
+        })
+        .catch(function (err) {
+          document.querySelector(".portal-content").innerHTML =
+            '<div class="portal-alert portal-alert-error">' +
+            P.escapeHtml(err.error || "Veriler yüklenemedi.") +
+            "</div>";
+        });
+    })();
+  </script>
+</body>
+</html>

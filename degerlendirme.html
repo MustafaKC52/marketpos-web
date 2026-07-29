@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Değerlendirmeler — MarketPOS</title>
+  <meta name="description" content="MarketPOS kullanıcı değerlendirmeleri. Deneme süresini tamamlayan ve uygulamayı kullanan işletmecilerin puanları." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.marketposs.com/degerlendirme.html" />
+  <link rel="icon" href="favicon.svg?v=20260530" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=20260730" />
+  <style>
+    .rating-page { padding: 2rem 0 4rem; }
+    .rating-hero { max-width: 42rem; margin: 0 auto 2.5rem; text-align: center; }
+    .rating-hero h1 { margin: 0.75rem 0; font-size: clamp(1.75rem, 4vw, 2.5rem); }
+    .rating-summary {
+      display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;
+      margin: 1.5rem 0 2rem;
+    }
+    .rating-summary-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 1rem;
+      padding: 1rem 1.5rem;
+      min-width: 8rem;
+      text-align: center;
+    }
+    .rating-summary-card strong { display: block; font-size: 1.75rem; font-family: "Space Grotesk", sans-serif; }
+    .rating-thanks {
+      display: none;
+      max-width: 36rem;
+      margin: 0 auto 2rem;
+      padding: 1.25rem 1.5rem;
+      border-radius: 1rem;
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      text-align: center;
+    }
+    .rating-thanks.visible { display: block; }
+    .rating-grid {
+      display: grid;
+      gap: 1rem;
+      max-width: 48rem;
+      margin: 0 auto;
+    }
+    .rating-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 1rem;
+      padding: 1.25rem 1.5rem;
+    }
+    .rating-stars { color: #fbbf24; letter-spacing: 0.05em; font-size: 1.1rem; }
+    .rating-meta { color: rgba(255,255,255,0.55); font-size: 0.85rem; margin-top: 0.5rem; }
+    .rating-comment { margin: 0.75rem 0 0; line-height: 1.6; }
+    .rating-empty, .rating-loading { text-align: center; color: rgba(255,255,255,0.6); padding: 2rem; }
+    .rating-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 2rem;
+    }
+    .rating-header .logo img { height: 2rem; }
+    .rating-header nav { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .rating-header nav a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.9rem; }
+    .rating-header nav a:hover { color: #fff; }
+  </style>
+</head>
+<body id="top">
+  <div class="bg-aurora" aria-hidden="true"><span class="aurora a1"></span><span class="aurora a2"></span></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <div class="container rating-page">
+    <header class="rating-header">
+      <a href="index.html" class="logo"><img src="assets/logo-lockup.png?v=20260530" alt="MarketPOS" /></a>
+      <nav aria-label="Sayfa menüsü">
+        <a href="index.html">Ana Sayfa</a>
+        <a href="index.html#features">Özellikler</a>
+        <a href="pricing.html">Fiyat</a>
+        <a href="blog/index.html">Blog</a>
+        <a class="btn btn-primary btn-sm" href="index.html#download" data-open-download>Hemen Dene</a>
+      </nav>
+    </header>
+
+    <div class="rating-thanks" id="ratingThanks" role="status">
+      <strong>Teşekkürler!</strong>
+      <p id="ratingThanksText">Puanınız kaydedildi. Geri bildiriminiz MarketPOS'u geliştirmemize yardımcı oluyor.</p>
+    </div>
+
+    <header class="rating-hero">
+      <span class="eyebrow">Kullanıcı değerlendirmeleri</span>
+      <h1>MarketPOS'u <span class="gradient-text">işletmeciler puanlıyor</span></h1>
+      <p>Uygulama içinden gönderilen gerçek puanlar. 4 yıldız ve üzeri yorumlar burada yayınlanır.</p>
+      <div class="rating-summary" id="ratingSummary" aria-live="polite">
+        <div class="rating-summary-card">
+          <strong id="summaryAverage">—</strong>
+          <span>Ortalama</span>
+        </div>
+        <div class="rating-summary-card">
+          <strong id="summaryCount">—</strong>
+          <span>Toplam puan</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="rating-loading" id="ratingLoading">Değerlendirmeler yükleniyor…</div>
+    <div class="rating-grid" id="ratingGrid" hidden></div>
+    <p class="rating-empty" id="ratingEmpty" hidden>Henüz yayınlanan değerlendirme yok. İlk siz olun — uygulamayı kullanırken puan isteği gelecektir.</p>
+  </div>
+
+  <script src="script.js?v=20260730"></script>
+  <script>
+    (function () {
+      var API = "https://api.marketposs.com/api/public/app-ratings";
+      var params = new URLSearchParams(window.location.search);
+      var thanks = params.get("thanks") === "1";
+      var stars = parseInt(params.get("stars") || "0", 10);
+
+      if (thanks) {
+        var box = document.getElementById("ratingThanks");
+        var text = document.getElementById("ratingThanksText");
+        box.classList.add("visible");
+        if (stars >= 1 && stars <= 5) {
+          text.textContent = stars + " yıldızlı puanınız kaydedildi. Teşekkür ederiz!";
+        }
+      }
+
+      function renderStars(n) {
+        var s = "";
+        for (var i = 1; i <= 5; i++) {
+          s += i <= n ? "★" : "☆";
+        }
+        return s;
+      }
+
+      function formatDate(ms) {
+        if (!ms) return "";
+        try {
+          return new Intl.DateTimeFormat("tr-TR", { dateStyle: "medium" }).format(new Date(ms));
+        } catch (e) {
+          return "";
+        }
+      }
+
+      fetch(API + "?limit=24")
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          document.getElementById("ratingLoading").hidden = true;
+          var summary = data.summary || {};
+          document.getElementById("summaryAverage").textContent =
+            summary.count ? String(summary.average) : "—";
+          document.getElementById("summaryCount").textContent =
+            summary.count != null ? String(summary.count) : "0";
+
+          var ratings = data.ratings || [];
+          var grid = document.getElementById("ratingGrid");
+          var empty = document.getElementById("ratingEmpty");
+
+          if (!ratings.length) {
+            empty.hidden = false;
+            return;
+          }
+
+          grid.hidden = false;
+          ratings.forEach(function (row) {
+            var card = document.createElement("article");
+            card.className = "rating-card";
+            var comment = (row.comment || "").trim();
+            card.innerHTML =
+              '<div class="rating-stars" aria-label="' + row.stars + ' yıldız">' + renderStars(row.stars) + "</div>" +
+              (comment ? '<p class="rating-comment">' + comment.replace(/</g, "&lt;") + "</p>" : "") +
+              '<p class="rating-meta">' + (row.storeName || "Market işletmecisi") +
+              (row.createdAt ? " · " + formatDate(row.createdAt) : "") + "</p>";
+            grid.appendChild(card);
+          });
+        })
+        .catch(function () {
+          document.getElementById("ratingLoading").textContent =
+            "Değerlendirmeler şu an yüklenemedi. Daha sonra tekrar deneyin.";
+        });
+    })();
+  </script>
+</body>
+</html>

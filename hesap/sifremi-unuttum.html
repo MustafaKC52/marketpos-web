@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Şifremi Unuttum — MarketPOS</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="../favicon.svg?v=20260530" type="image/svg+xml" />
+  <link rel="stylesheet" href="../style.css?v=20260730" />
+  <link rel="stylesheet" href="portal.css?v=20260730" />
+</head>
+<body>
+  <div class="bg-aurora" aria-hidden="true"><span class="aurora a1"></span></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <div class="portal-auth-page">
+    <div class="portal-auth-card">
+      <h1>Şifre sıfırlama</h1>
+      <p class="portal-sub">E-posta, mağaza kodu ve yeni şifrenizi girin. Tüm oturumlar kapanır.</p>
+      <div id="alert" hidden></div>
+      <form id="form">
+        <div class="portal-field"><label for="email">E-posta</label><input id="email" type="email" required /></div>
+        <div class="portal-field"><label for="storeCode">Mağaza kodu</label><input id="storeCode" required style="text-transform:uppercase" /></div>
+        <div class="portal-field"><label for="newPassword">Yeni şifre</label><input id="newPassword" type="password" minlength="8" required /></div>
+        <button class="btn btn-primary" style="width:100%" type="submit" id="submitBtn">Şifreyi güncelle</button>
+      </form>
+      <p class="portal-auth-links"><a href="giris.html">Giriş sayfasına dön</a></p>
+    </div>
+  </div>
+
+  <script src="portal.js?v=20260730"></script>
+  <script>
+    (function () {
+      var P = window.MarketPortal;
+      var alertEl = document.getElementById("alert");
+      document.getElementById("form").addEventListener("submit", async function (e) {
+        e.preventDefault();
+        var btn = document.getElementById("submitBtn");
+        P.setLoading(btn, true);
+        try {
+          await P.forgotPassword({
+            email: document.getElementById("email").value.trim(),
+            storeCode: document.getElementById("storeCode").value.trim().toUpperCase(),
+            newPassword: document.getElementById("newPassword").value,
+          });
+          alertEl.hidden = false;
+          alertEl.className = "portal-alert portal-alert-success";
+          alertEl.textContent = "Şifre güncellendi. Yeni şifrenizle giriş yapabilirsiniz.";
+        } catch (err) {
+          P.showAlert(alertEl, err.error || "İşlem başarısız.");
+        } finally {
+          P.setLoading(btn, false);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.pricing-island {
+	font-family: Inter, system-ui, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.pricing-island *,
+.pricing-island *::before,
+.pricing-island *::after {
+	box-sizing: border-box;
+}
